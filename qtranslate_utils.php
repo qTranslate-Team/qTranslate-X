@@ -52,28 +52,18 @@ if(defined('WP_DEBUG')&&WP_DEBUG){
 }// */
 
 function qtranxf_parseURL($url) {
-/*
-	if(function_exists('parse_url')){
-		$result = parse_url($url);
-		if(!isset($result['path'])) $result['path']='';
-		if(!isset($result['host'])) $result['host']='';
-		if(isset($result['port'])) $result['host'].=':'.$result['port'];
-	}else{
-*/
-	$r  = '!(?:(\w+)://)?(?:(\w+)\:(\w+)@)?([^/:]+)?';
-	$r .= '(?:\:(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!i';
-	preg_match ( $r, $url, $out );
-	$result = @array(
-		"scheme" => $out[1],
-		"host" => $out[4].(($out[5]=='')?'':':'.$out[5]),
-		"user" => $out[2],
-		"pass" => $out[3],
-		"path" => $out[6],
-		"query" => $out[7],
-		"fragment" => $out[8]
-		);
-//	}
-	return $result;
+	$result = parse_url($url) + array(
+            'scheme' => '',
+            'host' => '',
+            'user' => '',
+            'pass' => '',
+            'path' => '',
+            'query' => '',
+            'fragment' => ''
+    );
+    isset($result['port'])
+            and $result['host'] .= ':'. $result['port'];
+    return $result;
 }
 
 function qtranxf_stripSlashesIfNecessary($str) {

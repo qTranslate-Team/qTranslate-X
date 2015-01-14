@@ -1066,28 +1066,21 @@ function qtranxf_enableLanguage($lang) {
 
 if (!function_exists('qtranxf_use')){
 function qtranxf_use($lang, $text, $show_available=false) {
+	if (empty($text) || !qtrans_isEnabled($lang))
+	    return $text;
+	
+	$re = '/<!--:[a-z]{2}-->|\[:[a-z]{2}\]/';
+	if (is_string($text) && !preg_match($re, $text))
+	    return $text;
+	
+	if (is_array($text) || is_object($text)) {
+	    foreach ($text as &$t)
+	        if ($t && ((is_string($t) && preg_match($re, $t)) || is_array($t) || is_object($t)))
+	            $t = qtrans_use($lang, $t, $show_available);
+	    return $text;
+	}
+	
 	global $q_config;
-	// return full string if language is not enabled
-	if(!qtranxf_isEnabled($lang)) return $text;
-	if(is_array($text)) {
-		// handle arrays recursively
-		foreach($text as $key => $t) {
-			$text[$key] = qtranxf_use($lang,$text[$key],$show_available);
-		}
-		return $text;
-	}
-	
-	if(is_object($text)||@get_class($text) == '__PHP_Incomplete_Class') {
-		foreach(get_object_vars($text) as $key => $t) {
-			$text->$key = qtranxf_use($lang,$text->$key,$show_available);
-		}
-		return $text;
-	}
-	
-	// prevent filtering weird data types and save some resources
-	if(!is_string($text) || $text == '') {
-		return $text;
-	}
 	
 	// get content
 	$content = qtranxf_split($text);
