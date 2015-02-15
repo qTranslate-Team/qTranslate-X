@@ -58,10 +58,10 @@ function qtranxf_migrate_plugin($plugin){
 	$var=$plugin.'-migration';
 	if(!isset($_POST[$var])) return;
 	if($_POST[$var]=='none') return;
-	qtranxf_loadConfig();
-	qtranxf_saveConfig();
 	$f='qtranxf_migrate_'.$_POST[$var].'_'.str_replace('-','_',$plugin);
 	$f();
+	qtranxf_loadConfig();
+	qtranxf_saveConfig();
 }
 
 function qtranxf_migrate_plugins()
