@@ -607,7 +607,7 @@ function qtranxf_updateSetting($var, $type = QTX_STRING, $def = null) {
 		case QTX_LANGUAGE:
 		case QTX_STRING:
 			if(!isset($_POST[$var])) return false;
-			$val=$_POST[$var];
+			$val=sanitize_text_field($_POST[$var]);
 			if($type == QTX_URL) $val = trailingslashit($val);
 			else if($type == QTX_LANGUAGE && !qtranxf_isEnabled($val)) return false;
 			//standardize multi-line string
@@ -624,7 +624,7 @@ function qtranxf_updateSetting($var, $type = QTX_STRING, $def = null) {
 			return true;
 		case QTX_ARRAY:
 			if(!isset($_POST[$var])) return false;
-			$val=preg_split('/[\s,]+/',$_POST[$var],null,PREG_SPLIT_NO_EMPTY);
+			$val=preg_split('/[\s,]+/',sanitize_text_field($_POST[$var]),null,PREG_SPLIT_NO_EMPTY);
 			if( isset($q_config[$var]) && qtranxf_array_compare($q_config[$var],$val) ) return false;
 			$q_config[$var] = $val;
 			qtranxf_update_option($var, $def);
