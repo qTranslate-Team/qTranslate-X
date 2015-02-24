@@ -225,6 +225,9 @@ add_filter('link_name', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage'
 add_filter('link_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('the_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 
+add_filter('get_terms', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+add_filter('term_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+
 add_filter('pre_option_rss_language', 'qtranxf_getLanguage',0);
 
 add_filter('_wp_post_revision_field_post_title', 'qtranxf_showAllSeparated', 0);
