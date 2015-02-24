@@ -541,12 +541,12 @@ function qtranxf_updateSetting($var, $type = QTX_STRING) {
 			if($type == QTX_URL) $_POST[$var] = trailingslashit($_POST[$var]);
 			else if($type == QTX_LANGUAGE && !qtranxf_isEnabled($_POST[$var])) return false;
 			if($q_config[$var] == $_POST[$var]) return false;
-			$q_config[$var] = $_POST[$var];
+			$q_config[$var] = sanitize_text_field($_POST[$var]);
 			update_option('qtranslate_'.$var, $q_config[$var]);
 			return true;
 		case QTX_ARRAY:
 			if(!isset($_POST[$var])) return false;
-			$val=preg_split('/[\s,]+/',$_POST[$var],null,PREG_SPLIT_NO_EMPTY);
+			$val=preg_split('/[\s,]+/',sanitize_text_field($_POST[$var]),null,PREG_SPLIT_NO_EMPTY);
 			if( qtranxf_array_compare($q_config[$var],$val) ) return false;
 			$q_config[$var] = $val;
 			update_option('qtranslate_'.$var, $q_config[$var]);
