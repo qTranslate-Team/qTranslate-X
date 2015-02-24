@@ -782,24 +782,24 @@ function qtranxf_conf() {
 		}
 		if($error=='') {
 			// everything is fine, insert language
-			$q_config['language_name'][$_POST['language_code']] = $_POST['language_name'];
-			$q_config['flag'][$_POST['language_code']] = $_POST['language_flag'];
-			$q_config['locale'][$_POST['language_code']] = $_POST['language_locale'];
-			$q_config['date_format'][$_POST['language_code']] = $_POST['language_date_format'];
-			$q_config['time_format'][$_POST['language_code']] = $_POST['language_time_format'];
-			$q_config['not_available'][$_POST['language_code']] = $_POST['language_na_message'];
+			$q_config['language_name'][$_POST['language_code']] = sanitize_text_field($_POST['language_name']);
+			$q_config['flag'][$_POST['language_code']] = sanitize_text_field($_POST['language_flag']);
+			$q_config['locale'][$_POST['language_code']] = sanitize_text_field($_POST['language_locale']);
+			$q_config['date_format'][$_POST['language_code']] = sanitize_text_field($_POST['language_date_format']);
+			$q_config['time_format'][$_POST['language_code']] = sanitize_text_field($_POST['language_time_format']);
+			$q_config['not_available'][$_POST['language_code']] = sanitize_text_field($_POST['language_na_message']);
 		}
 		if($error!=''||isset($_GET['edit'])) {
 			// get old values in the form
-			$original_lang = $_POST['original_lang'];
-			$language_code = $_POST['language_code'];
-			$language_name = $_POST['language_name'];
-			$language_locale = $_POST['language_locale'];
-			$language_date_format = $_POST['language_date_format'];
-			$language_time_format = $_POST['language_time_format'];
-			$language_na_message = $_POST['language_na_message'];
-			$language_flag = $_POST['language_flag'];
-			$language_default = $_POST['language_default'];
+			$original_lang = sanitize_text_field($_POST['original_lang']);
+			$language_code = sanitize_text_field($_POST['language_code']);
+			$language_name = sanitize_text_field($_POST['language_name']);
+			$language_locale = sanitize_text_field($_POST['language_locale']);
+			$language_date_format = sanitize_text_field($_POST['language_date_format']);
+			$language_time_format = sanitize_text_field($_POST['language_time_format']);
+			$language_na_message = sanitize_text_field($_POST['language_na_message']);
+			$language_flag = sanitize_text_field($_POST['language_flag']);
+			$language_default = sanitize_text_field($_POST['language_default']);
 		}
 	} elseif(isset($_GET['convert'])){
 		// update language tags
