@@ -484,6 +484,7 @@ var qTranslateX=function(pg)
 			var nm=qTranslateConfig.custom_field_classes[i];
 			this.addContentHooksByClass(nm,form);
 		}
+		jQuery(document).trigger('qTranslateX:addCustomContentHooks', [this, form]);
 	}
 
 	/**
