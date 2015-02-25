@@ -53,7 +53,7 @@ class qTranslateXWidget extends WP_Widget {
 
 	function widget($args, $instance) {
 		extract($args);
-		echo '<style type="text/css">'.PHP_EOL;
+		echo '<style type="text/css" scoped>'.PHP_EOL;
 		echo empty($instance['widget-css']) ? QTX_WIDGET_CSS : $instance['widget-css'];
 		echo '</style>'.PHP_EOL;
 		echo $before_widget;
@@ -137,7 +137,7 @@ function qtranxf_generateLanguageSelectCode($style='', $id='') {
 				elseif($style=='text')
 					echo ' class="qtranxs_text qtranxs_text_'.$language.'"';
 				echo '>';
-				if($style=='image') echo '<img src="'.$flag_location.$q_config['flag'][$language].'"/>';
+				if($style=='image') echo '<img src="'.$flag_location.$q_config['flag'][$language].'" alt="'.$q_config['flag'][$language].'"/>';
 				echo '<span';
 				if($style=='image') echo ' style="display:none"';
 				echo '>'.$q_config['language_name'][$language].'</span>';
