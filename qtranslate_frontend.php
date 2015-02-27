@@ -50,6 +50,14 @@ function qtranxf_head(){
 }
 add_action('wp_head', 'qtranxf_head');
 
+/* Add a function to remove false duplicate alternate hreflang tags if qtranslate_slug is installed */
+add_action('get_header','remove_qts_slug_canonical');
+function remove_qts_slug_canonical(){
+	global $qtranslate_slug;
+	remove_action('wp_head',array($qtranslate_slug, 'qtranslate_slug_header_extended'));
+}
+
+
 /*
 function qtranxf_remove_detached_children( $items )
 {
