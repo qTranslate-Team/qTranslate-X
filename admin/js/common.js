@@ -703,7 +703,7 @@ var qTranslateX=function(pg)
 		}
 		for(var i=0; i < anchors.length; ++i){
 			var anchor = anchors[i];
-			var langSwitchWrap=qtranxj_ce('ul', {className: 'qtranxs-lang-switch-wrap'});
+			var langSwitchWrap=qtranxj_ce('ul', {className: 'qtranxs-lang-switch-wrap wp-ui-primary'});
 			//var header=w.getElementsByTagName('h2')[0];
 			//header.parentNode.insertBefore(langSwitchWrap, header.nextElementSibling);
 			anchor.parentNode.insertBefore( langSwitchWrap, anchor );
@@ -732,10 +732,10 @@ function qtranxj_LanguageSwitch(target)
 		}
 		if (qTranslateConfig.activeLanguage)
 		{
-			tabSwitches[qTranslateConfig.activeLanguage].classList.remove('active');
+			tabSwitches[qTranslateConfig.activeLanguage].classList.remove('wp-ui-highlight');
 		}
 		qTranslateConfig.activeLanguage=tabSwitch.lang;
-		tabSwitch.classList.add('active');
+		tabSwitch.classList.add('wp-ui-highlight');
 		for(var i=0; i<onTabSwitchFunctions.length; ++i)
 		{
 			onTabSwitchFunctions[i].call(this);
@@ -752,7 +752,7 @@ function qtranxj_LanguageSwitch(target)
 		qtranxj_ce('span', {innerHTML: langNames[lang]}, tabSwitch);
 		tabSwitches[lang]=tabSwitch;
 		if ( qTranslateConfig.activeLanguage == lang )
-			tabSwitch.classList.add('active');
+			tabSwitch.classList.add('wp-ui-highlight');
 	}
 	this.onSwitch=function(callback)
 	{

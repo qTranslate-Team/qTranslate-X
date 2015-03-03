@@ -67,27 +67,22 @@
 
 .qtranxs-lang-switch
 {
-	border: 1px solid  #ccc;
-	background-image: linear-gradient(to top,#e5e5e5,#f4f4f4);
-	//margin-top: 2px;
-	//padding: 8px;
-	padding: 0 0 2px 4px;
-	margin: 0 4px 0 0;
-	cursor: default;
+	padding: 3px 8px 5px 8px;
+	margin: 6px 4px 0 4px;
 	display: inline-block;
 }
 
-.qtranxs-lang-switch.active
+.qtranxs-lang-switch
 {
-	border-color: #888;
-	background-image: none;
-	background-color: #bbb;
-	color: #555;
+	cursor: pointer;
 }
 
-.qtranxs-lang-switch>*
+.qtranxs-lang-switch *
 {
 	vertical-align: middle;
+}
+
+.qtranxs-lang-switch img {
 	margin-right: 4px;
 }
 
