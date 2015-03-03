@@ -404,8 +404,10 @@ function qtranxf_parse_language_info(&$url_info, $link=false) {
 
 function qtranxf_setcookie_language($lang, $cookie_name, $cookie_path)
 {
-	//qtranxf_dbg_log('qtranxf_setcookie_language: lang='.$lang.'; cookie_name='.$cookie_name.'; cookie_path='.$cookie_path);
-	setcookie($cookie_name, $lang, time()+31536000, $cookie_path);//one year
+    //qtranxf_dbg_log('qtranxf_setcookie_language: lang='.$lang.'; cookie_name='.$cookie_name.'; cookie_path='.$cookie_path);
+    if (!headers_sent()) {
+        setcookie($cookie_name, $lang, time()+31536000, $cookie_path);//one year
+    }
 	//two weeks 1209600
 }
 
