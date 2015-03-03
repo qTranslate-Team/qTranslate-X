@@ -220,7 +220,12 @@ function qtranxf_detect_language(&$url_info) {
 	*/
 	$url_info = apply_filters('qtranslate_detect_language', $url_info);
 	$lang = $url_info['language'];
-	if(!defined('DOING_AJAX')) qtranxf_set_language_cookie($lang);
+    if(!defined('DOING_AJAX')) {
+        $index = defined('WP_ADMIN') ? QTX_COOKIE_NAME_ADMIN : QTX_COOKIE_NAME_FRONT;
+        if (!isset($_COOKIE[$index]) || $_COOKIE[$index] != $lang) {
+            qtranxf_set_language_cookie($lang);
+        }
+    }
 	return $lang;
 }
 }
