@@ -18,7 +18,7 @@ qtranxj_split = function(text)
 		result[lang] = '';
 	}
 	var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\])/gi;
-	var blocks = text.xsplit(split_regex);
+	var blocks = text.split(split_regex);
 	if(!qtranxj_isArray(blocks))
 		return result;
 	if(blocks.length==1){//no language separator found, enter it to all languages
@@ -172,27 +172,6 @@ function qtranxj_get_cookie(cname)
 	}
 	return '';
 }
-
-String.prototype.xsplit = function(_regEx){
-	// Most browsers can do this properly, so let them work, they'll do it faster
-	if ('a~b'.split(/(~)/).length === 3){ return this.split(_regEx); }
-
-	if (!_regEx.global)
-	{ _regEx = new RegExp(_regEx.source, 'g' + (_regEx.ignoreCase ? 'i' : '')); }
-
-	// IE (and any other browser that can't capture the delimiter)
-	// will, unfortunately, have to be slowed down
-	var start = 0, arr=[];
-	var result;
-	while((result = _regEx.exec(this)) != null){
-		arr.push(this.slice(start, result.index));
-		if(result.length > 1) arr.push(result[1]);
-		start = _regEx.lastIndex;
-	}
-	if(start < this.length) arr.push(this.slice(start));
-	if(start == this.length) arr.push(''); //delim at the end
-	return arr;
-};
 
 function qtranxj_isArray(obj){ return obj.constructor.toString().indexOf('Array') >= 0; }
 
