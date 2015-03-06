@@ -548,7 +548,7 @@ function qtranxf_flag_location() {
 function qtranxf_flag_location_default() {
 	//$q_config['flag_location'] = 'plugins/qtranslate-x/flags/';
 	$plugindir = dirname(plugin_basename( __FILE__ ));
-	return 'plugins/'.$plugindir.'/flags/';
+	return 'plugins/'.$plugindir.'/flag-icon-css/flags/4x3/'; //TESTING flag-icon-css
 }
 
 function qtranxf_load_option_flag_location($nm) {
@@ -1397,17 +1397,17 @@ function qtranxf_showAllSeparated($text) {
 	return $result;
 }
 
-/* Since 3.2.5 qtranslate.css is not actually needed
+// Since 3.2.5 qtranslate.css is not actually needed //TESTING flag-icon-css
 function qtranxf_add_css ()
 {
 	global $q_config;
 	if (is_admin() || !$q_config['disable_header_css'])
 	{
-		wp_register_style( 'qtranslate-style', plugins_url('qtranslate.css', __FILE__), array(), QTX_VERSION );
+		wp_register_style( 'qtranslate-style', plugins_url('qtranslate.css', __FILE__), array(), QTX_VERSION );  //TESTING flag-icon-css - Necessary to import flag-icon.min.css
 		wp_enqueue_style( 'qtranslate-style' );
 	}
 }
-*/
+
 
 function qtranxf_optionFilter($do='enable') {//do we need it?
 	//qtranxf_dbg_echo('qtranxf_optionFilter: do='.$do);
