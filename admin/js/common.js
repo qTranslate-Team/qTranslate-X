@@ -346,6 +346,20 @@ var qTranslateX=function(pg)
 	this.addContentHookByIdC=function(id,form) { return this.addContentHookById(id,form,'<'); }
 	this.addContentHookByIdB=function(id,form) { return this.addContentHookById(id,form,'['); }
 
+	this.removeContentHook=function(inpField)
+	{
+		if( !inpField ) return false;
+		if( !inpField.id ) return false;
+		if( !contentHooks[inpField.id] ) return false;
+		var h=contentHooks[inpField.id];
+		inpField.onblur = function(){};
+		inpField.name=inpField.name.replace(/^edit-/,'');
+		inpField.value=h.mlContentField.value;
+		jQuery(inpField).removeClass('qtranxs-translatable');
+		jQuery(h.mlContentField).remove();
+		delete contentHooks[inpField.id];
+	};
+
 	addDisplayHook=function(elem)
 	{
 		//co('addDisplayHook: elem=',elem);
