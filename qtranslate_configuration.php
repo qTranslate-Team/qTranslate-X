@@ -417,10 +417,10 @@ function qtranxf_add_admin_lang_icons ()
 	global $q_config;
 	echo '<style type="text/css">'.PHP_EOL;
 	echo "#wpadminbar #wp-admin-bar-language>div.ab-item{ background-size: 0;";
-	echo "background-image: url(".qtranxf_flag_location().$q_config['flag'][$q_config['language']].");}\n";
+	echo "background-image: url(".qtranxf_flag_location().$q_config['flag'][$q_config['language']].".svg".");}\n"; //TESTING flag-icon-css
 	foreach($q_config['enabled_languages'] as $language) 
 	{
-		echo "#wpadminbar ul li#wp-admin-bar-".$language." {background-size: 0; background-image: url(".qtranxf_flag_location().$q_config['flag'][$language].");}\n";
+		echo "#wpadminbar ul li#wp-admin-bar-".$language." {background-size: 0; background-image: url(".qtranxf_flag_location().$q_config['flag'][$language].".svg".");}\n"; //TESTING flag-icon-css
 	}
 	echo '</style>'.PHP_EOL;
 }
@@ -450,7 +450,7 @@ function qtranxf_add_admin_css () {
 }
 
 function qtranxf_admin_head() {
-	//qtranxf_add_css();// Since 3.2.5 no longer needed
+	qtranxf_add_css();// Since 3.2.5 no longer needed  //TESTING flag-icon-css
 	qtranxf_add_admin_css();
 	qtranxf_add_admin_head_js();
 	qtranxf_optionFilter('disable');//why this is here?
@@ -486,7 +486,7 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 	$flag_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
 	if($dir_handle = @opendir($flag_dir)) {
 		while (false !== ($file = readdir($dir_handle))) {
-			if(preg_match("/\.(jpeg|jpg|gif|png)$/i",$file)) {
+			if(preg_match("/\.(jpeg|jpg|gif|png|svg)$/i",$file)) { //TESTING flag-icon-css
 				$files[] = $file;
 			}
 		}
@@ -498,12 +498,12 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 	<?php
 		foreach ($files as $file) {
 	?>
-		<option value="<?php echo $file; ?>" <?php echo ($language_flag==$file)?'selected="selected"':''?>><?php echo $file; ?></option>
+		<option value="<?php echo substr($file, 0, -4) ?>" <?php echo ($language_flag==substr($file, 0, -4))?'selected="selected"':''?>><?php echo $file ?></option> <?php //TESTING flag-icon-css ?>
 	<?php
 		}
 	?>
 	</select>
-	<img src="" alt="<?php _e('Flag', 'qtranslate'); ?>" id="preview_flag" style="vertical-align:middle; display:none"/>
+	<img src="" alt="<?php _e('Flag', 'qtranslate'); ?>" id="preview_flag" class="flag-icon" style="vertical-align:middle; display:none"/> <?php //TESTING flag-icon-css ?>
 	<?php
 	} else {
 		_e('Incorrect Flag Image Path! Please correct it!', 'qtranslate');
@@ -515,7 +515,7 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 //<![CDATA[
 	function switch_flag(url) {
 		document.getElementById('preview_flag').style.display = "inline";
-		document.getElementById('preview_flag').src = "<?php echo qtranxf_flag_location();?>" + url;
+		document.getElementById('preview_flag').src = "<?php echo qtranxf_flag_location();?>" + url + ".svg"; <?php //TESTING flag-icon-css ?>
 	}
 	switch_flag(document.getElementById('language_flag').value);
 //]]>
@@ -1012,7 +1012,7 @@ function qtranxf_conf() {
 						echo ' />';
 						echo ' <a href="'.add_query_arg('moveup', $language, $clean_uri).'"><img src="'.$pluginurl.'/arrowup.png" alt="up" /></a>';
 						echo ' <a href="'.add_query_arg('movedown', $language, $clean_uri).'"><img src="'.$pluginurl.'/arrowdown.png" alt="down" /></a>';
-						echo ' <img src="' . $flag_location.$q_config['flag'][$language] . '" alt="' . $q_config['language_name'][$language] . '" /> ';
+						echo ' <span class="flag-icon flag-icon-'.$q_config['flag'][$language].'"></span>'; //TESTING flag-icon-css
 						echo ' '.$q_config['language_name'][$language] . '</label><br/>'.PHP_EOL;
 					}
 				?>
@@ -1256,7 +1256,7 @@ function qtranxf_conf() {
 	<tbody id="the-list" class="qtranxs-language-list" class="list:cat">
 <?php foreach($q_config['language_name'] as $lang => $language){ if($lang!='code') { ?>
 	<tr>
-		<td><img src="<?php echo qtranxf_flag_location().$q_config['flag'][$lang]; ?>" alt="<?php echo sprintf(__('%s Flag', 'qtranslate'), $language) ?>"></td>
+		<td><span class="flag-icon flag-icon-<?php echo $q_config['flag'][$lang]; // TESTING flag-icon-css?>"></span></td>
 		<td><?php echo $language; ?></td>
 		<td><?php if(in_array($lang,$q_config['enabled_languages'])) { ?><a class="edit" href="<?php echo $clean_uri; ?>&disable=<?php echo $lang; ?>"><?php _e('Disable', 'qtranslate'); ?></a><?php  } else { ?><a class="edit" href="<?php echo $clean_uri; ?>&enable=<?php echo $lang; ?>"><?php _e('Enable', 'qtranslate'); ?></a><?php } ?></td>
 		<td><a class="edit" href="<?php echo $clean_uri; ?>&edit=<?php echo $lang; ?>"><?php _e('Edit', 'qtranslate'); ?></a></td>

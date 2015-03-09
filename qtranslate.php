@@ -337,30 +337,31 @@ function qtranxf_set_config_default()
 
 	// Flag images configuration
 	// Look in /flags/ directory for a huge list of flags for usage
+	//TESTING flag-icon-css - Changed filename 'xx.png' to just 'xx' flag code, to simply add the sufix to class flag-icon-xx - Don't know if it's the best practice or not, just testing
 	$q_config['flag'] = array();
-	$q_config['flag']['en'] = 'gb.png';
-	$q_config['flag']['de'] = 'de.png';
-	$q_config['flag']['zh'] = 'cn.png';
-	$q_config['flag']['ru'] = 'ru.png';
-	$q_config['flag']['fi'] = 'fi.png';
-	$q_config['flag']['fr'] = 'fr.png';
-	$q_config['flag']['nl'] = 'nl.png';
-	$q_config['flag']['sv'] = 'se.png';
-	$q_config['flag']['it'] = 'it.png';
-	$q_config['flag']['ro'] = 'ro.png';
-	$q_config['flag']['hu'] = 'hu.png';
-	$q_config['flag']['ja'] = 'jp.png';
-	$q_config['flag']['es'] = 'es.png';
-	$q_config['flag']['vi'] = 'vn.png';
-	$q_config['flag']['ar'] = 'arle.png';
-	$q_config['flag']['pt'] = 'pt.png';
-	$q_config['flag']['pt-br'] = 'br.png';
-	$q_config['flag']['pl'] = 'pl.png';
-	$q_config['flag']['gl'] = 'galego.png';
-	$q_config['flag']['tr'] = 'tr.png';
-	$q_config['flag']['et'] = 'ee.png';
-	$q_config['flag']['hr'] = 'hr.png';
-	$q_config['flag']['eu'] = 'eu_ES.png';
+	$q_config['flag']['en'] = 'gb';
+	$q_config['flag']['de'] = 'de';
+	$q_config['flag']['zh'] = 'cn';
+	$q_config['flag']['ru'] = 'ru';
+	$q_config['flag']['fi'] = 'fi';
+	$q_config['flag']['fr'] = 'fr';
+	$q_config['flag']['nl'] = 'nl';
+	$q_config['flag']['sv'] = 'se';
+	$q_config['flag']['it'] = 'it';
+	$q_config['flag']['ro'] = 'ro';
+	$q_config['flag']['hu'] = 'hu';
+	$q_config['flag']['ja'] = 'jp';
+	$q_config['flag']['es'] = 'es';
+	$q_config['flag']['vi'] = 'vn';
+	$q_config['flag']['ar'] = 'ar';
+	$q_config['flag']['pt'] = 'pt';
+	$q_config['flag']['pt-br'] = 'br';
+	$q_config['flag']['pl'] = 'pl';
+	$q_config['flag']['gl'] = 'galego.png'; //unavailable in flag-icon-css
+	$q_config['flag']['tr'] = 'tr';
+	$q_config['flag']['et'] = 'ee';
+	$q_config['flag']['hr'] = 'hr';
+	$q_config['flag']['eu'] = 'eu_ES'; //unavailable in flag-icon-css
 
 	// Location of flags (needs trailing slash!)
 	//$q_config['flag_location'] = 'plugins/qtranslate-x/flags/';
