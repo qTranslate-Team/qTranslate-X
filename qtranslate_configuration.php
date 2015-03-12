@@ -1095,9 +1095,9 @@ function qtranxf_conf() {
 			<tr valign="top">
 				<th scope="row"><?php _e('Flag Image Path', 'qtranslate');?></th>
 				<td>
-					<?php echo trailingslashit(WP_CONTENT_URL); ?><input type="text" name="flag_location" id="flag_location" value="<?php echo $q_config['flag_location']; ?>" style="width:100%"/>
+					<input type="text" name="flag_location" id="flag_location" value="<?php echo $q_config['flag_location']; ?>" style="width:100%"/>
 					<br/>
-					<small><?php printf(__('Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the value above to reset it to the default)', 'qtranslate'), qtranxf_flag_location_default()); ?></small>
+					<small><?php printf(__('Path to the flag images, with trailing slash. (Default: %s, clear the value above to reset it to the default)', 'qtranslate'), qtranxf_flag_location_default()); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">

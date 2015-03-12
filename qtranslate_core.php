@@ -542,13 +542,12 @@ function qtranxf_front_header_css_default()
 
 function qtranxf_flag_location() {
 	global $q_config;
-	return trailingslashit(WP_CONTENT_URL).$q_config['flag_location'];
+	return $q_config['flag_location'];
 }
 
 function qtranxf_flag_location_default() {
 	//$q_config['flag_location'] = 'plugins/qtranslate-x/flags/';
-	$plugindir = dirname(plugin_basename( __FILE__ ));
-	return 'plugins/'.$plugindir.'/flags/';
+	return plugin_dir_url(__FILE__).'flags/';
 }
 
 function qtranxf_load_option_flag_location($nm) {
