@@ -665,7 +665,7 @@ function qtranxf_updateSettingFlagLocation($nm) {
 	global $q_config;
 	if(!isset($_POST['submit'])) return false;
 	if(!isset($_POST[$nm])) return false;
-	$flag_location=untrailingslashit($_POST[$nm]);
+	$flag_location=untrailingslashit(sanitize_text_field($_POST[$nm]));
 	if(empty($flag_location)) $flag_location = qtranxf_flag_location_default();
 	$flag_location = trailingslashit($flag_location);
 	if(!file_exists(trailingslashit(WP_CONTENT_DIR).$flag_location))
@@ -684,7 +684,7 @@ function qtranxf_updateSettingIgnoreFileTypes($nm) {
 	global $q_config;
 	if(!isset($_POST['submit'])) return false;
 	if(!isset($_POST[$nm])) return false;
-	$posted=preg_split('/[\s,]+/',strtolower($_POST[$nm]),null,PREG_SPLIT_NO_EMPTY);
+	$posted=preg_split('/[\s,]+/',strtolower(sanitize_text_field($_POST[$nm])),null,PREG_SPLIT_NO_EMPTY);
 	$val=explode(',',QTX_IGNORE_FILE_TYPES);
 	if(is_array($posted)){
 		foreach($posted as $v){
@@ -885,7 +885,7 @@ function qtranxf_conf() {
 			$q_config['locale'][$_POST['language_code']] = sanitize_text_field($_POST['language_locale']);
 			$q_config['date_format'][$_POST['language_code']] = sanitize_text_field($_POST['language_date_format']);
 			$q_config['time_format'][$_POST['language_code']] = sanitize_text_field($_POST['language_time_format']);
-			$q_config['not_available'][$_POST['language_code']] = sanitize_text_field($_POST['language_na_message']);
+			$q_config['not_available'][$_POST['language_code']] = wp_kses_data($_POST['language_na_message']);
 		}
 		if($error!=''||isset($_GET['edit'])) {
 			// get old values in the form
@@ -895,7 +895,7 @@ function qtranxf_conf() {
 			$language_locale = sanitize_text_field($_POST['language_locale']);
 			$language_date_format = sanitize_text_field($_POST['language_date_format']);
 			$language_time_format = sanitize_text_field($_POST['language_time_format']);
-			$language_na_message = sanitize_text_field($_POST['language_na_message']);
+			$language_na_message = wp_kses_data($_POST['language_na_message']);
 			$language_flag = sanitize_text_field($_POST['language_flag']);
 			$language_default = sanitize_text_field($_POST['language_default']);
 		}
