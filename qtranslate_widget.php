@@ -55,7 +55,7 @@ class qTranslateXWidget extends WP_Widget {
 		extract($args);
 		//qtranxf_dbg_log('widget: $this: ',$this);
 		//qtranxf_dbg_log('widget: $instance: ',$instance);
-		if(!isset($instance['widget-css-off'])){
+		if(isset($instance['widget-css-on'])){
 			echo '<style type="text/css">'.PHP_EOL;
 			echo empty($instance['widget-css']) ? QTX_WIDGET_CSS : $instance['widget-css'];
 			echo '</style>'.PHP_EOL;
@@ -90,8 +90,9 @@ class qTranslateXWidget extends WP_Widget {
 
 		$instance['type'] = $new_instance['type'];
 
-		if(isset($new_instance['widget-css-on'])) unset($instance['widget-css-off']);
-		else $instance['widget-css-off'] = true;
+		if(isset($new_instance['widget-css-on'])) unset($instance['widget-css-on']);
+		else $instance['widget-css-on'] = true;
+
 
 		$instance['widget-css'] = $new_instance['widget-css'];
 
@@ -104,7 +105,7 @@ class qTranslateXWidget extends WP_Widget {
 		$hide_title = isset($instance['hide-title']) && $instance['hide-title'] !== false;
 		$hide_title_colon = isset($instance['hide-title-colon']);
 		$type = $instance['type'];
-		$widget_css_on = !isset($instance['widget-css-off']);
+		$widget_css_on = isset($instance['widget-css-on']);
 		$widget_css = $instance['widget-css'];
 		if(empty($widget_css)) $widget_css=QTX_WIDGET_CSS;
 ?>
