@@ -131,7 +131,7 @@ function qtranxf_set_default_options(&$ops)
 	$cfg['pre_domain']['vi'] = "vi";
 	$cfg['pre_domain']['ar'] = "ar";
 	$cfg['pre_domain']['pt'] = "pt";
-	$cfg['pre_domain']['pt-br'] = "pt-br";
+	$cfg['pre_domain']['pb'] = "pb";
 	$cfg['pre_domain']['pl'] = "pl";
 	$cfg['pre_domain']['gl'] = "gl";
 	$cfg['pre_domain']['tr'] = "tr";
@@ -160,7 +160,7 @@ function qtranxf_default_language_name()
 	$cfg['vi'] = 'Tiếng Việt';
 	$cfg['ar'] = 'العربية';
 	$cfg['pt'] = 'Português';
-	$cfg['pt-br'] = 'Português do Brasil';
+	$cfg['pb'] = 'Português do Brasil';
 	$cfg['pl'] = 'Polski';
 	$cfg['gl'] = 'galego';
 	$cfg['tr'] = 'Turkish';
@@ -195,7 +195,7 @@ function qtranxf_default_locale()
 	$cfg['vi'] = 'vi';
 	$cfg['ar'] = 'ar';
 	$cfg['pt'] = 'pt_PT';
-	$cfg['pt-br'] = 'pt_BR';
+	$cfg['pb'] = 'pt_BR';
 	$cfg['pl'] = 'pl_PL';
 	$cfg['gl'] = 'gl_ES';
 	$cfg['tr'] = 'tr_TR';
@@ -230,7 +230,7 @@ function qtranxf_default_not_available()
 	$cfg['vi'] = 'Rất tiếc, mục này chỉ tồn tại ở %LANG:, : và %.';
 	$cfg['ar'] = 'عفوا، هذه المدخلة موجودة فقط في %LANG:, : و %.';
 	$cfg['pt'] = 'Desculpe, este conteúdo só está disponível em %LANG:, : e %.';
-	$cfg['pt-br'] = 'Desculpe-nos, mas este texto esta apenas disponível em %LANG:, : y %.';
+	$cfg['pb'] = 'Desculpe-nos, mas este texto está apenas disponível em %LANG:, : y %.';
 	$cfg['pl'] = 'Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.';
 	$cfg['gl'] = 'Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.';
 	$cfg['tr'] = 'Sorry, this entry is only available in %LANG:, : and %.';
@@ -249,7 +249,7 @@ function qtranxf_default_date_format()
 {
 	$cfg = array();
 	$cfg['en'] = '%A %B %e%q, %Y';
-	$cfg['de'] = '%A, der %e. %B %Y';
+	$cfg['de'] = '%A, \d\e\r %e. %B %Y';
 	$cfg['zh'] = '%x %A';
 	$cfg['ru'] = '%A %B %e%q, %Y';
 	$cfg['fi'] = '%e.&m.%C';
@@ -260,13 +260,13 @@ function qtranxf_default_date_format()
 	$cfg['ro'] = '%A, %e %B %Y';
 	$cfg['hu'] = '%Y %B %e, %A';
 	$cfg['ja'] = '%Y年%m月%d日';
-	$cfg['es'] = '%d de %B de %Y';
+	$cfg['es'] = '%d \d\e %B \d\e %Y';
 	$cfg['vi'] = '%d/%m/%Y';
 	$cfg['ar'] = '%d/%m/%Y';
-	$cfg['pt'] = '%A,%e de %B de %Y';
-	$cfg['pt-br'] = '%d de %B de %Y';
+	$cfg['pt'] = '%A, %e \d\e %B \d\e %Y';
+	$cfg['pb'] = '%d \d\e %B \d\e %Y';
 	$cfg['pl'] = '%d/%m/%y';
-	$cfg['gl'] = '%d de %B de %Y';
+	$cfg['gl'] = '%d \d\e %B \d\e %Y';
 	$cfg['tr'] = '%A %B %e%q, %Y';
 	$cfg['et'] = '%A %B %e%q, %Y';
 	$cfg['hr'] = '%d/%m/%Y';
@@ -298,7 +298,7 @@ function qtranxf_default_time_format()
 	$cfg['vi'] = '%H:%M';
 	$cfg['ar'] = '%H:%M';
 	$cfg['pt'] = '%H:%M';
-	$cfg['pt-br'] = '%H:%M hrs.';
+	$cfg['pb'] = '%H:%M hrs.';
 	$cfg['pl'] = '%H:%M';
 	$cfg['gl'] = '%H:%M hrs.';
 	$cfg['tr'] = '%H:%M';
@@ -333,7 +333,7 @@ function qtranxf_default_flag()
 	$cfg['vi'] = 'vn.png';
 	$cfg['ar'] = 'arle.png';
 	$cfg['pt'] = 'pt.png';
-	$cfg['pt-br'] = 'br.png';
+	$cfg['pb'] = 'br.png';
 	$cfg['pl'] = 'pl.png';
 	$cfg['gl'] = 'galego.png';
 	$cfg['tr'] = 'tr.png';
@@ -465,7 +465,7 @@ function qtranxf_default_windows_locale()
 	$cfg['pl'] = "Polish";
 	$cfg['ps'] = "Pushto";
 	$cfg['pt'] = "Portuguese";
-	$cfg['pt-br'] = "Brazilian Portuguese";
+	$cfg['pb'] = "Brazilian Portuguese";
 	$cfg['qu'] = "Quechua";
 	$cfg['rm'] = "Rhaeto-Romance";
 	$cfg['rn'] = "Rundi";
