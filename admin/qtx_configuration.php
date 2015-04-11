@@ -382,12 +382,21 @@ function qtranxf_select_admin_js ($enqueue_script=false) {
 			break;
 	}
 	$plugin_dir_path=plugin_dir_path(QTRANSLATE_FILE);
-	$script_path=$script.'.min.js'; $fn=$plugin_dir_path.$script_path;
+        
+        // Use minified libraries if SCRIPT_DEBUG is turned off
+        $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '.js' : '.min.js';
+
+	$script_path=$script.$suffix; 
+        $fn=$plugin_dir_path.$script_path;
+        
 	while(!file_exists($fn)){
+            /* We Do not need these anymore
 		$script_path=$script.'.js'; $fn=$plugin_dir_path.$script_path;
 		if(file_exists($fn)) break;
 		$script_path=$script; $fn=$plugin_dir_path.$script_path;
 		if(file_exists($fn)) break;
+             * 
+             */
 		return false;
 	}
 	if($enqueue_script){
@@ -443,6 +452,9 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	if(!$script_file && empty($page_config))
 		return;
 
+        // Use minified libraries if SCRIPT_DEBUG is turned off
+        $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '.js' : '.min.js';
+        
 	wp_dequeue_script('autosave');
 	wp_deregister_script( 'autosave' );//autosave script saves the active language only and messes it up later in a hard way
 
@@ -455,7 +467,7 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 			foreach($page_config['scripts'] as $js){
 			}
 		}
-		wp_register_script( 'qtranslate-admin-common', plugins_url( 'js/common.min.js', __FILE__ ), $deps, QTX_VERSION );
+		wp_register_script( 'qtranslate-admin-common', plugins_url( 'js/common'.$suffix, __FILE__ ), $deps, QTX_VERSION );
 		wp_enqueue_script( 'qtranslate-admin-common' );
 	}
 
@@ -492,7 +504,8 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	if(!$enqueue_script){
 		if($script_file) readfile($script_file);
 		$plugin_dir_path=plugin_dir_path(__FILE__);
-		readfile($plugin_dir_path.'js/common.min.js');
+                
+		readfile($plugin_dir_path.'js/common'.$suffix);
 		if(isset($page_config['scripts'])){
 			foreach($page_config['scripts'] as $js){
 			}
