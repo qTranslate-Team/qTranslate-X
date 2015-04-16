@@ -880,6 +880,40 @@ function qtranxf_conf() {
 <h2><?php _e('Language Management (qTranslate Configuration)', 'qtranslate'); ?></h2>
 <small><?php printf(__('For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate'), 'http://wordpress.org/plugins/qtranslate-x/faq/', 'https://wordpress.org/support/plugin/qtranslate-x'); ?></small>
 
+<?php // Launch jQuery - not sure if necessary as WordPress loads jQuery
+	wp_enqueue_script( ‘jquery’ );
+?>
+
+<?php // Set jQuery script for Navigation Tabs behaviour ?>
+<script>
+jQuery(function($) {
+	/**
+	* TABS
+	*/
+	var hash = window.location.hash;
+	if (hash != '') {
+		$('.nav-tab-wrapper').children().removeClass('nav-tab-active');
+		$('.nav-tab-wrapper a[href="' + hash + '"]').addClass('nav-tab-active');
+
+		$('.tabs-content').children().addClass('hidden');
+		$('.tabs-content div' + hash.replace('#', '#tab-')).removeClass('hidden');
+	}
+
+	$('.nav-tab-wrapper a').click(function() {
+		var tab_id = $(this).attr('href').replace('#', '#tab-');
+
+		// active tab
+		$(this).parent().children().removeClass('nav-tab-active');
+		$(this).addClass('nav-tab-active');
+
+		// active tab content
+		$('.tabs-content').children().addClass('hidden');
+		$('.tabs-content div' + tab_id).removeClass('hidden');
+	});
+
+});
+</script>
+
 <?php // Set Admin Sections Names
 	$qtx_admin_section_1 = __('General Settings', 'qtranslate');
 	$qtx_admin_section_2 = __('Advanced Settings', 'qtranslate');
@@ -887,6 +921,16 @@ function qtranxf_conf() {
 	$qtx_admin_section_4 = __('Import', 'qtranslate').'/'.__('Export', 'qtranslate');
 	$qtx_admin_section_5 = __('Languages', 'qtranslate');
 ?>
+
+<?php // Set Navigation Tabs ?>
+	<h2 class="nav-tab-wrapper">
+		<a class="nav-tab nav-tab-active" href="#general" title="<?php printf(__('Click to switch to %s', 'qtranslate'), $qtx_admin_section_1 ); ?>" ><?php echo $qtx_admin_section_1; ?></a>
+		<a class="nav-tab" href="#advanced" title="<?php printf(__('Click to switch to %s', 'qtranslate'), $qtx_admin_section_2 ); ?>" ><?php echo $qtx_admin_section_2; ?></a>
+		<a class="nav-tab" href="#integration" title="<?php printf(__('Click to switch to %s', 'qtranslate'), $qtx_admin_section_3 ); ?>" ><?php echo $qtx_admin_section_3; ?></a>
+		<a class="nav-tab" href="#import" title="<?php printf(__('Click to switch to %s', 'qtranslate'), $qtx_admin_section_4 ); ?>" ><?php echo $qtx_admin_section_4; ?></a>
+		<a class="nav-tab" href="#languages" title="<?php printf(__('Click to switch to %s', 'qtranslate'), $qtx_admin_section_5 ); ?>" ><?php echo $qtx_admin_section_5; ?></a>
+	</h2>
+
 
 	<form action="<?php echo $clean_uri;?>" method="post">
 	<?php qtranxf_admin_section_start($qtx_admin_section_1,'general'); //id="qtranslate-admin-general" ?>
