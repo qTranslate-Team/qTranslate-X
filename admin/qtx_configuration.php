@@ -563,8 +563,8 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 }
 
 function qtranxf_admin_section_start($section, $nm) {
-	echo '<h3>'.$section.'<span id="qtranxs-show-'.$nm.'"> ( <a name="qtranslate_'.$nm.'_settings" href="#" onclick="return qtranxj_toggleShowHide(\'qtranslate-admin-'.$nm.'\');">'.__('Show', 'qtranslate').' / '.__('Hide', 'qtranslate').'</a> )</span></h3>'.PHP_EOL;
-	echo '<div id="qtranslate-admin-'.$nm.'" style="display: none">'.PHP_EOL;
+	// echo '<h3>'.$section.'<span id="qtranxs-show-'.$nm.'"> ( <a name="qtranslate_'.$nm.'_settings" href="#" onclick="return qtranxj_toggleShowHide(\'qtranslate-admin-'.$nm.'\');">'.__('Show', 'qtranslate').' / '.__('Hide', 'qtranslate').'</a> )</span></h3>'.PHP_EOL;
+	echo '<div id="qtranslate-admin-'.$nm.'">'.PHP_EOL;
 }
 
 function qtranxf_admin_section_end($nm) {
@@ -573,11 +573,13 @@ function qtranxf_admin_section_end($nm) {
 	<input type="submit" name="submit" class="button-primary" value="<?php _e('Save Changes', 'qtranslate') ?>" />
 </p>
 </div>
+<?php /*  Unnecessary as Show/Hide is obsolete
 <script type="text/javascript">
 //<![CDATA[
 	qtranxj_readShowHideCookie('qtranslate-admin-<?php echo $nm; ?>');
 // ]]>
 </script>
+*/ ?>
 <?php
 }
 
@@ -873,7 +875,7 @@ function qtranxf_conf() {
 <?php qtranxf_language_form($language_code, $language_code, $language_name, $language_locale, $language_date_format, $language_time_format, $language_flag, $language_na_message, $language_default, $original_lang); ?>
 <p class="submit"><input type="submit" name="submit" value="<?php _e('Save Changes &raquo;', 'qtranslate'); ?>" /></p>
 </form>
-<p><small><a href="<?php echo admin_url('options-general.php?page=qtranslate-x'); ?>"><?php _e('back to configuration page', 'qtranslate'); ?></a></small></p>
+<p><small><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#languages'); ?>"><?php _e('back to configuration page', 'qtranslate'); ?></a></small></p>
 </div>
 <?php } else { ?>
 <div class="wrap">
