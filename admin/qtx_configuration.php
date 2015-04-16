@@ -933,6 +933,8 @@ jQuery(function($) {
 
 
 	<form action="<?php echo $clean_uri;?>" method="post">
+	<div class="tabs-content">
+	<div id="tab-general" class="">
 	<?php qtranxf_admin_section_start($qtx_admin_section_1,'general'); //id="qtranslate-admin-general" ?>
 		<table class="form-table">
 			<tr>
@@ -985,6 +987,9 @@ jQuery(function($) {
 			</tr>
 		</table>
 	<?php qtranxf_admin_section_end('general'); ?>
+	</div>
+
+	<div id="tab-advanced" class="hidden">
 	<?php qtranxf_admin_section_start($qtx_admin_section_2,'advanced'); //id="qtranslate-admin-advanced"
 		$permalink_is_query = qtranxf_is_permalink_structure_query();
 		//qtranxf_dbg_echo('$permalink_is_query: ',$permalink_is_query);
@@ -1222,6 +1227,9 @@ jQuery(function($) {
 */ ?>
 		</table>
 	<?php qtranxf_admin_section_end('advanced'); ?>
+	</div>
+
+	<div id="tab-integration" class="hidden">
 	<?php qtranxf_admin_section_start($qtx_admin_section_3,'integration'); ?>
 		<table class="form-table">
 			<tr valign="top">
@@ -1280,12 +1288,17 @@ jQuery(function($) {
 			<?php } ?>
 		</table>
 	<?php qtranxf_admin_section_end('integration'); ?>
+	</div>
+	</div><!-- /tabs-container -->
+	
 	<?php do_action('qtranslate_configuration', $clean_uri); ?>
 	</form>
 
 </div><!-- /wrap -->
 <div class="wrap">
 
+	<div class="tabs-content">
+	<div id="tab-languages" class="hidden">
 	<?php qtranxf_admin_section_start($qtx_admin_section_5,'languages'); //id="qtranslate-admin-languages" ?>
 	<div id="col-container">
 
@@ -1360,12 +1373,15 @@ jQuery(function($) {
 		</div><!-- /col-left -->
 
 	</div><!-- /col-container -->
-<!-- /qtranslate-admin-languages in qtranxf_admin_section_start -->
+	</div><!-- /qtranslate-admin-languages in qtranxf_admin_section_start -->
+	</div><!-- /tabs-container -->
+<?php /*  Unnecessary as Show/Hide is obsolete
 <script type="text/javascript">
 //<![CDATA[
 	qtranxj_readShowHideCookie('qtranslate-admin-languages');
 // ]]>
 </script>
+*/ ?>
 </div><!-- /wrap -->
 <?php
 }

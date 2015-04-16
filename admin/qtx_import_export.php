@@ -158,8 +158,10 @@ function qtranxf_add_row_migrate($nm,$plugin) {
 
 function qtranxf_admin_section_import_export($request_uri)
 {
-	qtranxf_admin_section_start($qtx_admin_section_4,'import');	//id="qtranslate-admin-import" style="display: none"
 ?>
+<div class="tabs-content">
+<div id="tab-import" class="hidden">
+<?php qtranxf_admin_section_start($qtx_admin_section_4,'import'); //id="qtranslate-admin-import" style="display: none" ?>
 	<table class="form-table">
 		<tr valign="top" id="qtranslate-convert-database">
 			<th scope="row"><?php _e('Convert Database', 'qtranslate');?></th>
@@ -194,5 +196,9 @@ function qtranxf_admin_section_import_export($request_uri)
 	</table>
 <?php
 	qtranxf_admin_section_end('import');
+?>
+</div>
+</div><!-- /tabs-container -->
+<?php
 }
 add_action('qtranslate_configuration', 'qtranxf_admin_section_import_export', 9);
