@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qtranslate-x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-14 13:25-0600\n"
-"PO-Revision-Date: 2015-04-14 08:43+0100\n"
+"POT-Creation-Date: 2015-04-16 14:47-0600\n"
+"PO-Revision-Date: 2015-04-14 20:50+0100\n"
 "Last-Translator: Marius Siroen <marius@marius-siroen.com>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/qtranslate-x/language/nl_NL/)\n"
 "MIME-Version: 1.0\n"
@@ -811,7 +811,7 @@ msgid "Experimental feature."
 msgstr "Experimentele functie."
 
 #: admin/qtx_configuration.php:1224
-#, fuzzy, php-format
+#, php-format
 msgid "If %s implements its own integration, this will need to be turned off."
 msgstr "Als %s een eigen integratie implementeert, zal dit moeten worden uitgeschakeld."
 
@@ -883,24 +883,33 @@ msgstr "Taal Toevoegen &raquo;"
 msgid "Language Menu"
 msgstr "Taal menu"
 
-#: admin/qtx_configuration.php:1377
+#: admin/qtx_configuration.php:1378
 msgid "Help"
 msgstr "Help"
 
-#: admin/qtx_configuration.php:1379
-#, php-format
-msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
-msgstr "Een menu-item toegevoegen wordt vervangen door een sub-menu met beschikbare talen wanneer het menu wordt weergegeven. Afhankelijk van hoe je thema het menu maakt moet je wellicht css fragmenten overschrijven en aanpassen %s en %s, oorspronkelijk gedefinieerd in %s. Het veld \"URL\" van ingevoegde menu items vraagt mogelijk aanvullende configuratie, beschreven in %sFAQ%s."
+#: admin/qtx_configuration.php:1381
+msgid "Menu item added is replaced with a drop-down menu of available languages, when menu is rendered."
+msgstr ""
 
-#: admin/qtx_configuration.php:1384
+#: admin/qtx_configuration.php:1383
+#, php-format
+msgid "The rendered menu items have CSS classes %s and %s (\"%s\" is a language code), which can be defined in theme style, if desired. The label of language menu can also be customized via field \"%s\" in the menu configuration."
+msgstr ""
+
+#: admin/qtx_configuration.php:1385
+#, php-format
+msgid "The field \"%s\" of inserted menu item allows additional configuration described in %sFAQ%s."
+msgstr ""
+
+#: admin/qtx_configuration.php:1390
 msgid "Add to Menu"
 msgstr "Aan menu toevoegen"
 
-#: admin/qtx_configuration.php:1394
+#: admin/qtx_configuration.php:1400
 msgid "Language Switcher"
 msgstr "Taal wisselen"
 
-#: admin/qtx_configuration.php:1439
+#: admin/qtx_configuration.php:1445
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -1001,27 +1010,27 @@ msgstr "Markeer vertaalbare velden"
 msgid "The way the translatable fields are highlighted is configured with global option %s."
 msgstr "De manier waarop de vertaalbare velden worden gemarkeerd is geconfigureerd met de algemene optie %s."
 
-#: qtranslate_core.php:1458
+#: qtranslate_core.php:1454
 msgid "For the sake of viewer convenience, the content is shown below in this site default language."
 msgstr "Voor het gemak van de kijker, is de inhoud hieronder weergegeven in de standaard taal van deze site."
 
-#: qtranslate_core.php:1461
+#: qtranslate_core.php:1457
 msgid "For the sake of viewer convenience, the content is shown below in one of the available alternative languages."
 msgstr "Voor het gemak van de kijker, wordt de inhoud hieronder weergegeven in een van de beschikbare alternatieve talen."
 
-#: qtranslate_core.php:1464
+#: qtranslate_core.php:1460
 msgid "You may click one of the links to switch the site language to another available language."
 msgstr "Je kunt op een van de koppelingen klikken om de taal van de site naar een andere beschikbare taal te veranderen."
 
-#: qtranslate_core.php:1466
+#: qtranslate_core.php:1462
 msgid "For the sake of viewer convenience, the content is shown below in the alternative language."
 msgstr "Voor het gemak van de kijker, is de inhoud hieronder weergegeven in de alternatieve taal."
 
-#: qtranslate_core.php:1467
+#: qtranslate_core.php:1463
 msgid "You may click the link to switch the active language."
 msgstr "Je kunt klikken op de link om naar de actieve taal over te schakelen."
 
-#: qtranslate_frontend.php:160 qtranslate_widget.php:67
+#: qtranslate_frontend.php:171 qtranslate_widget.php:67
 msgid "Language"
 msgstr "Taal"
 
@@ -1358,6 +1367,9 @@ msgstr "Widget CSS:"
 #: qtranslate.php:5
 msgid "Adds user-friendly and database-friendly multilingual content support."
 msgstr "Voegt ondersteuning voor gebruiks- en database-vriendelijke meertalige inhoud toe."
+
+#~ msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
+#~ msgstr "Een menu-item toegevoegen wordt vervangen door een sub-menu met beschikbare talen wanneer het menu wordt weergegeven. Afhankelijk van hoe je thema het menu maakt moet je wellicht css fragmenten overschrijven en aanpassen %s en %s, oorspronkelijk gedefinieerd in %s. Het veld \"URL\" van ingevoegde menu items vraagt mogelijk aanvullende configuratie, beschreven in %sFAQ%s."
 
 #~ msgid "WPBakery Visual Composer"
 #~ msgstr "WPBakery Visual Composer"
