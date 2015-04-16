@@ -1236,88 +1236,87 @@ function qtranxf_conf() {
 			<?php } ?>
 		</table>
 	<?php qtranxf_admin_section_end('integration'); ?>
-<?php do_action('qtranslate_configuration', $clean_uri); ?>
+	<?php do_action('qtranslate_configuration', $clean_uri); ?>
 	</form>
 
-</div>
+</div><!-- /wrap -->
 <div class="wrap">
 
-<?php qtranxf_admin_section_start($qtx_admin_section_5,'languages'); //id="qtranslate-admin-languages" ?>
-<div id="col-container">
+	<?php qtranxf_admin_section_start($qtx_admin_section_5,'languages'); //id="qtranslate-admin-languages" ?>
+	<div id="col-container">
 
-<div id="col-right">
-<div class="col-wrap">
-<h3><?php _e('List of Configured Languages','qtranslate'); ?></h3>
-<p><small><?php
-	$language_names = qtranxf_language_configured('language_name');
-	$flags = qtranxf_language_configured('flag');
-	//$windows_locales = qtranxf_language_configured('windows_locale');
-	printf(__('Only enabled languages are loaded at front-end, while all %d configured languages are listed here.','qtranslate'),count($language_names));
-	echo ' '; _e('The table below contains both pre-defined and manually added or modified languages.','qtranslate');
-	echo ' '; printf(__('You may %s or %s a language, or %s manually added language, or %s previous modifications of a pre-defined language.', 'qtranslate'), '"'.__('Enable', 'qtranslate').'"', '"'.__('Disable', 'qtranslate').'"', '"'.__('Delete', 'qtranslate').'"', '"'.__('Reset', 'qtranslate').'"');
-	echo ' '; printf(__('Click %s to modify language properties.', 'qtranslate'), '"'.__('Edit', 'qtranslate').'"');
-?></small></p>
-<table class="widefat">
-	<thead>
-	<tr>
-<?php print_column_headers('language'); ?>
-	</tr>
-	</thead>
+		<div id="col-right">
+			<div class="col-wrap">
+				<h3><?php _e('List of Configured Languages','qtranslate'); ?></h3>
+				<p><small><?php
+					$language_names = qtranxf_language_configured('language_name');
+					$flags = qtranxf_language_configured('flag');
+					//$windows_locales = qtranxf_language_configured('windows_locale');
+					printf(__('Only enabled languages are loaded at front-end, while all %d configured languages are listed here.','qtranslate'),count($language_names));
+					echo ' '; _e('The table below contains both pre-defined and manually added or modified languages.','qtranslate');
+					echo ' '; printf(__('You may %s or %s a language, or %s manually added language, or %s previous modifications of a pre-defined language.', 'qtranslate'), '"'.__('Enable', 'qtranslate').'"', '"'.__('Disable', 'qtranslate').'"', '"'.__('Delete', 'qtranslate').'"', '"'.__('Reset', 'qtranslate').'"');
+					echo ' '; printf(__('Click %s to modify language properties.', 'qtranslate'), '"'.__('Edit', 'qtranslate').'"');
+				?></small></p>
+				<table class="widefat">
+					<thead>
+						<tr>
+							<?php print_column_headers('language'); ?>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<?php print_column_headers('language', false); ?>
+						</tr>
+					</tfoot>
+					<tbody id="the-list" class="qtranxs-language-list" class="list:cat">
+						<?php
+							$languages_stored = get_option('qtranslate_language_names',array());
+							$languages_predef = qtranxf_default_language_name();
+							$flag_location_url = qtranxf_flag_location();
+							$flag_location_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
+							$flag_location_dir_def = dirname(QTRANSLATE_FILE).'/flags/';
+							$flag_location_url_def = trailingslashit(WP_CONTENT_URL).'/plugins/'.basename(dirname(QTRANSLATE_FILE)).'/flags/';
+							foreach($language_names as $lang => $language){ if($lang=='code') continue;
+								$flag = $flags[$lang];
+								if(file_exists($flag_location_dir.$flag)){
+									$flag_url = $flag_location_url.$flag;
+								}else{
+									$flag_url = $flag_location_url_def.$flag;
+								}
+						?>
+						<tr>
+							<td><?php echo $lang; ?></td>
+							<td><img src="<?php echo $flag_url; ?>" alt="<?php echo sprintf(__('%s Flag', 'qtranslate'), $language) ?>"></td>
+							<td><?php echo $language; ?></td>
+							<td><?php if(in_array($lang,$q_config['enabled_languages'])) { if($q_config['default_language']==$lang){ _e('Default', 'qtranslate'); } else{ ?><a class="edit" href="<?php echo $clean_uri; ?>&disable=<?php echo $lang; ?>"><?php _e('Disable', 'qtranslate'); ?></a><?php } } else { ?><a class="edit" href="<?php echo $clean_uri; ?>&enable=<?php echo $lang; ?>"><?php _e('Enable', 'qtranslate'); ?></a><?php } ?></td>
+							<td><a class="edit" href="<?php echo $clean_uri; ?>&edit=<?php echo $lang; ?>"><?php _e('Edit', 'qtranslate'); ?></a></td>
+							<td><?php if(!isset($languages_stored[$lang])){ _e('Pre-Defined', 'qtranslate'); } else { ?><a class="delete" href="<?php echo $clean_uri; ?>&delete=<?php echo $lang; ?>"><?php if(isset($languages_predef[$lang])) _e('Reset', 'qtranslate'); else _e('Delete', 'qtranslate'); ?></a><?php } ?></td>
+						</tr>
+						<?php }
+						/*
+						<td><?php if($q_config['default_language']==$lang){ _e('Default', 'qtranslate'); } else { ?><a class="delete" href="<?php echo $clean_uri; ?>&delete=<?php echo $lang; ?>"><?php _e('Delete', 'qtranslate'); ?></a><?php } ?></td>
+						*/
+						?>
+					</tbody>
+				</table>
+				<p><?php _e('Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server\'s connection speed.', 'qtranslate');?></p>
+			</div>
+		</div><!-- /col-right -->
 
-	<tfoot>
-	<tr>
-<?php print_column_headers('language', false); ?>
-	</tr>
-	</tfoot>
+		<div id="col-left">
+			<div class="col-wrap">
+				<div class="form-wrap">
+					<h3><?php _e('Add Language', 'qtranslate'); ?></h3>
+					<form name="addcat" id="addcat" method="post" class="add:the-list: validate">
+						<?php qtranxf_language_form($language_code, $language_code, $language_name, $language_locale, $language_date_format, $language_time_format, $language_flag, $language_na_message, $language_default); ?>
+						<p class="submit"><input type="submit" name="submit" value="<?php _e('Add Language &raquo;', 'qtranslate'); ?>" /></p>
+					</form>
+				</div>
+			</div>
+		</div><!-- /col-left -->
 
-	<tbody id="the-list" class="qtranxs-language-list" class="list:cat">
-<?php
-	$languages_stored = get_option('qtranslate_language_names',array());
-	$languages_predef = qtranxf_default_language_name();
-	$flag_location_url = qtranxf_flag_location();
-	$flag_location_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
-	$flag_location_dir_def = dirname(QTRANSLATE_FILE).'/flags/';
-	$flag_location_url_def = trailingslashit(WP_CONTENT_URL).'/plugins/'.basename(dirname(QTRANSLATE_FILE)).'/flags/';
-	foreach($language_names as $lang => $language){ if($lang=='code') continue;
-		$flag = $flags[$lang];
-		if(file_exists($flag_location_dir.$flag)){
-			$flag_url = $flag_location_url.$flag;
-		}else{
-			$flag_url = $flag_location_url_def.$flag;
-		}
-?>
-	<tr>
-		<td><?php echo $lang; ?></td>
-		<td><img src="<?php echo $flag_url; ?>" alt="<?php echo sprintf(__('%s Flag', 'qtranslate'), $language) ?>"></td>
-		<td><?php echo $language; ?></td>
-		<td><?php if(in_array($lang,$q_config['enabled_languages'])) { if($q_config['default_language']==$lang){ _e('Default', 'qtranslate'); } else{ ?><a class="edit" href="<?php echo $clean_uri; ?>&disable=<?php echo $lang; ?>"><?php _e('Disable', 'qtranslate'); ?></a><?php } } else { ?><a class="edit" href="<?php echo $clean_uri; ?>&enable=<?php echo $lang; ?>"><?php _e('Enable', 'qtranslate'); ?></a><?php } ?></td>
-		<td><a class="edit" href="<?php echo $clean_uri; ?>&edit=<?php echo $lang; ?>"><?php _e('Edit', 'qtranslate'); ?></a></td>
-		<td><?php if(!isset($languages_stored[$lang])){ _e('Pre-Defined', 'qtranslate'); } else { ?><a class="delete" href="<?php echo $clean_uri; ?>&delete=<?php echo $lang; ?>"><?php if(isset($languages_predef[$lang])) _e('Reset', 'qtranslate'); else _e('Delete', 'qtranslate'); ?></a><?php } ?></td>
-	</tr>
-<?php }
-/*
-<td><?php if($q_config['default_language']==$lang){ _e('Default', 'qtranslate'); } else { ?><a class="delete" href="<?php echo $clean_uri; ?>&delete=<?php echo $lang; ?>"><?php _e('Delete', 'qtranslate'); ?></a><?php } ?></td>
-*/
-?>
-	</tbody>
-</table>
-<p><?php _e('Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server\'s connection speed.', 'qtranslate');?></p>
-</div>
-</div><!-- /col-right -->
-
-<div id="col-left">
-<div class="col-wrap">
-<div class="form-wrap">
-<h3><?php _e('Add Language', 'qtranslate'); ?></h3>
-<form name="addcat" id="addcat" method="post" class="add:the-list: validate">
-<?php qtranxf_language_form($language_code, $language_code, $language_name, $language_locale, $language_date_format, $language_time_format, $language_flag, $language_na_message, $language_default); ?>
-<p class="submit"><input type="submit" name="submit" value="<?php _e('Add Language &raquo;', 'qtranslate'); ?>" /></p>
-</form></div>
-</div>
-</div><!-- /col-left -->
-
-</div><!-- /col-container -->
-</div><!-- /qtranslate-admin-languages in qtranxf_admin_section_start -->
+	</div><!-- /col-container -->
+<!-- /qtranslate-admin-languages in qtranxf_admin_section_start -->
 <script type="text/javascript">
 //<![CDATA[
 	qtranxj_readShowHideCookie('qtranslate-admin-languages');
