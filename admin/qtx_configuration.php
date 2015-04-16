@@ -879,8 +879,17 @@ function qtranxf_conf() {
 <div class="wrap">
 <h2><?php _e('Language Management (qTranslate Configuration)', 'qtranslate'); ?></h2>
 <small><?php printf(__('For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate'), 'http://wordpress.org/plugins/qtranslate-x/faq/', 'https://wordpress.org/support/plugin/qtranslate-x'); ?></small>
+
+<?php // Set Admin Sections Names
+	$qtx_admin_section_1 = __('General Settings', 'qtranslate');
+	$qtx_admin_section_2 = __('Advanced Settings', 'qtranslate');
+	$qtx_admin_section_3 = __('Custom Integration', 'qtranslate');
+	$qtx_admin_section_4 = __('Import', 'qtranslate').'/'.__('Export', 'qtranslate');
+	$qtx_admin_section_5 = __('Languages', 'qtranslate');
+?>
+
 	<form action="<?php echo $clean_uri;?>" method="post">
-	<?php  qtranxf_admin_section_start(__('General Settings', 'qtranslate'),'general'); //id="qtranslate-admin-general" ?>
+	<?php qtranxf_admin_section_start($qtx_admin_section_1,'general'); //id="qtranslate-admin-general" ?>
 		<table class="form-table">
 			<tr>
 				<th scope="row"><?php _e('Default Language / Order', 'qtranslate') ?></th>
@@ -932,7 +941,7 @@ function qtranxf_conf() {
 			</tr>
 		</table>
 	<?php qtranxf_admin_section_end('general'); ?>
-	<?php qtranxf_admin_section_start(__('Advanced Settings', 'qtranslate'),'advanced'); //id="qtranslate-admin-advanced"
+	<?php qtranxf_admin_section_start($qtx_admin_section_2,'advanced'); //id="qtranslate-admin-advanced"
 		$permalink_is_query = qtranxf_is_permalink_structure_query();
 		//qtranxf_dbg_echo('$permalink_is_query: ',$permalink_is_query);
 		$url_mode = $q_config['url_mode'];
@@ -1169,7 +1178,7 @@ function qtranxf_conf() {
 */ ?>
 		</table>
 	<?php qtranxf_admin_section_end('advanced'); ?>
-	<?php qtranxf_admin_section_start(__('Custom Integration', 'qtranslate'),'integration'); ?>
+	<?php qtranxf_admin_section_start($qtx_admin_section_3,'integration'); ?>
 		<table class="form-table">
 			<tr valign="top">
 				<th scope="row"><?php echo __('Custom Fields', 'qtranslate');?></th>
@@ -1233,7 +1242,7 @@ function qtranxf_conf() {
 </div>
 <div class="wrap">
 
-<?php qtranxf_admin_section_start(__('Languages', 'qtranslate'),'languages'); //id="qtranslate-admin-languages" ?>
+<?php qtranxf_admin_section_start($qtx_admin_section_5,'languages'); //id="qtranslate-admin-languages" ?>
 <div id="col-container">
 
 <div id="col-right">
