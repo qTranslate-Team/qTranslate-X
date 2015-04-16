@@ -160,44 +160,44 @@ function qtranxf_admin_section_import_export($request_uri)
 {
 ?>
 <div class="tabs-content">
-<div id="tab-import" class="hidden">
-<?php qtranxf_admin_section_start($qtx_admin_section_4,'import'); //id="qtranslate-admin-import" style="display: none" ?>
-	<table class="form-table">
-		<tr valign="top" id="qtranslate-convert-database">
-			<th scope="row"><?php _e('Convert Database', 'qtranslate');?></th>
-			<td>
-				<?php printf(__('If you are updating from qTranslate 1.x or Polyglot, <a href="%s">click here</a> to convert posts to the new language tag format.', 'qtranslate'), $request_uri.'&convert=true'); ?>
-				<?php printf(__('If you have installed qTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href="%s">click here</a> to mark all existing posts as written in the default language.', 'qtranslate'), $request_uri.'&markdefault=true'); ?>
-				<?php _e('Both processes are <b>irreversible</b>! Be sure to make a full database backup before clicking one of the links.', 'qtranslate'); ?><br/><br/>
-				<label for="qtranxs_convert_database_none"><input type="radio" name="convert_database" id="qtranxs_convert_database_none" value="none" checked />&nbsp;<?php _e('Do not convert database', 'qtranslate'); ?></label><br/><br/>
-				<label for="qtranxs_convert_database_to_b_only"><input type="radio" name="convert_database" id="qtranxs_convert_database_to_b_only" value="b_only" />&nbsp;<?php echo __('Convert database to the "square bracket only" style.', 'qtranslate'); ?></label><br/>
-				<small><?php printf(__('The square bracket language tag %s only will be used as opposite to dual-tag (%s and %s) %s legacy database format. All string options and standard post and page fields will be uniformly encoded like %s.','qtranslate'),'[:]',esc_html('<!--:-->'),'[:]','qTranslate','"[:en]English[:de]Deutsch[:]"'); ?></small><br/><br/>
-				<label for="qtranxs_convert_database_to_c_dual"><input type="radio" name="convert_database" id="qtranxs_convert_database_to_c_dual" value="c_dual" />&nbsp;<?php echo __('Convert database back to the legacy "dual language tag" style.', 'qtranslate'); ?></label><br/>
-				<small><?php _e('Note, that only string options and standard post and page fields are affected.','qtranslate'); ?></small>
-			</td>
-		</tr>
-		<?php qtranxf_add_row_migrate('qTranslate','qtranslate'); ?>
-		<?php qtranxf_add_row_migrate('mqTranslate','mqtranslate'); ?>
-		<?php qtranxf_add_row_migrate('qTranslate Plus','qtranslate-xp'); ?>
-		<?php qtranxf_add_row_migrate('zTranslate','ztranslate'); ?>
-		<?php qtranxf_add_row_migrate('WPML Multilingual CMS','sitepress-multilingual-cms'); ?>
-		<tr valign="top">
-			<th scope="row"><?php _e('Reset qTranslate', 'qtranslate');?></th>
-			<td>
-				<label for="qtranslate_reset"><input type="checkbox" name="qtranslate_reset" id="qtranslate_reset" value="1"/> <?php _e('Check this box and click Save Changes to reset all qTranslate settings.', 'qtranslate'); ?></label>
-				<br/>
-				<label for="qtranslate_reset2"><input type="checkbox" name="qtranslate_reset2" id="qtranslate_reset2" value="1"/> <?php _e('Yes, I really want to reset qTranslate.', 'qtranslate'); ?></label>
-				<br/>
-				<label for="qtranslate_reset3"><input type="checkbox" name="qtranslate_reset3" id="qtranslate_reset3" value="1"/> <?php _e('Also delete Translations for Categories/Tags/Link Categories.', 'qtranslate'); ?></label>
-				<br/>
-				<small><?php _e('If something isn\'t working correctly, you can always try to reset all qTranslate settings. A Reset won\'t delete any posts but will remove all settings (including all languages added).', 'qtranslate'); ?></small>
-			</td>
-		</tr>
-	</table>
+	<div id="tab-import" class="hidden">
+		<?php qtranxf_admin_section_start($qtx_admin_section_4,'import'); //id="qtranslate-admin-import" style="display: none" ?>
+		<table class="form-table">
+			<tr valign="top" id="qtranslate-convert-database">
+				<th scope="row"><?php _e('Convert Database', 'qtranslate');?></th>
+				<td>
+					<?php printf(__('If you are updating from qTranslate 1.x or Polyglot, <a href="%s">click here</a> to convert posts to the new language tag format.', 'qtranslate'), $request_uri.'&convert=true'); ?>
+					<?php printf(__('If you have installed qTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href="%s">click here</a> to mark all existing posts as written in the default language.', 'qtranslate'), $request_uri.'&markdefault=true'); ?>
+					<?php _e('Both processes are <b>irreversible</b>! Be sure to make a full database backup before clicking one of the links.', 'qtranslate'); ?><br/><br/>
+					<label for="qtranxs_convert_database_none"><input type="radio" name="convert_database" id="qtranxs_convert_database_none" value="none" checked />&nbsp;<?php _e('Do not convert database', 'qtranslate'); ?></label><br/><br/>
+					<label for="qtranxs_convert_database_to_b_only"><input type="radio" name="convert_database" id="qtranxs_convert_database_to_b_only" value="b_only" />&nbsp;<?php echo __('Convert database to the "square bracket only" style.', 'qtranslate'); ?></label><br/>
+					<small><?php printf(__('The square bracket language tag %s only will be used as opposite to dual-tag (%s and %s) %s legacy database format. All string options and standard post and page fields will be uniformly encoded like %s.','qtranslate'),'[:]',esc_html('<!--:-->'),'[:]','qTranslate','"[:en]English[:de]Deutsch[:]"'); ?></small><br/><br/>
+					<label for="qtranxs_convert_database_to_c_dual"><input type="radio" name="convert_database" id="qtranxs_convert_database_to_c_dual" value="c_dual" />&nbsp;<?php echo __('Convert database back to the legacy "dual language tag" style.', 'qtranslate'); ?></label><br/>
+					<small><?php _e('Note, that only string options and standard post and page fields are affected.','qtranslate'); ?></small>
+				</td>
+			</tr>
+			<?php qtranxf_add_row_migrate('qTranslate','qtranslate'); ?>
+			<?php qtranxf_add_row_migrate('mqTranslate','mqtranslate'); ?>
+			<?php qtranxf_add_row_migrate('qTranslate Plus','qtranslate-xp'); ?>
+			<?php qtranxf_add_row_migrate('zTranslate','ztranslate'); ?>
+			<?php qtranxf_add_row_migrate('WPML Multilingual CMS','sitepress-multilingual-cms'); ?>
+			<tr valign="top">
+				<th scope="row"><?php _e('Reset qTranslate', 'qtranslate');?></th>
+				<td>
+					<label for="qtranslate_reset"><input type="checkbox" name="qtranslate_reset" id="qtranslate_reset" value="1"/> <?php _e('Check this box and click Save Changes to reset all qTranslate settings.', 'qtranslate'); ?></label>
+					<br/>
+					<label for="qtranslate_reset2"><input type="checkbox" name="qtranslate_reset2" id="qtranslate_reset2" value="1"/> <?php _e('Yes, I really want to reset qTranslate.', 'qtranslate'); ?></label>
+					<br/>
+					<label for="qtranslate_reset3"><input type="checkbox" name="qtranslate_reset3" id="qtranslate_reset3" value="1"/> <?php _e('Also delete Translations for Categories/Tags/Link Categories.', 'qtranslate'); ?></label>
+					<br/>
+					<small><?php _e('If something isn\'t working correctly, you can always try to reset all qTranslate settings. A Reset won\'t delete any posts but will remove all settings (including all languages added).', 'qtranslate'); ?></small>
+				</td>
+			</tr>
+		</table>
 <?php
-	qtranxf_admin_section_end('import');
+		qtranxf_admin_section_end('import');
 ?>
-</div>
+	</div>
 </div><!-- /tabs-container -->
 <?php
 }
