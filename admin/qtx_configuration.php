@@ -563,8 +563,8 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 }
 
 function qtranxf_admin_section_start($section, $nm) {
+	echo '<div id="tab-'.$nm.'" class="';if($nm!=='general'){echo 'hidden';};echo '"><!-- tab-ID -->';
 	// echo '<h3>'.$section.'<span id="qtranxs-show-'.$nm.'"> ( <a name="qtranslate_'.$nm.'_settings" href="#" onclick="return qtranxj_toggleShowHide(\'qtranslate-admin-'.$nm.'\');">'.__('Show', 'qtranslate').' / '.__('Hide', 'qtranslate').'</a> )</span></h3>'.PHP_EOL;
-	echo '<div id="tab-'.$nm.'" class="';if($nm!=='general'){echo 'hidden';};echo '"><!-- tab-ID -->'; 
 	echo '<div id="qtranslate-admin-'.$nm.'">'.PHP_EOL;
 }
 
@@ -959,6 +959,7 @@ jQuery(function($) {
 
 	<form action="<?php echo $clean_uri;?>" method="post">
 	<div class="tabs-content"><!-- tabs-container -->
+	
 	<?php  qtranxf_admin_section_start($qtx_admin_section_1,'general'); //id="qtranslate-admin-general" ?>
 		<table class="form-table">
 			<tr>
@@ -1306,6 +1307,7 @@ jQuery(function($) {
 			<?php } ?>
 		</table>
 	<?php qtranxf_admin_section_end('integration'); ?>
+	
 	</div><!-- /tabs-container -->
 <?php do_action('qtranslate_configuration', $clean_uri); ?>
 	</form>
@@ -1313,6 +1315,7 @@ jQuery(function($) {
 </div>
 <div class="wrap">
 <div class="tabs-content"><!-- tabs-container -->
+
 <?php qtranxf_admin_section_start($qtx_admin_section_5,'languages'); //id="qtranslate-admin-languages" ?>
 <div id="col-container">
 
