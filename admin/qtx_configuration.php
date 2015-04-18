@@ -494,7 +494,7 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 	$flag_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
 	if($dir_handle = @opendir($flag_dir)) {
 		while (false !== ($file = readdir($dir_handle))) {
-			if(preg_match("/\.(jpeg|jpg|gif|png)$/i",$file)) {
+			if(preg_match("/\.(jpeg|jpg|gif|png|svg)$/i",$file)) {
 				$files[] = $file;
 			}
 		}
@@ -741,26 +741,47 @@ function qtranxf_conf() {
 		// update language tags
 		global $wpdb;
 		$wpdb->show_errors();
+		$cnt = 0;
+		//this will not work correctly if set of languages is different
 		foreach($q_config['enabled_languages'] as $lang) {
-			$wpdb->query('UPDATE '.$wpdb->posts.' set post_title = REPLACE(post_title, "[lang_'.$lang.']","<!--:'.$lang.'-->")');
-			$wpdb->query('UPDATE '.$wpdb->posts.' set post_title = REPLACE(post_title, "[/lang_'.$lang.']","<!--:-->")');
-			$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = REPLACE(post_content, "[lang_'.$lang.']","<!--:'.$lang.'-->")');
-			$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = REPLACE(post_content, "[/lang_'.$lang.']","<!--:-->")');
+			$cnt +=
+			$wpdb->query('UPDATE '.$wpdb->posts.' set post_title = REPLACE(post_title, "[lang_'.$lang.']","[:'.$lang.']"),  post_content = REPLACE(post_content, "[lang_'.$lang.']","[:'.$lang.']")');
+			$wpdb->query('UPDATE '.$wpdb->posts.' set post_title = REPLACE(post_title, "[/lang_'.$lang.']","[:]"),  post_content = REPLACE(post_content, "[/lang_'.$lang.']","[:]")');
 		}
-		$message[] = "Database Update successful!";
+		if($cnt > 0){
+			$message[] = sprintf(__('%d database entries have been converted.', 'qtranslate'), $cnt);
+		}else{
+			$message[] = __('No database entry has been affected while processing the conversion request.', 'qtranslate');
+		}
 	} elseif(isset($_GET['markdefault'])){
 		// update language tags
 		global $wpdb;
 		$wpdb->show_errors();
-		$result = $wpdb->get_results('SELECT ID, post_title, post_content FROM '.$wpdb->posts.' WHERE NOT (post_content LIKE "%<!--:-->%" OR post_title LIKE "%<!--:-->%")');
-		foreach($result as $post) {
-			$title=qtranxf_mark_default($post->post_title);
-			$content=qtranxf_mark_default($post->post_content);
-			if( $title==$post->post_title && $content==$post->post_content ) continue;
-			//qtranxf_dbg_echo("markdefault:<br>\ntitle old: '".$post->post_title."'<br>\ntitle new: '".$title."'<br>\ncontent old: '".$post->post_content."'<br>\ncontent new: '".$content."'"); continue;
-			$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = "'.mysql_real_escape_string($content).'", post_title = "'.mysql_real_escape_string($title).'" WHERE ID='.$post->ID);
+		$result = $wpdb->get_results('SELECT ID, post_content, post_title, post_excerpt, post_type FROM '.$wpdb->posts.' WHERE post_status = \'publish\' AND  (post_type = \'post\' OR post_type = \'page\') AND NOT (post_content LIKE \'%<!--:-->%\' OR post_title LIKE \'%<!--:-->%\' OR post_content LIKE \'%![:!]%\' ESCAPE \'!\' OR post_title LIKE \'%![:!]%\' ESCAPE \'!\')');
+		if(is_array($result)){
+			$cnt_page = 0;
+			$cnt_post = 0;
+			foreach($result as $post) {
+				$title=qtranxf_mark_default($post->post_title);
+				$content=qtranxf_mark_default($post->post_content);
+				$excerpt=qtranxf_mark_default($post->post_excerpt);
+				if( $title==$post->post_title && $content==$post->post_content && $excerpt==$post->post_excerpt ) continue;
+				switch($post->post_type){
+					case 'post': ++$cnt_post; break;
+					case 'page': ++$cnt_page; break;
+				}
+				//qtranxf_dbg_log('markdefault:'. PHP_EOL .'title old: '.$post->post_title. PHP_EOL .'title new: '.$title. PHP_EOL .'content old: '.$post->post_content. PHP_EOL .'content new: '.$content); continue;
+				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->posts.' set post_content = %s, post_title = %s, post_excerpt = %s WHERE ID = %d', $content, $title, $excerpt, $post->ID));
+			}
+
+			if($cnt_page > 0) $message[] = sprintf(__('%d pages have been processed to set the default language.', 'qtranslate'), $cnt_page);
+			else $message[] = __('No initially untranslated pages found to set the default language', 'qtranslate');
+
+			if($cnt_post > 0) $message[] = sprintf(__('%d posts have been processed to set the default language.', 'qtranslate'), $cnt_post);
+			else $message[] = __('No initially untranslated posts found to set the default language.', 'qtranslate');
+
+			$message[] = sprintf(__('Post types other than "post" or "page", as well as unpublished entries, will have to be adjusted manually as needed, since there is no a common way to automate setting the default language otherwise. It can be done with a custom script though. You may request a %spaid support%s for this.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/contact-us/">', '</a>');
 		}
-		$message[] = "All Posts marked as default language!";
 	} elseif(isset($_GET['edit'])){
 		$lang = $_GET['edit'];
 		$original_lang = $lang;
