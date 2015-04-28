@@ -235,11 +235,21 @@ function qtranxf_parse_language_info(&$url_info, $link=false) {
 		$url_mode = $q_config['url_mode'];
 		switch($url_mode) {
 			case QTX_URL_PATH: // pre path
-				if( !empty($url_info['wp-path']) && preg_match('!^/([a-z]{2})(/|$)!i',$url_info['wp-path'],$match)) {
-					$lang = qtranxf_resolveLangCase($match[1],$doredirect);
-					if($lang){
+				if( !empty($url_info['wp-path'])) {
+					if(preg_match('!^/([a-z]{2})(/|$)!i',$url_info['wp-path'],$match)) {
+						$lang = qtranxf_resolveLangCase($match[1],$doredirect);
+						if($lang){
+							$url_info['lang_url'] = $lang;
+							$url_info['wp-path'] = substr($url_info['wp-path'],3);
+							$url_info['doing_front_end'] = true;
+							if(WP_DEBUG){
+								$url_info['url_mode'] = 'pre-path';
+							}
+						}
+					}
+					elseif ($q_config['hide_default_language'] && !empty($q_config['default_language'])) {
+						$lang = $q_config['default_language'];
 						$url_info['lang_url'] = $lang;
-						$url_info['wp-path'] = substr($url_info['wp-path'],3);
 						$url_info['doing_front_end'] = true;
 						if(WP_DEBUG){
 							$url_info['url_mode'] = 'pre-path';
