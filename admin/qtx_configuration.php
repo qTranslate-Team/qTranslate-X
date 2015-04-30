@@ -57,7 +57,8 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 function qtranxf_collect_translations_posted() {
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ',$_REQUEST);
 	if(!isset($_REQUEST['qtranslate-fields'])) return;
-	$edit_lang = isset($_COOKIE['qtrans_edit_language']) ? $_COOKIE['qtrans_edit_language'] : qtranxf_getLanguage();
+	//$edit_lang = isset($_COOKIE['qtrans_edit_language']) ? $_COOKIE['qtrans_edit_language'] : qtranxf_getLanguage();
+	$edit_lang = qtranxf_getLanguageEdit();
 	foreach($_REQUEST['qtranslate-fields'] as $nm => &$qfields){
 		//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST[qtranslate-fields]['.$nm.']: ',$qfields);
 		qtranxf_collect_translations($qfields,$_REQUEST[$nm],$edit_lang);
@@ -204,6 +205,8 @@ function qtranxf_load_admin_page_config() {
 	$page_configs = array();//will be set to a default in the future
 
 	$page_configs = apply_filters('qtranslate_load_admin_page_config',$page_configs);
+	//qtranxf_dbg_log('qtranxf_load_admin_page_config: $page_configs:',json_encode($page_configs,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+
 	foreach($page_configs as $pgcfg){
 		foreach($pgcfg['pages'] as $page => $query){
 			//qtranxf_dbg_log('qtranxf_load_admin_page_config: $page='.$page.'; query=',$query);
@@ -222,7 +225,17 @@ function qtranxf_load_admin_page_config() {
 				else $page_config['forms'] = array_merge($page_config['forms'],$pgcfg['forms']);
 			}
 
-			break;
+			if( isset($pgcfg['js-conf']) && !empty($pgcfg['js-conf']) ){
+				if( !isset($page_config['js-conf']) ) $page_config['js-conf'] = $pgcfg['js-conf'];
+				else $page_config['js-conf'] = array_merge($page_config['js-conf'],$pgcfg['js-conf']);
+			}
+
+			if( isset($pgcfg['js-exec']) && !empty($pgcfg['js-exec']) ){
+				if( !isset($page_config['js-exec']) ) $page_config['js-exec'] = $pgcfg['js-exec'];
+				else $page_config['js-exec'] = array_merge($page_config['js-exec'],$pgcfg['js-exec']);
+			}
+
+			break;//each $pgcfg should not have more than one configuration for the same page
 		}
 	}
 	return $page_config;
@@ -251,21 +264,40 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	wp_deregister_script( 'autosave' );//autosave script saves the active language only and messes it up later in a hard way
 
 	if( $enqueue_script ){
-		//wp_register_script( 'qtranslate-admin-utils', plugins_url( 'js/utils.min.js', __FILE__ ), array(), QTX_VERSION );
+		//wp_register_script( 'qtranslate-admin-utils', plugins_url( 'js/utils.min.js', __FILE__ ), array(), QTX_VERSION, true );
 		//wp_enqueue_script( 'qtranslate-admin-utils' );
 		$deps = array();
 		if($script_file) $deps[] = 'qtranslate-admin-edit';
-		if(isset($page_config['scripts'])){
-			foreach($page_config['scripts'] as $js){
+		if(isset($page_config['js-conf'])){
+			$cnt=0;
+			foreach($page_config['js-conf'] as $js){
+				if(!isset($js['src'])) continue;
+				$handle = isset($js['handle']) ? $js['handle'] : 'qtranslate-admin-js-conf-'.(++$cnt);
+				$ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;
+				wp_register_script( $handle, plugins_url($js['src']), $deps, $ver, true);
+				$deps[] = $handle;
+				wp_enqueue_script( $handle );
 			}
 		}
-		wp_register_script( 'qtranslate-admin-common', plugins_url( 'js/common.min.js', __FILE__ ), $deps, QTX_VERSION );
+		wp_register_script( 'qtranslate-admin-common', plugins_url( 'js/common.min.js', __FILE__ ), $deps, QTX_VERSION, true);
 		wp_enqueue_script( 'qtranslate-admin-common' );
+		if(isset($page_config['js-exec'])){
+			$deps[] = 'qtranslate-admin-common';
+			$cnt=0;
+			foreach($page_config['js-exec'] as $js){
+				if(!isset($js['src'])) continue;
+				$handle = isset($js['handle']) ? $js['handle'] : 'qtranslate-admin-js-exec-'.(++$cnt);
+				$ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;
+				wp_register_script( $handle, plugins_url($js['src']), $deps, $ver, true);
+				$deps[] = $handle;
+				wp_enqueue_script( $handle );
+			}
+		}
 	}
 
 	$config=array();
 	// since 3.2.9.9.0 'enabled_languages' is replaced with 'language_config' structure
-	$keys=array('default_language', 'language', 'url_mode', 'lsb_style_wrap_class', 'lsb_style_active_class', 'plugin_js_composer_off');//,'term_name'
+	$keys=array('default_language', 'language', 'url_mode', 'lsb_style_wrap_class', 'lsb_style_active_class'); // ,'term_name', 'plugin_js_composer_off'
 	foreach($keys as $key){
 		$config[$key]=$q_config[$key];
 	}
@@ -301,10 +333,20 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	echo 'var qTranslateConfig='.json_encode($config).';'.PHP_EOL;
 	if(!$enqueue_script){
 		if($script_file) readfile($script_file);
-		$plugin_dir_path=plugin_dir_path(__FILE__);
+		if(isset($page_config['js-conf'])){
+			$plugins_dir = WP_CONTENT_DIR.'/plugins/';
+			foreach($page_config['js-conf'] as $js){
+				if(!isset($js['src'])) continue;
+				readfile($plugins_dir.$js['src']);
+			}
+		}
+		$plugin_dir_path = plugin_dir_path(__FILE__);
 		readfile($plugin_dir_path.'js/common.min.js');
-		if(isset($page_config['scripts'])){
-			foreach($page_config['scripts'] as $js){
+		if(isset($page_config['js-exec'])){
+			$plugins_dir = WP_CONTENT_DIR.'/plugins/';
+			foreach($page_config['js-exec'] as $js){
+				if(!isset($js['src'])) continue;
+				readfile($plugins_dir.$js['src']);
 			}
 		}
 	}
@@ -467,6 +509,7 @@ add_action('admin_head', 'qtranxf_admin_head');
 
 function qtranxf_admin_footer() {
 	$enqueue_script = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG);
+	//$enqueue_script = false;
 	qtranxf_add_admin_footer_js( $enqueue_script );
 }
 add_action('admin_footer', 'qtranxf_admin_footer',999);
@@ -485,7 +528,7 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 <div class="form-field">
 	<label for="language_code"><?php _e('Language Code', 'qtranslate') ?></label>
 	<input name="language_code" id="language_code" type="text" value="<?php echo $language_code; ?>" size="2" maxlength="2"/>
-	<p><?php _e('2-Letter <a href="http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter">ISO Language Code</a> for the Language you want to insert. (Example: en)', 'qtranslate'); ?></p>
+	<p><?php echo __('2-Letter <a href="http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter">ISO Language Code</a> for the Language you want to insert. (Example: en)', 'qtranslate').'<br>'.__('The language code is used in language tags and in URLs. It is case sensitive. Use of lower case for the language code is preferable, but not required. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision.', 'qtranslate'); ?></p>
 </div>
 <div class="form-field">
 	<label for="language_flag"><?php _e('Flag', 'qtranslate') ?></label>
@@ -658,6 +701,7 @@ function qtranxf_conf() {
 		if(strlen($_POST['language_locale'])<2) $error = __('The Language must have a Locale!', 'qtranslate');
 		if($_POST['language_name']=='') $error = __('The Language must have a name!', 'qtranslate');
 		if(strlen($lang)!=2) $error = __('Language Code has to be 2 characters long!', 'qtranslate');
+		//$lang = strtolower($lang);
 		//$language_names = qtranxf_language_configured('language_name');
 		$langs=array(); qtranxf_load_languages($langs);
 		$language_names = $langs['language_name'];
@@ -782,7 +826,7 @@ function qtranxf_conf() {
 			if($cnt_post > 0) $message[] = sprintf(__('%d posts have been processed to set the default language.', 'qtranslate'), $cnt_post);
 			else $message[] = __('No initially untranslated posts found to set the default language.', 'qtranslate');
 
-			$message[] = sprintf(__('Post types other than "post" or "page", as well as unpublished entries, will have to be adjusted manually as needed, since there is no a common way to automate setting the default language otherwise. It can be done with a custom script though. You may request a %spaid support%s for this.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/contact-us/">', '</a>');
+			$message[] = sprintf(__('Post types other than "post" or "page", as well as unpublished entries, will have to be adjusted manually as needed, since there is no common way to automate setting the default language otherwise. It can be done with a custom script though. You may request a %spaid support%s for this.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/contact-us/">', '</a>');
 		}
 	} elseif(isset($_GET['edit'])){
 		$lang = $_GET['edit'];
@@ -1290,7 +1334,7 @@ jQuery(function($) {
 					<small><?php printf(__('Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>'); ?></small>
 				</td>
 			</tr>
-			<?php if ( defined( 'WPB_VC_VERSION' ) ) { ?>
+			<?php /* if ( defined( 'WPB_VC_VERSION' ) ) { ?>
 			<tr valign="top">
 				<th scope="row"><?php _e('3rd-party plugins', 'qtranslate') ?></th>
 				<td><?php _e('Below is a list of plugins which have a way to auto-integrate with qTranslate-X.', 'qtranslate') ?>
@@ -1303,7 +1347,7 @@ jQuery(function($) {
 					<p><small><?php printf(__('If %s implements its own integration, this will need to be turned off.', 'qtranslate'), 'WPBakery'); ?></small></p>
 				</td>
 			</tr>
-			<?php } ?>
+			<?php } */ ?>
 		</table>
 	<?php qtranxf_admin_section_end('integration'); ?>
 	</div><!-- /tabs-container -->

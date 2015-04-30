@@ -59,11 +59,14 @@ if(WP_DEBUG){
 	}
 	assert_options(ASSERT_BAIL,true);
 
+	/*
 	function qtranxf_do_tests(){
+		//qtranxf_dbg
 		if(file_exists(dirname(__FILE__).'/dev/qtx-tests.php'))
 			require_once(dirname(__FILE__).'/dev/qtx-tests.php');
 	}
-	/*qtranxf_dbg */ //add_action('qtranslate_init_language','qtranxf_do_tests');
+	add_action('qtranslate_init_language','qtranxf_do_tests');
+	// */
 
 }else{
 	if(!function_exists('qtranxf_dbg_log')){
@@ -383,11 +386,9 @@ function qtranxf_isMultilingual($str){
 	return preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$str);
 }
 
-if (!function_exists('qtranxf_getLanguage')){
 function qtranxf_getLanguage() {
 	global $q_config;
 	return $q_config['language'];
-}
 }
 
 function qtranxf_getLanguageName($lang = '') {
@@ -435,7 +436,7 @@ function qtranxf_getAvailableLanguages($text) {
 	if(count($blocks) <= 1)
 		return FALSE;// no languages set
 	$result = array();
-	$content = qtranxf_split_blocks($blocks);
+	$content = qtranxf_split_languages($blocks);
 	foreach($content as $language => $lang_text) {
 		$lang_text = trim($lang_text);
 		if(!empty($lang_text)) $result[] = $language;
