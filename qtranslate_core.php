@@ -235,11 +235,21 @@ function qtranxf_parse_language_info(&$url_info, $link=false) {
 		$url_mode = $q_config['url_mode'];
 		switch($url_mode) {
 			case QTX_URL_PATH: // pre path
-				if( !empty($url_info['wp-path']) && preg_match('!^/([a-z]{2})(/|$)!i',$url_info['wp-path'],$match)) {
-					$lang = qtranxf_resolveLangCase($match[1],$doredirect);
-					if($lang){
+				if( !empty($url_info['wp-path'])) {
+					if(preg_match('!^/([a-z]{2})(/|$)!i',$url_info['wp-path'],$match)) {
+						$lang = qtranxf_resolveLangCase($match[1],$doredirect);
+						if($lang){
+							$url_info['lang_url'] = $lang;
+							$url_info['wp-path'] = substr($url_info['wp-path'],3);
+							$url_info['doing_front_end'] = true;
+							if(WP_DEBUG){
+								$url_info['url_mode'] = 'pre-path';
+							}
+						}
+					}
+					elseif ($q_config['hide_default_language'] && !empty($q_config['default_language'])) {
+						$lang = $q_config['default_language'];
 						$url_info['lang_url'] = $lang;
-						$url_info['wp-path'] = substr($url_info['wp-path'],3);
 						$url_info['doing_front_end'] = true;
 						if(WP_DEBUG){
 							$url_info['url_mode'] = 'pre-path';
@@ -866,7 +876,15 @@ function qtranxf_language_neutral_path($path) {
 		//qtranxf_dbg_log('qtranxf_language_neutral_path: cached='.$language_neutral_path_cache[$path].': path='.$path);
 		return $language_neutral_path_cache[$path];
 	}
-	if(preg_match('#^/(wp-.*\.php|wp-admin/|xmlrpc.php|.*sitemap.*|robots.txt|oauth/)#', $path)){
+	$match_path = $path;
+	if(defined('WP_SITEURL')){
+		$wp_siteurl_path = parse_url(WP_SITEURL, PHP_URL_PATH);
+		$len = strlen($wp_siteurl_path);
+		if(substr($path, 0, $len + 1) === $wp_siteurl_path.'/'){
+			$match_path = substr($path, $len);
+		}
+	}
+	if(preg_match('#^/(wp-.*\.php|wp-admin/|xmlrpc.php|.*sitemap.*|robots.txt|oauth/)#', $match_path)){
 		$language_neutral_path_cache[$path] = true;
 		//qtranxf_dbg_log('qtranxf_language_neutral_path: preg_match: path='.$path);
 		return true;
