@@ -216,7 +216,22 @@ function qtranxf_buildURL($urlinfo,$homeinfo) {
 	$url .= empty($urlinfo['host']) ? $homeinfo['host'] : $urlinfo['host'];
 	if(!empty($urlinfo['path-base'])) $url .= $urlinfo['path-base'];
 	if(!empty($urlinfo['wp-path'])) $url .= $urlinfo['wp-path'];
-	if(!empty($urlinfo['query'])) $url .= '?'.$urlinfo['query'];
+	// PATCH Change for redirection in nginx for rule like location / {try_files $uri /index.php?q=$uri&$args; }
+	// 	where such rule can lead to infinite loop
+	// because different uri_orig (e.g. SERVER[REQUEST_URI]) vs url_lang(E.G. SERVER[QUERY_STRING])
+	$PREFIX = "q="; // Better use a global variable for this, and allow user to configure?
+	if(!empty($urlinfo['query']))  {
+		if(!empty($urlinfo['wp-path'])) {
+			$match = $PREFIX.$urlinfo['wp-path'];
+			$len_match = strlen($match);
+			// replace q=uri with emptry from query
+			if ( substr($urlinfo['query'], 0, $len_match) == $match )
+				$urlinfo['query'] = substr($urlinfo['query'], $len_match);
+		}
+		$urlinfo['query'] = preg_replace('/^[#?&]/', '', $urlinfo['query']);
+		$url .= '?'.$urlinfo['query'];
+	}
+	// PATCH Change END
 	if(!empty($urlinfo['fragment'])) $url .= '#'.$urlinfo['fragment'];
 	//qtranxf_dbg_log('qtranxf_buildURL: $url:',$url);
 	return $url;
