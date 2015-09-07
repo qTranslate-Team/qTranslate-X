@@ -136,10 +136,9 @@ function qtranxf_plugin_dirname_from_wp_content(){
 		//qtranxf_dbg_log('content_url: ', content_url());//no links either
 
 		$d = plugin_dir_url( QTRANSLATE_FILE );
-		//content_url() should not be used as it might return another URL when Multisite is used
-		//$c = content_url();
-		$d = preg_replace('/.*wp-content/', '/', $d);
-		$s = trim($d, '/\\');
+		//regex matching the last two folders of the path
+		preg_match('/.*\/([^\/]+)\/([^\/]+)/', $d, $matches);
+		$s = $matches[1] . '/' . $matches[2];
 	}
 	return $s;
 }
