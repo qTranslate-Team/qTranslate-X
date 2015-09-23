@@ -489,9 +489,7 @@ function qtranxf_isAvailableIn($post_id, $language='') {
 	global $q_config;
 	if($language == '') $language = $q_config['default_language'];
 	$p = get_post($post_id); $post = &$p;
-	$languages = qtranxf_getAvailableLanguages($post->post_content);
-	if($languages===FALSE) return $language == $q_config['default_language'];
-	return in_array($language,$languages);
+	return (bool) $post->post_content;
 }
 
 function qtranxf_convertDateFormatToStrftimeFormat($format) {
