@@ -1350,8 +1350,13 @@ function qtranxf_join_byline($texts) {
 			$ln[$lang] = $t;
 		}
 		if( $done ) break;
-		$text .= qtranxf_join_b($ln).PHP_EOL;
+
+		$char = qtransx_getTagCharacter();
+		if ($char == '{') $text .= qtranxf_join_b($ln).PHP_EOL;
+		else $text .= qtranxf_join_s($ln).PHP_EOL;
+	
 	}
+
 	return $text;
 }
 

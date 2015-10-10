@@ -38,6 +38,9 @@ if(!function_exists('qtrans_getSortedLanguages')){
 if(!function_exists('qtrans_join')){
 	function qtrans_join($texts) {
 		if(!is_array($texts)) $texts = qtranxf_split($texts);
+	
+		$char = qtransx_getTagCharacter();
+		if ($char == '{') return qtranxf_join_s($texts);
 		return qtranxf_join_b($texts);
 	}
 }
