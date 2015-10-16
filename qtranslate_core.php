@@ -428,7 +428,11 @@ function qtranxf_http_negotiate_language(){
 				$supported[] = $q_config['locale_html'][$lang];
 			}
 		}
-		$locale_negotiated = http_negotiate_language($supported);
+		$fallback = array();
+		$locale_negotiated = http_negotiate_language($supported, $fallback);
+		if ($fallback == NULL) {
+			$locale_negotiated = 'en';
+		};
 		return qtranxf_match_language_locale($locale_negotiated);
 	}else{
 		return qtranxf_get_browser_language();
