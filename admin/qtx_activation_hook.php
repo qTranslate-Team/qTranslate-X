@@ -43,11 +43,11 @@ function qtranxf_default_enabled_languages(){
 			if($p > 0){ 
 				$fn = strtolower(substr($locale,$p,2));
 				$flag = $fn.'.png'; if(file_exists($flag_location.$flag)) break;
-				$flag = $fn.'.gpg'; if(file_exists($flag_location.$flag)) break;
+				$flag = $fn.'.jpg'; if(file_exists($flag_location.$flag)) break;
 			}
 			$fn = strtolower(substr($locale,0,2));
 			$flag = $fn.'.png'; if(file_exists($flag_location.$flag)) break;
-			$flag = $fn.'.gpg'; if(file_exists($flag_location.$flag)) break;
+			$flag = $fn.'.jpg'; if(file_exists($flag_location.$flag)) break;
 			$flag = 'aa.png';
 		}while(false);
 		$props = array(
