@@ -639,8 +639,10 @@ function qtranxf_match_page($cfg, $url_path, $url_query, $d){
 	if(!isset($cfg['pages']))
 		return true;
 	foreach($cfg['pages'] as $page => $query){
+		$page = str_replace($d, '\\'.$d, $page);
 		if( preg_match($d.$page.$d,$url_path) !== 1 ) continue;
 		//qtranxf_dbg_log('qtranxf_match_page: preg_match('.$d.$query.$d.', '.$url_query.')');
+		$query = str_replace($d, '\\'.$d, $query);
 		if( empty($query) || preg_match($d.$query.$d,$url_query) === 1 )
 			return true;
 	}
