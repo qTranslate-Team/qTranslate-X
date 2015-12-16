@@ -369,6 +369,9 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 					<br/>
 					<label for="show_alternative_content"><input type="checkbox" name="show_alternative_content" id="show_alternative_content" value="1"<?php checked($q_config['show_alternative_content']) ?>/> <?php _e('Show content in an alternative language when translation is not available for the selected language.', 'qtranslate') ?></label>
 					<p class="qtranxs_notes"><?php echo __('If this option is on, then the content of the first available language will also be shown, instead of the expected language, for the sake of user convenience.', 'qtranslate') ?></p>
+					<br/>
+					<label for="show_only_available_translations"><input type="checkbox" name="show_only_available_translations" id="show_only_available_translations" value="1"<?php checked($q_config['show_only_available_translations']) ?>/> <?php _e('Show links to available language translations only.', 'qtranslate') ?></label>
+					<p class="qtranxs_notes"><?php echo __('Posts or pages with available translations are only shown.', 'qtranslate') ?></p>
 				</td>
 			</tr>
 			<tr valign="top">

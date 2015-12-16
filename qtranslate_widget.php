@@ -53,7 +53,7 @@ class qTranslateXWidget extends WP_Widget {
 			$title=apply_filters('qtranslate_widget_title',$title,$this);
 			echo $before_title . $title . $after_title;
 		}
-		qtranxf_generateLanguageSelectCode($instance,$this->id);
+		qtranxf_getPageAvailableLanguages($instance,$this->id);
 		echo $after_widget;
 	}
 
@@ -162,7 +162,7 @@ function qtranxf_generateLanguageSelectCode($args = array(), $id='') {
 		case 'text':
 		case 'css_only':
 		case 'dropdown': {
-			foreach(qtranxf_getSortedLanguages() as $language) {
+			foreach(qtranxf_getPageAvailableLanguages() as $language) {
 				$alt = $q_config['language_name'][$language].' ('.$language.')';
 				$classes = array('lang-'.$language);
 				if($language == $q_config['language']) $classes[] = 'active';
