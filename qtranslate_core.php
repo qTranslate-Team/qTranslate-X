@@ -324,7 +324,9 @@ function qtranxf_parse_language_info(&$url_info, $link=false) {
 		//}
 	}else if(isset($url_info['lang_url'])){
 		$lang = $url_info['lang_url'];
-		if($q_config['hide_default_language'] && $lang == $q_config['default_language']) $doredirect=true;
+		if($q_config['hide_default_language'] && $lang == $q_config['default_language']){
+			$doredirect = ($url_info['wp-path']=='/' ? false : true);
+		}
 	}
 
 	if($lang) $url_info['language'] = $lang;
