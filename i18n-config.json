@@ -18,7 +18,8 @@
 		},
 		"wpbody-content":{
 			"fields":{
-				"wrap-h2":{"jquery":".wrap>h2", "encode":"display"}
+				"wrap-h1":{"jquery":".wrap h1", "encode":"display"},
+				"wrap-h2":{"jquery":".wrap h2", "encode":"display"}
 			}
 		}
 	},
@@ -37,6 +38,11 @@
 			}
 		}
 	}
+}
+,
+"options-general-languages":{
+	"pages":{"options-general.php":"page=qtranslate-x"},
+	"anchors":{"lsb":{"jquery":".i18n-anchor-lsb", "where":"first"}}
 }
 ,
 "widgets":{
@@ -79,7 +85,7 @@
 			"fields":{
 				"tag-name":{},
 				"tag-description":{},
-				"parent":{}
+				"parent":{"encode":"display"}
 			}
 		},
 		"col-left":{

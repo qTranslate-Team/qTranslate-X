@@ -465,6 +465,59 @@ function qtranxf_filter_options(){
 }
 qtranxf_filter_options();
 
+/**
+ * @since 3.4.6.5
+*/
+function qtranxf_translate_post($post,$lang) {
+	foreach(get_object_vars($post) as $key => $txt) {
+		switch($key){//the quickest way to proceed
+			//known to skip
+			case 'ID'://int
+			case 'post_author':
+			case 'post_date':
+			case 'post_date_gmt':
+			case 'post_status':
+			case 'comment_status':
+			case 'ping_status':
+			case 'post_password':
+			case 'post_name': //slug!
+			case 'to_ping':
+			case 'pinged':
+			case 'post_modified':
+			case 'post_modified_gmt':
+			case 'post_parent': //int
+			case 'guid':
+			case 'menu_order': //int
+			case 'post_type':
+			case 'post_mime_type':
+			case 'comment_count':
+			case 'filter':
+				continue;
+			//known to translate
+			case 'post_content': $post->$key = qtranxf_use_language($lang, $txt, true); break;
+			case 'post_title':
+			case 'post_excerpt':
+			case 'post_content_filtered'://not sure how this is in use
+			{
+				$blocks = qtranxf_get_language_blocks($txt);
+				if(count($blocks)>1){//value is multilingual
+					$key_ml = $key.'_ml';
+					$post->$key_ml = $txt;
+					$langs = array();
+					$content = qtranxf_split_blocks($blocks,$langs);
+					$post->$key = qtranxf_use_content($lang, $content, $langs, false);
+					//$post->$key = qtranxf_use_block($lang, $blocks, false);
+					$key_langs = $key.'_langs';
+					$post->$key_langs = $langs;
+				}
+			} break;
+			//other maybe, if it is a string, most likely it never comes here
+			default:
+				$post->$key = qtranxf_use($lang, $txt, false);
+		}
+	}
+}
+
 function qtranxf_postsFilter($posts,&$query) {//WP_Query
 	global $q_config;
 	//qtranxf_dbg_log('qtranxf_postsFilter: $posts: ',$posts);
@@ -481,48 +534,7 @@ function qtranxf_postsFilter($posts,&$query) {//WP_Query
 	foreach($posts as $post) {//post is an object derived from WP_Post
 		//if($post->filter == 'raw') continue;//@since 3.4.5 - makes 'get_the_exerpts' to return raw, breaks "more" tags in 'the_content', etc.
 		//qtranxf_dbg_log('qtranxf_postsFilter: ID='.$post->ID.'; post_type='.$post->post_type.'; $post->filter: ',$post->filter);
-		foreach(get_object_vars($post) as $key => $txt) {
-			switch($key){//the quickest way to proceed
-				//known to skip
-				case 'ID'://int
-				case 'post_author':
-				case 'post_date':
-				case 'post_date_gmt':
-				case 'post_status':
-				case 'comment_status':
-				case 'ping_status':
-				case 'post_password':
-				case 'post_name': //slug!
-				case 'to_ping':
-				case 'pinged':
-				case 'post_modified':
-				case 'post_modified_gmt':
-				case 'post_parent': //int
-				case 'guid':
-				case 'menu_order': //int
-				case 'post_type':
-				case 'post_mime_type':
-				case 'comment_count':
-				case 'filter':
-					continue;
-				//known to translate
-				case 'post_content': $post->$key = qtranxf_use_language($lang, $txt, true); break;
-				case 'post_title':
-				case 'post_excerpt':
-				case 'post_content_filtered'://not sure how this is in use
-				{
-					$blocks = qtranxf_get_language_blocks($txt);
-					if(count($blocks)>1){//value is multilingual
-						$key_ml = $key.'_ml';
-						$post->$key_ml = $txt;
-						$post->$key = qtranxf_use_block($lang, $blocks, false);
-					}
-				} break;
-				//other maybe, if it is a string, most likely it never comes here
-				default:
-					$post->$key = qtranxf_use($lang, $txt, false);
-			}
-		}
+		qtranxf_translate_post($post,$lang);
 	}
 	return $posts;
 }
@@ -581,7 +593,7 @@ function qtranxf_excludeUntranslatedAdjacentPosts($where) {
 }
 
 function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
-	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type: ',$query->query_vars['post_type']);
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: post_type: ',$query->query_vars['post_type']);
 	switch($query->query_vars['post_type']){
 		//known not to filter
 		case 'nav_menu_item':
@@ -593,17 +605,17 @@ function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 		case 'post':
 		default: break;
 	}
-	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type is empty: $query: ',$query, true);
-	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $where: ',$where);
-	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: is_singular(): ',is_singular());
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: post_type is empty: $query: ',$query, true);
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: $where: ',$where);
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: is_singular(): ',is_singular());
 	$single_post_query=$query->is_singular();//since 3.1 instead of top is_singular()
-	if($single_post_query){
+	while(!$single_post_query){
 		$single_post_query = preg_match('/ID\s*=\s*[\'"]*(\d+)[\'"]*/i',$where,$matches)==1;
-		//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $single_post_query: ',$single_post_query);
-		//if($single_post_query){
-		//	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $matches[1]:',$matches[1]);
-		//}
+		if($single_post_query) break;
+		$single_post_query = preg_match('/post_name\s*=\s*[^\s]+/i',$where,$matches)==1;
+		break;
 	}
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: $single_post_query: ',$single_post_query);
 	if(!$single_post_query){
 		global $wpdb;
 		$lang = qtranxf_getLanguage();
@@ -732,7 +744,124 @@ function qtranxf_cache_delete_metadata($meta_type, $object_id){//, $meta_key) {
 
 /**
  * @since 3.2.3 translation of meta data
+ * @since 3.4.6.4 improved caching algorithm
  */
+function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $meta_key = '', $single = false){
+	global $q_config;
+	static $meta_cache_unserialized = array();
+	if(!isset($q_config['url_info'])){
+		//qtranxf_dbg_log('qtranxf_filter_postmeta: too early: $object_id='.$object_id.'; $meta_key',$meta_key,true);
+		return $original_value;
+	}
+	//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_key=',$meta_key);
+
+	//$meta_type = 'post';
+	$lang = $q_config['language'];
+	$cache_key = $meta_type . '_meta';
+	$cache_key_lang = $cache_key . $lang;
+
+	$meta_cache_wp = wp_cache_get($object_id, $cache_key);
+	if($meta_cache_wp){
+		//if there is wp cache, then we check if there is qtx cache
+		$meta_cache = wp_cache_get( $object_id, $cache_key_lang );
+	}else{
+		//reset qtx cache, since it would not be valid in the absence of wp cache
+		qtranxf_cache_delete_metadata($meta_type, $object_id);
+		$meta_cache = null;
+	}
+
+	if(!isset($meta_cache_unserialized[$meta_type])) $meta_cache_unserialized[$meta_type] = array();
+	if(!isset($meta_cache_unserialized[$meta_type][$object_id])) $meta_cache_unserialized[$meta_type][$object_id] = array();
+	$meta_unserialized = &$meta_cache_unserialized[$meta_type][$object_id];
+
+	if( !$meta_cache ){
+		if ( $meta_cache_wp ) {
+			$meta_cache = $meta_cache_wp;
+		}else{
+			$meta_cache = update_meta_cache( $meta_type, array( $object_id ) );
+			$meta_cache = $meta_cache[$object_id];
+		}
+		$meta_unserialized = array();//clear this cache if we are re-doing meta_cache
+		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
+		foreach($meta_cache as $mkey => $mval){
+			$meta_unserialized[$mkey] = array();
+			if(strpos($mkey,'_url') !== false){
+				switch($mkey){
+					case '_menu_item_url': break; // function qtranxf_wp_get_nav_menu_items takes care of this later
+					default:
+						foreach($mval as $k => $v){
+							$s = is_serialized($v);
+							if($s) $v = unserialize($v);
+							$v = qtranxf_convertURLs($v,$lang);
+							$meta_unserialized[$mkey][$k] = $v;
+							if($s) $v = serialize($v);
+							$meta_cache[$mkey][$k] = $v;
+						}
+					break;
+				}
+			}else{
+				foreach($mval as $k => $v){
+					if(!qtranxf_isMultilingual($v)) continue;
+					$s = is_serialized($v);
+					if($s) $v = unserialize($v);
+					$v = qtranxf_use($lang, $v, false, false);
+					$meta_unserialized[$mkey][$k] = $v;
+					if($s) $v = serialize($v);
+					$meta_cache[$mkey][$k] = $v;
+				}
+			}
+		}
+		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache  after:',$meta_cache);
+		wp_cache_set( $object_id, $meta_cache, $cache_key_lang );
+	}
+
+	if(!$meta_key){
+		if($single){
+	/**
+	  @since 3.2.9.9.7
+	  The code executed after a call to this filter in /wp-includes/meta.php,
+	  in function get_metadata, is apparently designed having non-empty $meta_key in mind:
+
+	  	if ( $single && is_array( $check ) ){
+	  		return $check[0];
+	  	}else
+	  		return $check;
+
+	  Following the logic of the code "if ( !$meta_key ) return $meta_cache;",
+		a few lines below in the same function, the code above rather have to be:
+
+	  	if ( $meta_key && $single && is_array( $check ) ){
+	  		return $check[0];
+	  	}else
+	  		return $check;
+
+	  WP assumes that, if $meta_key is empty, then $single must be 'false', but developers sometimes put 'true' anyway, as it is ignored in the original function. The line below offsets this imperfection.
+	  If WP ever fixes that place, this block of code can be removed.
+	 */
+			return array($meta_cache);
+		}
+		return $meta_cache;
+	}
+
+	if(isset($meta_cache[$meta_key])){
+		//cache unserialized values, just for the sake of performance.
+		$meta_key_unserialized = &$meta_unserialized[$meta_key];
+		if($single){
+			if(!isset($meta_key_unserialized[0])) $meta_key_unserialized[0] = maybe_unserialize($meta_cache[$meta_key][0]);
+		}else{
+			foreach($meta_cache[$meta_key] as $k => $v){
+				if(!isset($meta_key_unserialized[$k])) $meta_key_unserialized[$k] = maybe_unserialize($meta_cache[$meta_key][$k]);
+			}
+		}
+		return $meta_key_unserialized;
+	}
+
+	if ($single)
+		return '';
+	else
+		return array();
+}
+/* // code before 3.4.6.4
 function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $meta_key = '', $single = false){
 	global $q_config;
 	if(!isset($q_config['url_info'])){
@@ -813,7 +942,7 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 
 	  The line below offsets this imperfection.
 	  If WP ever fixes that place, this block of code will have to be removed.
-	 */
+	 * /
 			return array($meta_cache);
 		}
 		return $meta_cache;
@@ -827,6 +956,7 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 	else
 		return array();
 }
+*/
 
 /**
  * @since 3.2.3 translation of postmeta
@@ -904,11 +1034,71 @@ function qtranxf_pagenum_link($url) {
 }
 add_filter('get_pagenum_link', 'qtranxf_pagenum_link');
 
+function qtranxf_option_dt_format($fmt)
+{
+	static $c;
+	if(!empty($c[$fmt])){
+		//qtranxf_dbg_log('qtranxf_option_dt_format: cached: '.$fmt.' => ', $c[$fmt]);
+		return $c[$fmt];
+	}
+	global $q_config;
+	$lang = $q_config['language'];
+	//qtranxf_dbg_log('qtranxf_option_dt_format: $lang='.$lang.'; $fmt: ',$fmt);
+	$fmt_req = $fmt;
+	if(!empty($q_config['date_i18n'][$fmt][$lang])){
+		$fmt = $q_config['date_i18n'][$fmt][$lang];
+		//qtranxf_dbg_log('qtranxf_option_dt_format: $fmt_lang: ', $fmt);
+	}
+	if(!isset($c)) $c = array();
+	return $c[$fmt_req] = $fmt;
+}
+
+function qtranxf_date_i18n( $j, $req_format, $i, $gmt ){
+	static $level = 0;
+	if($level){
+		//qtranxf_dbg_log('qtranxf_date_i18n: $level="'.$level.'" $i='.$i.'; $req_format="'.$req_format.'"; $gmt="'.$gmt.'"; $j: ', $j);
+		return $j;//to prevent infinite loop just in case user configured it wrong.
+	}
+	//static $c;
+	//if(isset($c[$req_format][$gmt][$i])){
+	//	return $c[$req_format][$gmt][$i];
+	//}
+ 	//qtranxf_dbg_log('qtranxf_date_i18n: $i='.$i.'; $req_format="'.$req_format.'"; $gmt="'.$gmt.'"; $j: ', $j);
+	global $q_config;
+	$lang = $q_config['language'];
+	if(!empty($q_config['date_i18n'][$req_format][$lang])){
+		$fmt_lang = $q_config['date_i18n'][$req_format][$lang];
+		if($fmt_lang != $req_format){
+			$level = 1;
+			$j = date_i18n($fmt_lang,$i,$gmt);//causes recursive call
+			$level = 0;
+			//qtranxf_dbg_log('qtranxf_date_i18n: $fmt_lang="'.$fmt_lang.'"; $j: ', $j);
+		}
+	}
+	//$c[$req_format][$gmt][$i] = $j;
+ 	//qtranxf_dbg_log('qtranxf_date_i18n: $c: ', $c);
+	return $j;
+}
+
 /**
  * @since 3.3.7
  */
 function qtranxf_add_front_filters(){
 	global $q_config;
+
+	// date/time filters
+	switch($q_config['use_strftime']){
+		case QTX_DATE_WP:
+			add_filter('option_date_format', 'qtranxf_option_dt_format', 5);
+			add_filter('option_time_format', 'qtranxf_option_dt_format', 5);
+			add_filter( 'date_i18n', 'qtranxf_date_i18n', 5, 4);
+		break;
+		case QTX_DATE:
+		case QTX_DATE_OVERRIDE:
+		case QTX_STRFTIME:
+		case QTX_STRFTIME_OVERRIDE:
+		default: require_once(QTRANSLATE_DIR.'/inc/qtx_date_time.php'); break;
+	}
 
 	if($q_config['hide_untranslated']){
 		add_filter('wp_list_pages_excludes', 'qtranxf_excludePages');//moved here from _hooks.php since 3.2.8

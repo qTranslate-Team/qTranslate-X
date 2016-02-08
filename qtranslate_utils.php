@@ -248,6 +248,8 @@ function qtranxf_copy_url_info($urlinfo) {
 	if(isset($urlinfo['query'])) $r['query'] = $urlinfo['query'];
 	if(isset($urlinfo['fragment'])) $r['fragment'] = $urlinfo['fragment'];
 	if(isset($urlinfo['query_amp'])) $r['query_amp'] = $urlinfo['query_amp'];
+	if(isset($urlinfo['wp-path-slugs'])) $r['wp-path-slugs'] = $urlinfo['wp-path-slugs'];
+	if(isset($urlinfo['wp-paths'])) $r['wp-paths'] = $urlinfo['wp-paths'];
 	return $r;
 }
 
@@ -492,30 +494,39 @@ function qtranxf_getLanguageNameNative($lang = ''){
 /**
  * @since 3.4.5.4 - return language name in active language, if available, otherwise the name in native language.
 */
-function qtranxf_getLanguageName($lang = ''){
+function qtranxf_getLanguageName($lang = '', $locale = null, $native_name = null){
 	global $q_config, $l10n;
 	if(empty($lang)) return $q_config['language_name'][$q_config['language']];
 	if(isset($q_config['language-names'][$lang])) return $q_config['language-names'][$lang];
 	if(!isset($l10n['language-names'])){//is not loaded by default, since this place should not be hit frequently
-		$locale = $q_config['locale'][$q_config['language']];
-		if(!load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-'.$locale.'.mo' )){
-			if($locale[2] == '_'){
-				$locale = substr($locale,0,2);
-				load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-'.$locale.'.mo' );
+		$loc = $q_config['locale'][$q_config['language']];
+		if(!load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-'.$loc.'.mo' )){
+			if($loc[2] == '_'){
+				$loc = substr($loc,0,2);
+				load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-'.$loc.'.mo' );
 			}
 		}
 	}
 	$translations = get_translations_for_domain('language-names');
-	$locale = $q_config['locale'][$lang];
+	if(!$locale) $locale = $q_config['locale'][$lang];
 	while(!isset($translations->entries[$locale])){
 		if($locale[2] == '_'){
 			$locale = substr($locale,0,2);
 			if(isset($translations->entries[$locale])) break;
 		}
-		return $q_config['language-names'][$lang] = $q_config['language_name'][$lang];
+		if(!$native_name) $native_name = $q_config['language_name'][$lang];
+		return $q_config['language-names'][$lang] = $native_name;
 	}
 	$n = $translations->entries[$locale]->translations[0];
-	return $q_config['language-names'][$lang] = mb_convert_case($n,MB_CASE_TITLE);
+	if(empty($q_config['language_name_case'])){//Camel Case by default
+		if(function_exists('mb_convert_case')){// module 'mbstring' may not be installed by default: https://wordpress.org/support/topic/qtranslate_utilsphp-on-line-504
+			$n = mb_convert_case($n,MB_CASE_TITLE);
+		}else{
+			$msg = 'qTranslate-X: Enable PHP module "mbstring" to get names of languages printed in "Camel Case" or disable option \'Show language names in "Camel Case"\' on admin page '.admin_url('options-general.php?page=qtranslate-x#general').'. You may find more information at http://php.net/manual/en/mbstring.installation.php, or search for PHP installation options on control panel of your server provider.';
+			error_log($msg);
+		}
+	}
+	return $q_config['language-names'][$lang] = $n;
 }
 
 function qtranxf_isEnabled($lang) {
@@ -582,129 +593,6 @@ function qtranxf_isAvailableIn($post_id, $lang='') {
 	$languages = qtranxf_getAvailableLanguages($post_content);
 	if($languages===FALSE) return $lang == $q_config['default_language'];
 	return in_array($lang,$languages);
-}
-
-function qtranxf_convertDateFormatToStrftimeFormat($format) {
-	$mappings = array(
-		'd' => '%d',
-		'D' => '%a',
-		'j' => '%E',
-		'l' => '%A',
-		'N' => '%u',
-		'S' => '%q',
-		'w' => '%f',
-		'z' => '%F',
-		'W' => '%V',
-		'F' => '%B',
-		'm' => '%m',
-		'M' => '%b',
-		'n' => '%i',
-		't' => '%J',
-		'L' => '%k',
-		'o' => '%G',
-		'Y' => '%Y',
-		'y' => '%y',
-		'a' => '%P',
-		'A' => '%p',
-		'B' => '%K',
-		'g' => '%l',
-		'G' => '%L',
-		'h' => '%I',
-		'H' => '%H',
-		'i' => '%M',
-		's' => '%S',
-		'u' => '%N',
-		'e' => '%Q',
-		'I' => '%o',
-		'O' => '%O',
-		'P' => '%s',
-		'T' => '%v',
-		'Z' => '%1',
-		'c' => '%2',
-		'r' => '%3',
-		'U' => '%4'
-	);
-	
-	$date_parameters = array();
-	$strftime_parameters = array();
-	$date_parameters[] = '#%#'; 			$strftime_parameters[] = '%';
-	foreach($mappings as $df => $sf) {
-		$date_parameters[] = '#(([^%\\\\])'.$df.'|^'.$df.')#';	$strftime_parameters[] = '${2}'.$sf;
-	}
-	// convert everything
-	$format = preg_replace($date_parameters, $strftime_parameters, $format);
-	// remove single backslashes from dates
-	$format = preg_replace('#\\\\([^\\\\]{1})#','${1}',$format);
-	// remove double backslashes from dates
-	$format = preg_replace('#\\\\\\\\#','\\\\',$format);
-	return $format;
-}
-
-function qtranxf_convertFormat($format, $default_format) {
-	global $q_config;
-	// if one of special language-neutral formats are requested, don't replace it
-	switch($format){
-		case 'Z':
-		case 'c':
-		case 'r':
-		case 'U':
-			return qtranxf_convertDateFormatToStrftimeFormat($format); 
-		default: break;
-	}
-	// check for multilang formats
-	$format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($format);
-	$default_format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($default_format);
-	switch($q_config['use_strftime']) {
-		case QTX_DATE:
-			if($format=='') $format = $default_format;
-			return qtranxf_convertDateFormatToStrftimeFormat($format);
-		case QTX_DATE_OVERRIDE:
-			return qtranxf_convertDateFormatToStrftimeFormat($default_format);
-		case QTX_STRFTIME:
-			return $format;
-		case QTX_STRFTIME_OVERRIDE:
-		default:
-			return $default_format;
-	}
-}
-
-function qtranxf_convertDateFormat($format) {
-	global $q_config;
-	if(isset($q_config['date_format'][$q_config['language']])) {
-		$default_format = $q_config['date_format'][$q_config['language']];
-	} elseif(isset($q_config['date_format'][$q_config['default_language']])) {
-		$default_format = $q_config['date_format'][$q_config['default_language']];
-	} else {
-		$default_format = '';
-	}
-	return qtranxf_convertFormat($format, $default_format);
-}
-
-function qtranxf_convertTimeFormat($format) {
-	global $q_config;
-	if(isset($q_config['time_format'][$q_config['language']])) {
-		$default_format = $q_config['time_format'][$q_config['language']];
-	} elseif(isset($q_config['time_format'][$q_config['default_language']])) {
-		$default_format = $q_config['time_format'][$q_config['default_language']];
-	} else {
-		$default_format = '';
-	}
-	return qtranxf_convertFormat($format, $default_format);
-}
-
-function qtranxf_formatCommentDateTime($format) {
-	global $comment;
-	return qtranxf_strftime(qtranxf_convertFormat($format, $format), mysql2date('U',$comment->comment_date), '');
-}
-
-function qtranxf_formatPostDateTime($format) {
-	global $post;
-	return qtranxf_strftime(qtranxf_convertFormat($format, $format), mysql2date('U',$post->post_date), '');
-}
-
-function qtranxf_formatPostModifiedDateTime($format) {
-	global $post;
-	return qtranxf_strftime(qtranxf_convertFormat($format, $format), mysql2date('U',$post->post_modified), '');
 }
 
 //not in use
@@ -892,7 +780,7 @@ function qtranxf_parse_page_config($config, $url_path, $url_query) {
 
 	//qtranxf_dbg_log('qtranxf_parse_page_config: $page_configs: ', $page_configs);
 	foreach($page_configs as $post_type_key => &$page_config){
-		if(!empty($post_type_key))
+		//if(!empty($post_type_key))
 		//qtranxf_dbg_log('qtranxf_parse_page_config: $post_type_key="'.$post_type_key.'"; page_config: ', $page_config);
 		if(!empty($page_config)){
 			//clean up 'fields'
@@ -1004,3 +892,85 @@ function qtranxf_match_language_locale($locale){
 		if( $locale_code == $lang ) return $lang;
 	}
 }
+
+function qtranxf_windows_os(){
+	static $windows_os;
+	if(!isset($windows_os)){
+		$windows_os = strtoupper(substr(PHP_OS,0,3)) === 'WIN';
+	}
+	return $windows_os;
+}
+
+{// BEGIN DATE TIME FUNCTIONS
+/**
+ * Mapping to convert date format to strftime format and vice-versa.
+*/
+function qtranxf_date_strftime_mapping() {
+	static $mapping;
+	if(!$mapping)
+	$mapping = array(
+		'd' => '%d',
+		'D' => '%a',
+		'j' => '%e',//'%E',
+		'l' => '%A',
+		'N' => '%u',
+		'S' => '%q',
+		'w' => '%f',
+		'z' => '%F',
+		'W' => '%V',
+		'F' => '%B',
+		'm' => '%m',
+		'M' => '%b',
+		'n' => '%i',
+		't' => '%J',
+		'L' => '%k',
+		'o' => '%G',
+		'Y' => '%Y',
+		'y' => '%y',
+		'a' => '%P',
+		'A' => '%p',
+		'B' => '%K',
+		'g' => '%l',
+		'G' => '%L',
+		'h' => '%I',
+		'H' => '%H',
+		'i' => '%M',
+		's' => '%S',
+		'u' => '%N',
+		'e' => '%Q',
+		'I' => '%o',
+		'O' => '%O',
+		'P' => '%s',
+		'T' => '%v',
+		'Z' => '%1',
+		'c' => '%2',
+		'r' => '%3',
+		'U' => '%4'
+	);
+	return $mapping;
+}
+
+function qtranxf_convert_date2strftime($format) {
+	$mappings = qtranxf_date_strftime_mapping();
+	$d = array(); $s = array();
+	$d[] = '#%#'; $s[] = '%%';
+	foreach($mappings as $df => $sf) {
+		$d[] = '#([^%\\]?)'.$df.'#'; $s[] = '${1}'.$sf;
+	}
+	$format = preg_replace($d, $s, $format);
+	return $format;
+}
+
+function qtranxf_convert_strftime2date($format) {
+	if(strpos($format,'%')===false) return $format;
+	$mappings = qtranxf_date_strftime_mapping();
+	$d = array(); $s = array();
+	foreach($mappings as $df => $sf) {
+		$d[] = $df; $s[] = $sf;
+	}
+	$d[] = '%%'; $s[] = '%';
+	$format = str_replace('%x', 'm/d/y', $format);//for 'zh'
+	$format = str_replace($s, $d, $format);
+	return $format;
+}
+}// END DATE TIME FUNCTIONS
