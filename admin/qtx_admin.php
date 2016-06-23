@@ -61,6 +61,16 @@ function qtranxf_regroup_translations_for( $type, $edit_lang, $default_lang ) {
 	}
 }
 
+/**
+ * @since 3.4.6.5
+ */
+function qtranxf_decode_json_name_value($val) {
+	if(strpos($val,'qtranslate-fields') === false) return;
+	$nv = json_decode(stripslashes($val));
+	if(is_null($nv)) return;
+	return qtranxf_decode_name_value($nv);
+}
+
 function qtranxf_collect_translations_posted() {
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ', $_REQUEST);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: POST: ', $_POST);
@@ -108,13 +118,32 @@ function qtranxf_collect_translations_posted() {
 		//multilingual slug/term values will be processed later
 		if(!$edit_lang) $edit_lang = qtranxf_getLanguageEdit();
 		global $q_config;
-		$default_language = $q_config['default_language'];
 		$default_lang = qtranxf_getLanguage();
 		qtranxf_regroup_translations_for('qtranslate-terms', $edit_lang, $default_lang);
 		qtranxf_regroup_translations_for('qtranslate-slugs', $edit_lang, $default_lang);
 	}
 }
 add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
+
+function qtranxf_decode_translations_posted(){
+	//quick fix, there must be a better way
+	if(isset($_POST['nav-menu-data'])){
+		$r = qtranxf_decode_json_name_value($_POST['nav-menu-data']);
+		//qtranxf_dbg_log('qtranxf_collect_translations_posted: $r: ', $r);
+		if(!empty($r['qtranslate-fields'])){
+			$edit_lang = qtranxf_getLanguageEdit();
+			qtranxf_collect_translations($r['qtranslate-fields'],$r,$edit_lang);
+			unset($r['qtranslate-fields']);
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: collected $r: ', $r);
+			foreach($r as $k => $v){
+				$_POST[$k] = $v;
+			}
+			unset($_POST['nav-menu-data']);
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: nav-menu-data decoded $_POST: ', $_POST);
+		}
+	}
+}
+add_action('sanitize_comment_cookies', 'qtranxf_decode_translations_posted', 5);//after POST & GET are set, and before all WP objects are created, alternatively can use action 'setup_theme' instead.
 
 function qtranxf_admin_load()
 {
@@ -747,7 +776,7 @@ function qtranxf_admin_notices_config() {
  * A term name containing '&' is stored in database with '&amp;' instead of '&',
  * but search in get_terms is done on raw '&' coming from $_POST variable.
  */
-function qtranxf_get_terms_args($args) {
+function qtranxf_get_terms_args($args, $taxonomies=null) {
 	if(!empty($args['name'])){
 		$p = 0;
 		while(($p = strpos($args['name'],'&',$p)) !== false){
@@ -759,10 +788,33 @@ function qtranxf_get_terms_args($args) {
 				$p += 4;
 			}
 		}
+		global $q_config;
+		$lang = $q_config['language'];
+		if($lang != $q_config['default_language']){
+			$args['name'] = qtranxf_find_term($lang, $args['name']);
+		}
+	}
+	if(!empty($args['name__like'])){
+		global $q_config;
+		$lang = $q_config['language'];
+		if($lang != $q_config['default_language']){
+			$s = $args['name__like'];
+			foreach($q_config['term_name'] as $nm => $ts){
+				if(empty($ts[$lang])) continue;
+				$t = $ts[$lang];
+				if(function_exists('mb_stripos'))
+					$p = mb_stripos($t,$s);
+				else
+					$p = stripos($t,$s);
+				if($p === false) continue;
+				$args['name__like'] = $nm;
+				break;
+			}
+		}
 	}
 	return $args;
 }
-add_filter('get_terms_args', 'qtranxf_get_terms_args');
+add_filter('get_terms_args', 'qtranxf_get_terms_args', 5, 2);
 //apply_filters( 'get_terms_args', $args, $taxonomies );
 
 /**
