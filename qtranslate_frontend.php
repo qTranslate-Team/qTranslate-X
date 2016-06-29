@@ -282,7 +282,7 @@ function qtranxf_add_language_menu_item(&$items, &$menu_order, &$itemid, $key, $
 		unset($items[$k]);
 	}
 
-	foreach($q_config['enabled_languages'] as $lang)
+	foreach(qtranxf_getPageAvailableLanguages() as $lang)
 	{
 		if($type=='AL'){
 			if($lang==$language) continue;

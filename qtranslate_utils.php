@@ -964,3 +964,34 @@ function qtranxf_convert_strftime2date($format) {
 	return $format;
 }
 }// END DATE TIME FUNCTIONS
+
+function qtranxf_getPageAvailableLanguages(){
+	global $q_config;
+	$sortedLanguages = qtranxf_getSortedLanguages();
+	if (!empty($q_config['show_only_available_translations']) && $q_config['show_only_available_translations']) {
+		$postId = get_queried_object_id();
+		$pageLanguages = get_metadata('post', $postId, 'availablePageLanguages', true);
+		$availablePageLanguages = [];
+
+		if (empty($pageLanguages) || $pageLanguages === false) {
+			return $sortedLanguages;
+		}
+
+		foreach ($sortedLanguages as $language) {
+			if (in_array($language, $pageLanguages))
+				$availablePageLanguages[] = $language;
+		}
+		return $availablePageLanguages;
+	}
+	return $sortedLanguages;
+}
+function qtranxf_setPageAvailableLanguages($newStatus, $oldStatus, $post) {
+	$translatedLanguages = qtranxf_getAvailableLanguages($post->post_content);
+	if ($newStatus == 'publish') {
+		update_post_meta($post->ID, 'availablePageLanguages', $translatedLanguages);
+	}
+	else if ($newStatus == 'trash') {
+		delete_post_meta($post->ID, 'availablePageLanguages', $translatedLanguages);
+	}
+}
+add_action('transition_post_status', 'qtranxf_setPageAvailableLanguages', 10, 3);
