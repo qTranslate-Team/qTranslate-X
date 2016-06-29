@@ -477,6 +477,13 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 	<?php qtranxf_admin_section_start('advanced') ?>
 		<table class="form-table">
 			<tr valign="top">
+				<th scope="row"><?php _e('Language tag choice', 'qtranslate') ?></th>
+				<td>
+					<label for="use_swirly_brackets"><input type="checkbox" name="use_swirly_brackets" id="use_swirly_brackets" value="1"<?php checked($q_config['use_swirly_brackets']) ?>/> <?php _e('Use swirly brackets - "{" instead of "[" in translation storage.', 'qtranslate') ?></label>
+				</td>
+			</tr>
+
+			<tr valign="top">
 				<th scope="row"><?php _e('Post Types', 'qtranslate') ?></th>
 				<td>
 					<label for="post_types"><?php _e('Post types enabled for translation:', 'qtranslate') ?></label><p>

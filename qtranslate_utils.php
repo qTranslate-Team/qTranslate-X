@@ -23,6 +23,20 @@ function qtranxf_error_log($msg) {
 	error_log('qTranslate-X: '.strip_tags($msg));
 }
 
+
+/**
+ * @since 3.3.8
+ * This function needs come kind of configuration backend
+ */
+
+function qtransx_getTagCharacter() {
+	global $q_config;
+	if($q_config['use_swirly_brackets']){
+		return '{';
+	}
+	return '[';	
+}
+
 /**
  * @since 3.3.7
  */

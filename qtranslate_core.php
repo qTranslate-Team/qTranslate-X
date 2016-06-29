@@ -448,7 +448,11 @@ function qtranxf_http_negotiate_language(){
 				$supported[] = $q_config['locale_html'][$lang];
 			}
 		}
-		$locale_negotiated = http_negotiate_language($supported);
+		$fallback = array();
+		$locale_negotiated = http_negotiate_language($supported, $fallback);
+		if ($fallback == NULL) {
+			$locale_negotiated = 'en';
+		};
 		return qtranxf_match_language_locale($locale_negotiated);
 	}else{
 		return qtranxf_get_browser_language();
@@ -1307,8 +1311,13 @@ function qtranxf_join_byline($texts) {
 			$ln[$lang] = $t;
 		}
 		if( $done ) break;
-		$text .= qtranxf_join_b($ln).PHP_EOL;
+
+		$char = qtransx_getTagCharacter();
+		if ($char == '{') $text .= qtranxf_join_b($ln).PHP_EOL;
+		else $text .= qtranxf_join_s($ln).PHP_EOL;
+	
 	}
+
 	return $text;
 }
 

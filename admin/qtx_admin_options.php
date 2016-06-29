@@ -14,6 +14,7 @@ function qtranxf_admin_set_default_options(&$ops){
 
 	$ops['admin']['bool']=array(
 		'auto_update_mo' => true,// automatically update .mo files
+		'use_swirly_brackets' => false // use swirly brackets
 	);
 
 	//single line options
