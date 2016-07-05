@@ -68,7 +68,7 @@ function qtranxf_init_language() {
 	if( $q_config['url_info']['doing_front_end'] && qtranxf_can_redirect() ){
 		$lang = $q_config['language'];
 		$url_orig = $url_info['scheme'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-		$url_lang = qtranxf_convertURL('',$lang);//uses $q_config['url_info'] and caches information, which will be needed later anyway.
+		$url_lang = qtranxf_convertURL($url_orig,$lang);//uses $q_config['url_info'] and caches information, which will be needed later anyway.
 		if(!isset($url_info['doredirect']) && $url_orig != $url_lang){
 			$url_info['doredirect'] = '$url_orig != $url_lang';
 		}
