@@ -1085,10 +1085,6 @@ function qtranxf_split_blocks($blocks, &$found = array()) {
 			break;
 		}
 	}
-	//it gets trimmed later in qtranxf_use() anyway, better to do it here
-	foreach($result as $lang => $text){
-		$result[$lang]=trim($text);
-	}
 	return $result;
 }
 
