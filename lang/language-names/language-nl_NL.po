@@ -1,46 +1,54 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Language: \n"
+"Language: nl_NL\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
 
 msgid "en"
-msgstr "Engels"
+msgstr "het Engels"
 
 msgid "en_US"
-msgstr "Amerikaans Engels"
+msgstr "het Amerikaans Engels"
 
 msgid "af"
-msgstr "Afrikaans"
+msgstr "het Afrikaans"
 
 msgid "ak"
-msgstr "Akan"
+msgstr "het Akan"
 
 msgid "sq"
-msgstr "Albanees"
+msgstr "het Albanees"
 
 msgid "arq"
-msgstr "Algerijns Arabisch"
+msgstr "het Algerijns Arabisch"
 
 msgid "am"
-msgstr "Amhaars"
+msgstr "het Amhaars"
 
 msgid "ar"
-msgstr "Arabisch"
+msgstr "het Arabisch"
 
 msgid "hy"
-msgstr "Armeens"
+msgstr "het Armeens"
 
 msgid "rup_MK"
-msgstr "Aroemeens"
+msgstr "het Aroemeens"
 
 msgid "frp"
-msgstr "Arpitaans"
+msgstr "het Arpitaans"
 
 msgid "as"
-msgstr "Assamees"
+msgstr "het Assamees"
 
 msgid "az"
-msgstr "Azerbeidzjaans"
+msgstr "het Azerbeidzjaans"
 
 msgid "az_TR"
 msgstr ""
@@ -49,31 +57,31 @@ msgid "bcc"
 msgstr ""
 
 msgid "ba"
-msgstr "Basjkiers"
+msgstr "het Basjkiers"
 
 msgid "eu"
-msgstr "Baskisch"
+msgstr "het Baskisch"
 
 msgid "bel"
 msgstr ""
 
 msgid "bn_BD"
-msgstr "Bengaals"
+msgstr "het Bengaals"
 
 msgid "bs_BA"
-msgstr "Bosnisch"
+msgstr "het Bosnisch"
 
 msgid "bre"
-msgstr "Bretons"
+msgstr "het Bretons"
 
 msgid "bg_BG"
-msgstr "Bulgaars"
+msgstr "het Bulgaars"
 
 msgid "ca"
-msgstr "Catalaans"
+msgstr "het Catalaans"
 
 msgid "bal"
-msgstr "Beloetsji"
+msgstr "het Beloetsji"
 
 msgid "zh_CN"
 msgstr ""
@@ -85,34 +93,34 @@ msgid "zh_TW"
 msgstr ""
 
 msgid "co"
-msgstr "Corsicaans"
+msgstr "het Corsicaans"
 
 msgid "hr"
-msgstr "Kroatisch"
+msgstr "het Kroatisch"
 
 msgid "cs_CZ"
-msgstr "Tsjechisch"
+msgstr "het Tsjechisch"
 
 msgid "da_DK"
-msgstr "Deens"
+msgstr "het Deens"
 
 msgid "dv"
-msgstr "Divehi"
+msgstr "het Divehi"
 
 msgid "nl_NL"
-msgstr "Nederlands"
+msgstr "het Nederlands"
 
 msgid "nl_BE"
-msgstr "Vlaams"
+msgstr "het Vlaams"
 
 msgid "dzo"
 msgstr ""
 
 msgid "en_AU"
-msgstr "Australisch Engels"
+msgstr "het Australisch Engels"
 
 msgid "en_CA"
-msgstr "Canadees Engels"
+msgstr "het Canadees Engels"
 
 msgid "en_NZ"
 msgstr ""
@@ -121,178 +129,178 @@ msgid "en_ZA"
 msgstr ""
 
 msgid "en_GB"
-msgstr "Brits Engels"
+msgstr "het Brits Engels"
 
 msgid "eo"
-msgstr "Esperanto"
+msgstr "het Esperanto"
 
 msgid "et"
-msgstr "Estisch"
+msgstr "het Estisch"
 
 msgid "fo"
-msgstr "Faeröers"
+msgstr "het Faeröers"
 
 msgid "fi"
-msgstr "Fins"
+msgstr "het Fins"
 
 msgid "fr_BE"
 msgstr ""
 
 msgid "fr_CA"
-msgstr "Canadees Frans"
+msgstr "het Canadees Frans"
 
 msgid "fr_FR"
-msgstr "Frans"
+msgstr "het Frans"
 
 msgid "fy"
-msgstr "Fries"
+msgstr "het Fries"
 
 msgid "fur"
-msgstr "Friulisch"
+msgstr "het Friulisch"
 
 msgid "fuc"
 msgstr ""
 
 msgid "gl_ES"
-msgstr "Galicisch"
+msgstr "het Galicisch"
 
 msgid "ka_GE"
-msgstr "Georgisch"
+msgstr "het Georgisch"
 
 msgid "de_DE"
-msgstr "Duits"
+msgstr "het Duits"
 
 msgid "de_CH"
-msgstr "Zwitsers Hoogduits"
+msgstr "het Zwitsers Hoogduits"
 
 msgid "el"
-msgstr "Grieks"
+msgstr "het Grieks"
 
 msgid "gn"
-msgstr "Guaraní"
+msgstr "het Guaraní"
 
 msgid "gu"
-msgstr "Gujarati"
+msgstr "het Gujarati"
 
 msgid "haw_US"
-msgstr "Hawaïaans"
+msgstr "het Hawaïaans"
 
 msgid "haz"
 msgstr ""
 
 msgid "he_IL"
-msgstr "Hebreeuws"
+msgstr "het Hebreeuws"
 
 msgid "hi_IN"
-msgstr "Hindi"
+msgstr "het Hindi"
 
 msgid "hu_HU"
-msgstr "Hongaars"
+msgstr "het Hongaars"
 
 msgid "is_IS"
-msgstr "IJslands"
+msgstr "het IJslands"
 
 msgid "ido"
 msgstr ""
 
 msgid "id_ID"
-msgstr "Indonesisch"
+msgstr "het Indonesisch"
 
 msgid "ga"
-msgstr "Iers"
+msgstr "het Iers"
 
 msgid "it_IT"
-msgstr "Italiaans"
+msgstr "het Italiaans"
 
 msgid "ja"
-msgstr "Japans"
+msgstr "het Japans"
 
 msgid "jv_ID"
-msgstr "Javaans"
+msgstr "het Javaans"
 
 msgid "kab"
-msgstr "Kabylisch"
+msgstr "het Kabylisch"
 
 msgid "kn"
-msgstr "Kannada"
+msgstr "het Kannada"
 
 msgid "kk"
-msgstr "Kazachs"
+msgstr "het Kazachs"
 
 msgid "km"
-msgstr "Khmer"
+msgstr "het Khmer"
 
 msgid "kin"
 msgstr ""
 
 msgid "ky_KY"
-msgstr "Kirgizisch"
+msgstr "het Kirgizisch"
 
 msgid "ko_KR"
-msgstr "Koreaans"
+msgstr "het Koreaans"
 
 msgid "ckb"
-msgstr "Soranî"
+msgstr "het Soranî"
 
 msgid "lo"
-msgstr "Laotiaans"
+msgstr "het Laotiaans"
 
 msgid "lv"
-msgstr "Lets"
+msgstr "het Lets"
 
 msgid "li"
-msgstr "Limburgs"
+msgstr "het Limburgs"
 
 msgid "lin"
 msgstr ""
 
 msgid "lt_LT"
-msgstr "Litouws"
+msgstr "het Litouws"
 
 msgid "lb_LU"
-msgstr "Luxemburgs"
+msgstr "het Luxemburgs"
 
 msgid "mk_MK"
-msgstr "Macedonisch"
+msgstr "het Macedonisch"
 
 msgid "mg_MG"
-msgstr "Malagassisch"
+msgstr "het Malagassisch"
 
 msgid "ms_MY"
-msgstr "Maleis"
+msgstr "het Maleis"
 
 msgid "ml_IN"
-msgstr "Malayalam"
+msgstr "het Malayalam"
 
 msgid "mri"
 msgstr ""
 
 msgid "mr"
-msgstr "Marathi"
+msgstr "het Marathi"
 
 msgid "xmf"
-msgstr "Mingreels"
+msgstr "het Mingreels"
 
 msgid "mn"
-msgstr "Mongools"
+msgstr "het Mongools"
 
 msgid "me_ME"
 msgstr ""
 
 msgid "ary"
-msgstr "Marokkaans Arabisch"
+msgstr "het Marokkaans Arabisch"
 
 msgid "my_MM"
 msgstr ""
 
 msgid "ne_NP"
-msgstr "Nepalees"
+msgstr "het Nepalees"
 
 msgid "nb_NO"
-msgstr "Noors - Bokmål"
+msgstr "het Noors - Bokmål"
 
 msgid "nn_NO"
-msgstr "Noors - Nynorsk"
+msgstr "het Noors - Nynorsk"
 
 msgid "oci"
 msgstr ""
@@ -301,49 +309,49 @@ msgid "ory"
 msgstr ""
 
 msgid "os"
-msgstr "Ossetisch"
+msgstr "het Ossetisch"
 
 msgid "ps"
-msgstr "Pasjtoe"
+msgstr "het Pasjtoe"
 
 msgid "fa_IR"
-msgstr "Perzisch"
+msgstr "het Perzisch"
 
 msgid "fa_AF"
 msgstr ""
 
 msgid "pl_PL"
-msgstr "Pools"
+msgstr "het Pools"
 
 msgid "pt_BR"
-msgstr "Braziliaans Portugees"
+msgstr "het Braziliaans Portugees"
 
 msgid "pt_PT"
-msgstr "Europees Portugees"
+msgstr "het Europees Portugees"
 
 msgid "pa_IN"
-msgstr "Punjabi"
+msgstr "het Punjabi"
 
 msgid "rhg"
 msgstr ""
 
 msgid "ro_RO"
-msgstr "Roemeens"
+msgstr "het Roemeens"
 
 msgid "roh"
 msgstr ""
 
 msgid "ru_RU"
-msgstr "Russisch"
+msgstr "het Russisch"
 
 msgid "ru_UA"
 msgstr ""
 
 msgid "rue"
-msgstr "Roetheens"
+msgstr "het Roetheens"
 
 msgid "sah"
-msgstr "Jakoets"
+msgstr "het Jakoets"
 
 msgid "sa_IN"
 msgstr ""
@@ -352,28 +360,28 @@ msgid "srd"
 msgstr ""
 
 msgid "gd"
-msgstr "Schots-Gaelisch"
+msgstr "het Schots-Gaelisch"
 
 msgid "sr_RS"
-msgstr "Servisch"
+msgstr "het Servisch"
 
 msgid "szl"
-msgstr "Silezisch"
+msgstr "het Silezisch"
 
 msgid "sd_PK"
-msgstr "Sindhi"
+msgstr "het Sindhi"
 
 msgid "si_LK"
-msgstr "Singalees"
+msgstr "het Singalees"
 
 msgid "sk_SK"
-msgstr "Slowaaks"
+msgstr "het Slowaaks"
 
 msgid "sl_SI"
-msgstr "Sloveens"
+msgstr "het Sloveens"
 
 msgid "so_SO"
-msgstr "Somalisch"
+msgstr "het Somalisch"
 
 msgid "azb"
 msgstr ""
@@ -388,7 +396,7 @@ msgid "es_CO"
 msgstr ""
 
 msgid "es_MX"
-msgstr "Mexicaans Spaans"
+msgstr "het Mexicaans Spaans"
 
 msgid "es_PE"
 msgstr ""
@@ -397,80 +405,79 @@ msgid "es_PR"
 msgstr ""
 
 msgid "es_ES"
-msgstr "Europees Spaans"
+msgstr "het Europees Spaans"
 
 msgid "es_VE"
 msgstr ""
 
 msgid "su_ID"
-msgstr "Soendanees"
+msgstr "het Soendanees"
 
 msgid "sw"
-msgstr "Swahili"
+msgstr "het Swahili"
 
 msgid "sv_SE"
-msgstr "Zweeds"
+msgstr "het Zweeds"
 
 msgid "gsw"
-msgstr "Zwitserduits"
+msgstr "het Zwitserduits"
 
 msgid "tl"
-msgstr "Tagalog"
+msgstr "het Tagalog"
 
 msgid "tg"
-msgstr "Tadzjieks"
+msgstr "het Tadzjieks"
 
 msgid "tzm"
-msgstr "Tamazight (Centraal-Marokko)"
+msgstr "het Tamazight (Centraal-Marokko)"
 
 msgid "ta_IN"
-msgstr "Tamil"
+msgstr "het Tamil"
 
 msgid "ta_LK"
 msgstr ""
 
 msgid "tt_RU"
-msgstr "Tataars"
+msgstr "het Tataars"
 
 msgid "te"
-msgstr "Telugu"
+msgstr "het Telugu"
 
 msgid "th"
-msgstr "Thai"
+msgstr "het Thai"
 
 msgid "bo"
-msgstr "Tibetaans"
+msgstr "het Tibetaans"
 
 msgid "tir"
 msgstr ""
 
 msgid "tr_TR"
-msgstr "Turks"
+msgstr "het Turks"
 
 msgid "tuk"
 msgstr ""
 
 msgid "ug_CN"
-msgstr "Oeigoers"
+msgstr "het Oeigoers"
 
 msgid "uk"
-msgstr "Oekraïens"
+msgstr "het Oekraïens"
 
 msgid "ur"
-msgstr "Urdu"
+msgstr "het Urdu"
 
 msgid "uz_UZ"
-msgstr "Oezbeeks"
+msgstr "het Oezbeeks"
 
 msgid "vi"
-msgstr "Vietnamees"
+msgstr "het Vietnamees"
 
 msgid "wa"
-msgstr "Waals"
+msgstr "het Waals"
 
 msgid "cy"
-msgstr "Welsh"
+msgstr "het Welsh"
 
 msgid "yor"
 msgstr ""
-
