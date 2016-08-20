@@ -389,6 +389,7 @@ function qtranxf_detect_language_front(&$url_info) {
 	){
 		$url_info['doredirect']='language needs to be shown in url';
 	}
+	if(isset($url_info['doredirect']) && $q_config['hide_default_language']) $lang = $q_config['default_language'];
 	return $lang;
 }
 
