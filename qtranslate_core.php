@@ -364,7 +364,9 @@ function qtranxf_detect_language_front(&$url_info) {
 	global $q_config;
 	//assert($url_info['doing_front_end']);
 	while(true){
-		if( isset($_COOKIE[QTX_COOKIE_NAME_FRONT]) ){
+		if( isset($_COOKIE[QTX_COOKIE_NAME_FRONT])
+			&& !$q_config['disable_client_cookies']
+		){
 			$cs=null;
 			$lang=qtranxf_resolveLangCase($_COOKIE[QTX_COOKIE_NAME_FRONT],$cs);
 			$url_info['lang_cookie_front'] = $lang;
