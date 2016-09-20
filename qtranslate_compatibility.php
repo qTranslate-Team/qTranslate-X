@@ -67,3 +67,15 @@ if (!function_exists('qtrans_useDefaultLanguage')){
 if(!function_exists('qtrans_useTermLib')){
 	function qtrans_useTermLib($obj){ return qtranxf_useTermLib($obj); }
 }
+
+// To keep comptible with 3.6.1 version where this function doesn't exists
+if(!function_exists('wp_normalize_path')){
+    function wp_normalize_path( $path ) {
+        $path = str_replace( '\\', '/', $path );
+        $path = preg_replace( '|(?<=.)/+|', '/', $path );
+        if ( ':' === substr( $path, 1, 1 ) ) {
+            $path = ucfirst( $path );
+        }
+        return $path;
+    }
+}
