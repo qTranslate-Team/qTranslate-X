@@ -551,7 +551,6 @@ function qtranxf_pre_get_posts( &$query ) {//WP_Query
 				default: break;
 			}
 	}
-	$query->query_vars['suppress_filters'] = false;
 }
 add_action( 'pre_get_posts', 'qtranxf_pre_get_posts', 99 );
 
