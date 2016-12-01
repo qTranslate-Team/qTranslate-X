@@ -838,11 +838,11 @@ msgstr "Преобразование Даты/Времени"
 
 #: admin/qtx_configuration.php:367
 msgid "Use emulated date function."
-msgstr "эмулировать функции даты."
+msgstr "Эмулировать функции даты."
 
 #: admin/qtx_configuration.php:368
 msgid "Use emulated date function and replace formats with the predefined formats for each language."
-msgstr "эмулировать функции даты с заменой форматов предопределенных  для каждого языка."
+msgstr "Эмулировать функции даты с заменой форматов предопределенных  для каждого языка."
 
 #: admin/qtx_configuration.php:369
 msgid "Use strftime instead of date."
@@ -881,7 +881,7 @@ msgstr ""
 #: admin/qtx_configuration.php:391
 #, fuzzy
 msgid "Editor Mode"
-msgstr "Raw режим редактора"
+msgstr "Режим редактора"
 
 #: admin/qtx_configuration.php:393
 msgid "Use Language Switching Buttons (LSB)."
@@ -893,11 +893,11 @@ msgstr ""
 
 #: admin/qtx_configuration.php:394
 msgid "This is the default mode."
-msgstr ""
+msgstr "Это режим по умолчанию"
 
 #: admin/qtx_configuration.php:395
 msgid "Do not use Language Switching Buttons to edit multi-language text entries."
-msgstr ""
+msgstr "Не исполльзовать кнопки для изменения языка, чтобы редактировать многоязычные текстовые записи"
 
 #: admin/qtx_configuration.php:395
 msgid "Editor Raw Mode"
@@ -936,7 +936,7 @@ msgstr ""
 
 #: admin/qtx_configuration.php:412
 msgid "Active button class:"
-msgstr ""
+msgstr "CSS-класс для активной кнопки"
 
 #: admin/qtx_configuration.php:413
 msgid "The above is reset to an appropriate default, if the below is changed."
@@ -949,7 +949,7 @@ msgstr ""
 #: admin/qtx_configuration.php:418 admin/qtx_configuration.php:420
 #: admin/qtx_configuration.php:462 admin/qtx_configuration.php:464
 msgid "Use custom CSS"
-msgstr ""
+msgstr "Использовать индивидуальные настройки CSS"
 
 #: admin/qtx_configuration.php:420
 #, php-format
@@ -962,23 +962,23 @@ msgstr ""
 
 #: admin/qtx_configuration.php:442 admin/qtx_configuration.php:444
 msgid "Do not highlight the translatable fields."
-msgstr ""
+msgstr "Не подсвечивать переводимые поля"
 
 #: admin/qtx_configuration.php:446 admin/qtx_configuration.php:448
 msgid "Show a line on the left border of translatable fields."
-msgstr ""
+msgstr "Показать линию слевого края от переводимых полей"
 
 #: admin/qtx_configuration.php:450 admin/qtx_configuration.php:452
 msgid "Draw a border around translatable fields."
-msgstr ""
+msgstr "Нарисовать рамку вокруг переводимхы полей"
 
 #: admin/qtx_configuration.php:454 admin/qtx_configuration.php:456
 msgid "Show a shadow on the left of translatable fields."
-msgstr ""
+msgstr "Показывать тень слева от переводимых полей"
 
 #: admin/qtx_configuration.php:458 admin/qtx_configuration.php:460
 msgid "Outline border around translatable fields."
-msgstr ""
+msgstr "Наружняя рамка вокруг переводимых полей"
 
 #: admin/qtx_configuration.php:468
 #, php-format
@@ -1042,7 +1042,7 @@ msgstr "Значение атрибута \"id\" обычно уникален �
 #: admin/qtx_configuration.php:534
 #, php-format
 msgid "All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s"
-msgstr "Все поля указанного класса будет реагировать на кнопки переключения языка. Будьте осторожны, чтобы не включить класс, который затронет поля нейтральные к языку. Если вы не можете уникально идентифицировать поле необходимое %s, либо с атрибутом %s, сообщите о проблеме в %sSupport Forum%s"
+msgstr "Все поля указанного класса будут реагировать на кнопки переключения языка. Будьте осторожны, чтобы не включить класс, который затронет поля нейтральные к языку. Если вы не можете уникально идентифицировать поле необходимое %s, либо с атрибутом %s, сообщите о проблеме в %sSupport Forum%s"
 
 #: admin/qtx_configuration.php:538
 msgid "Custom Filters"
