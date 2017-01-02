@@ -11,7 +11,7 @@ jQuery(document).ready(
 
         var set_post_name = function (lang) {
             if (!qtx.hasContentHook('post_name')) return;
-            new_post_slug_field = $('#new-post-slug');
+            var new_post_slug_field = $('#new-post-slug');
             if (new_post_slug_field.length) {
                 new_post_slug_field.attr('value', post_name_field.value);
             } else {
@@ -29,7 +29,7 @@ jQuery(document).ready(
             if (!qtx.hasContentHook('post_name')) {
                 return true;
             }
-            new_post_slug_field = $('#new-post-slug');
+            var new_post_slug_field = $('#new-post-slug');
             //co('canSwitchLang: new_post_slug_field.length=', new_post_slug_field.length);
             if (new_post_slug_field.length) {
                 alert('Please, finish current slug editing before switching the active edit language.');

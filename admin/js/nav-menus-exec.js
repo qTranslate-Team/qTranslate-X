@@ -17,6 +17,7 @@ jQuery(document).ready(
 
         var onAddMenuItem = function (menuMarkup) {
             var rx = /id="menu-item-(\d+)"/gi;
+            var matches;
             while ((matches = rx.exec(menuMarkup))) {
                 var id = 'menu-item-' + matches[1];
                 var li = document.getElementById(id);

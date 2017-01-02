@@ -160,7 +160,7 @@ String.prototype.xsplit = function (_regEx) {
 function qtranxj_ce(tagName, props, pNode, isFirst) {
     var el = document.createElement(tagName);
     if (props) {
-        for (prop in props) {
+        for (var prop in props) {
             //try
             {
                 el[prop] = props[prop];
@@ -229,7 +229,6 @@ var qTranslateX = function (pg) {
         document.cookie = 'qtrans_edit_language=' + lang;
     };
 
-    qTranslateConfig.activeLanguage;
     if (qTranslateConfig.LSB) {
         qTranslateConfig.activeLanguage = qtranxj_get_cookie('qtrans_edit_language');
         if (!qTranslateConfig.activeLanguage || !this.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
@@ -629,7 +628,7 @@ var qTranslateX = function (pg) {
     };
 
     var updateTinyMCE = function (h) {
-        text = h.contentField.value;
+        var text = h.contentField.value;
         //co('updateTinyMCE: window.switchEditors: ',window.switchEditors);
         //c('updateTinyMCE: text:'+text);
         if (h.wpautop && window.switchEditors) {
@@ -930,7 +929,7 @@ var qTranslateX = function (pg) {
         }
 
         /** Sets hooks on HTML-loaded TinyMCE editors via tinyMCEPreInit.mceInit. */
-        setTinyMceInit = function () {
+        var setTinyMceInit = function () {
             //co('setTinyMceInit: this: ', this);
             if (!window.tinyMCE) return;
             for (var key in contentHooks) {
@@ -963,7 +962,7 @@ var qTranslateX = function (pg) {
         setTinyMceInit();
 
         /** Adds more TinyMCE editors, which may have been initialized dynamically. */
-        loadTinyMceHooks = function () {
+        var loadTinyMceHooks = function () {
             if (!window.tinyMCE) return;
             if (!tinyMCE.editors) return;
             for (var i = 0; i < tinyMCE.editors.length; ++i) {
@@ -1280,7 +1279,7 @@ var qTranslateX = function (pg) {
             this.addLanguageSwitchListener(pg.onTabSwitch);
         }
     }
-};;;;;
+};
 
 /**
  * Designed as interface for other plugin integration. The documentation is available at
