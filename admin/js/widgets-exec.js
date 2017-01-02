@@ -18,7 +18,7 @@ jQuery(document).ready(
             widget.find("textarea[id^='widget-text-'][id$='-text']").each(function (i, e) {
                 qtx.refreshContentHook(e);
             });
-        }
+        };
 
         $(document).on('widget-added', onWidgetUpdate);
         $(document).on('widget-updated', onWidgetUpdate);
@@ -27,7 +27,7 @@ jQuery(document).ready(
             jQuery('#widgets-right .widget').each(function () {
                 wpWidgets.appendTitle(this);
             });
-        }
+        };
 
         qtx.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
     });

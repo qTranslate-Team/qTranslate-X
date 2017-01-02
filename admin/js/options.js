@@ -12,13 +12,13 @@ jQuery(document).ready(
                 if (p >= 0) return ce.substring(p + nm.length, ce.length);
             }
             return '';
-        }
+        };
         var setFormAction = function (hash) {
             var f = jQuery('#qtranxs-configuration-form');
             var a = f.attr('action');
             a     = a.replace(/(#.*|$)/, hash);
             f.attr('action', a);
-        }
+        };
         var switchTabTo   = function (anchor, hash) {
             // active tab
             anchor.parent().children().removeClass('nav-tab-active');
@@ -30,7 +30,7 @@ jQuery(document).ready(
             tabcontents.find('div' + tab_id).removeClass('hidden');
             setFormAction(hash);
             document.cookie = 'qtrans_admin_section=' + hash;
-        }
+        };
         var onHashChange  = function (hash_default) {
             var tabs = $('.nav-tab-wrapper');
             if (!tabs || !tabs.length) return;
@@ -58,7 +58,7 @@ jQuery(document).ready(
                 return;
             }
             switchTabTo(anchor, hash);
-        }
+        };
         $(window).bind('hashchange', function (e) {
             onHashChange();
         });

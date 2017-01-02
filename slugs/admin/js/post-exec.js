@@ -20,10 +20,10 @@ jQuery(document).ready(
                 //if(!editable_post_name_full_field) editable_post_name_full_field = $('#editable-post-name-full');
                 //if(editable_post_name_full_field.length) editable_post_name_full_field.text(post_name_field.value);
 
-                $('#editable-post-name').text(post_name_field.value)
+                $('#editable-post-name').text(post_name_field.value);
                 $('#editable-post-name-full').text(post_name_field.value)
             }
-        }
+        };
 
         var canSwitchLang = function (lang) {
             if (!qtx.hasContentHook('post_name')) {
@@ -37,7 +37,7 @@ jQuery(document).ready(
                 return false;
             }
             return true;
-        }
+        };
 
         qtx.addLanguageSwitchBeforeListener(canSwitchLang);
         qtx.addLanguageSwitchAfterListener(set_post_name);

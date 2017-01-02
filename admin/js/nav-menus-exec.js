@@ -13,7 +13,7 @@ jQuery(document).ready(
             qtx.addDisplayHooksByClass('menu-item-title', li);
             //qtx.addDisplayHooksByClass('item-title',li);
             qtx.addDisplayHooksByTagInClass('link-to-original', 'A', li);
-        }
+        };
 
         var onAddMenuItem = function (menuMarkup) {
             var rx = /id="menu-item-(\d+)"/gi;
@@ -22,7 +22,7 @@ jQuery(document).ready(
                 var li = document.getElementById(id);
                 if (li) addMenuItemHooks(li);
             }
-        }
+        };
 
         if (wpNavMenu) {
             var wp_addMenuItemToBottom = wpNavMenu.addMenuItemToBottom;
@@ -49,7 +49,7 @@ jQuery(document).ready(
                     wpNavMenu.refreshAdvancedAccessibility();
                 }
             }
-        }
+        };
         onLanguageSwitchAfter();
 
         qtx.addLanguageSwitchAfterListener(onLanguageSwitchAfter);

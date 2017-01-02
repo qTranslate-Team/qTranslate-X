@@ -35,7 +35,7 @@ jQuery(document).ready(
                     url.host = qTranslateConfig.domains[lang];
                     break;
             }
-        }
+        };
 
         var btnViewPostA;//a node of 'View Page/Post' link.
         var origUrl, langUrl, origUrlQ;
@@ -91,7 +91,7 @@ jQuery(document).ready(
             if (view_link && view_link.children.length) {
                 view_link.children[0].href = btnViewPostA.href;
             }
-        }
+        };
 
         //handle prompt text of empty field 'title', not important
         var field_title            = jQuery('#title');
@@ -106,7 +106,7 @@ jQuery(document).ready(
             }
             //jQuery('#title-prompt-text').remove();//ok
             //this.delLanguageSwitchAfterListener(hide_title_prompt_text);//ok
-        }
+        };
 
         qtx.addCustomContentHooks();//handles values of option 'Custom Fields'
         setSlugLanguage(qtx.getActiveLanguage());
