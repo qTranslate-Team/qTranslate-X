@@ -17,10 +17,8 @@
 
 .qtranxs-lang-switch-wrap li.qtranxs-lang-switch {
     position: relative;
-    border-color: #ccc;
     padding: 5px 5px;
     cursor: pointer;
-    position: relative;
     z-index: 2;
     background: none;
     margin-right: 2px;

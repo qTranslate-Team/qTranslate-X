@@ -18,8 +18,7 @@
 
 .qtranxs-lang-switch.active {
     border-color: #888;
-    background-image: none;
-    background-color: #bbb;
+    background: #bbb none;
     color: #555;
 }
 

@@ -66,8 +66,7 @@
 
 #wpadminbar #wp-admin-bar-language > div.ab-item,
 #wpadminbar #wp-admin-bar-language ul li {
-    background-repeat: no-repeat;
-    background-position: right;
+    background: no-repeat right;
     background-size: 18px;
 }
 
