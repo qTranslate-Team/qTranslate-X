@@ -190,7 +190,7 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 		$id   = 'qtranxs_' . $type . '_' . $key;
 		?>
         <tr>
-            <th scope="row" style="text-align: right"><label for="<?php echo $id ?>" class="i18n-multilingual-display"><?php echo $label ?></label></th>
+            <th scope="row" style="text-align: right;"><label for="<?php echo $id ?>" class="i18n-multilingual-display"><?php echo $label ?></label></th>
             <td><input type="text" name="<?php echo $name ?>" id="<?php echo $id ?>" value="<?php echo $val ?>" class="i18n-multilingual-slug qtranxs-slug-<?php echo $type ?> widefat"></td>
         </tr>
 		<?php

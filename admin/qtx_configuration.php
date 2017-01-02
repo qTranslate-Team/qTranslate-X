@@ -71,7 +71,7 @@ function qtranxf_language_form() {
 				}
 				?>
             </select>
-            <img src="" alt="<?php _e( 'Flag', 'qtranslate' ) ?>" id="preview_flag" style="vertical-align:middle; display:none"/>
+            <img src="" alt="<?php _e( 'Flag', 'qtranslate' ) ?>" id="preview_flag" style="vertical-align:middle; display:none;"/>
 			<?php
 		} else {
 			_e( 'Incorrect Flag Image Path! Please correct it!', 'qtranslate' );
@@ -244,7 +244,7 @@ function qtranxf_conf() {
 		?>
         <h2><?php _e( 'Language Management (qTranslate Configuration)', 'qtranslate' ) ?></h2>
         <p class="qtranxs_heading"
-           style="font-size: small"><?php printf( __( 'For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate' )
+           style="font-size: small;"><?php printf( __( 'For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate' )
 				, 'https://qtranslatexteam.wordpress.com/faq/'
 //, 'https://wordpress.org/plugins/qtranslate-x/faq/'
 				, 'http://qtranslate-x.com/support/'
@@ -455,7 +455,7 @@ function qtranxf_conf() {
                                 <td colspan="2" class="i18n-anchor-lsb"></td>
                             </tr>
                             <tr valign="top">
-                                <th scope="row" style="text-align:right">
+                                <th scope="row" style="text-align:right;">
                                     <label for="date_format"><?php echo qtranxf_translate_wp( 'Date Format' ) . ' (&ldquo;' . $date_format . '&rdquo;)' ?></label>
                                     <input type="hidden" name="date_i18n_fmt[date_format]" value="<?php echo esc_attr( $date_format ) ?>">
                                 </th>
@@ -464,7 +464,7 @@ function qtranxf_conf() {
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <th scope="row" style="text-align:right">
+                                <th scope="row" style="text-align:right;">
                                     <label for="time_format"><?php echo qtranxf_translate_wp( 'Time Format' ) . ' ( &ldquo;' . $time_format . '&rdquo; )' ?></label>
                                     <input type="hidden" name="date_i18n_fmt[time_format]" value="<?php echo esc_attr( $time_format ) ?>">
                                 </th>
@@ -497,7 +497,7 @@ function qtranxf_conf() {
 								}
 								?>
                                 <tr valign="top">
-                                    <td style="text-align:right"><input type="text" name="date_i18n_fmt[<?php echo esc_attr( $fmt ) ?>]" value="<?php echo esc_attr( $fmt ) ?>"></td>
+                                    <td style="text-align:right;"><input type="text" name="date_i18n_fmt[<?php echo esc_attr( $fmt ) ?>]" value="<?php echo esc_attr( $fmt ) ?>"></td>
                                     <td><input type="text" name="date_i18n[<?php echo esc_attr( $fmt ) ?>]" value="<?php echo esc_attr( qtranxf_date_format_multilinual( $fmt ) ) ?>" class="i18n-multilingual">&nbsp;<span
                                                 class="i18n-multilingual-display"><?php echo qtranxf_date_i18n_multilinual( $fmt, $ts ) ?></span></td>
                                 </tr>
@@ -505,7 +505,7 @@ function qtranxf_conf() {
 							}
 							?>
                             <tr valign="top">
-                                <td style="text-align:right"><input type="text" name="date_i18n_fmt[new]" value=""></td>
+                                <td style="text-align:right;"><input type="text" name="date_i18n_fmt[new]" value=""></td>
                                 <td><input type="text" name="date_i18n[new]" value="" class="i18n-multilingual"></td>
                             </tr>
                             <tr valign="top">
@@ -560,10 +560,10 @@ function qtranxf_conf() {
 										}
 										$post_type_off = isset( $q_config['post_type_excluded'] ) && in_array( $post_type, $q_config['post_type_excluded'] );
 										?>
-                                        <span style="margin-right: 12pt"><input type="hidden" name="post_types_all[<?php echo $post_type ?>]" value="<?php echo $post_type_off ? '0' : '1' ?>"><input type="checkbox"
-                                                                                                                                                                                                      name="post_types[<?php echo $post_type ?>]"
-                                                                                                                                                                                                      id="post_type_<?php echo $post_type ?>"
-                                                                                                                                                                                                      value="1"<?php checked( ! $post_type_off ) ?> />&nbsp;<?php echo $post_type ?></span>
+                                        <span style="margin-right: 12pt;"><input type="hidden" name="post_types_all[<?php echo $post_type ?>]" value="<?php echo $post_type_off ? '0' : '1' ?>"><input type="checkbox"
+                                                                                                                                                                                                       name="post_types[<?php echo $post_type ?>]"
+                                                                                                                                                                                                       id="post_type_<?php echo $post_type ?>"
+                                                                                                                                                                                                       value="1"<?php checked( ! $post_type_off ) ?> />&nbsp;<?php echo $post_type ?></span>
 										<?php
 									}
 									?>
@@ -582,7 +582,7 @@ function qtranxf_conf() {
                         <tr valign="top">
                             <th scope="row"><?php _e( 'Flag Image Path', 'qtranslate' ) ?></th>
                             <td>
-								<?php echo trailingslashit( content_url() ) ?><input type="text" name="flag_location" id="flag_location" value="<?php echo $q_config['flag_location']; ?>" style="width:100%"/>
+								<?php echo trailingslashit( content_url() ) ?><input type="text" name="flag_location" id="flag_location" value="<?php echo $q_config['flag_location']; ?>" style="width:100%;"/>
                                 <p class="qtranxs_notes"><?php printf( __( 'Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the value above to reset it to the default)', 'qtranslate' ), qtranxf_flag_location_default() ) ?></p>
                             </td>
                         </tr>
@@ -590,7 +590,7 @@ function qtranxf_conf() {
                             <th scope="row"><?php _e( 'Ignore Links', 'qtranslate' ) ?></th>
                             <td>
                                 <input type="text" name="ignore_file_types" id="ignore_file_types" value="<?php echo implode( ',', array_diff( $q_config['ignore_file_types'], explode( ',', QTX_IGNORE_FILE_TYPES ) ) ) ?>"
-                                       style="width:100%"/>
+                                       style="width:100%;"/>
                                 <p class="qtranxs_notes"><?php printf( __( 'Don\'t convert links to files of the given file types. (Always included: %s)', 'qtranslate' ), implode( ', ', explode( ',', QTX_IGNORE_FILE_TYPES ) ) ) ?></p>
                             </td>
                         </tr>
@@ -600,7 +600,7 @@ function qtranxf_conf() {
                                 <label for="header_css_on"><input type="checkbox" name="header_css_on" id="header_css_on"
                                                                   value="1"<?php checked( $q_config['header_css_on'] ) ?> />&nbsp;<?php _e( 'CSS code added by plugin in the head of front-end pages:', 'qtranslate' ) ?></label>
                                 <br/>
-                                <textarea id="header_css" name="header_css" style="width:100%"><?php echo esc_textarea( $q_config['header_css'] ) ?></textarea>
+                                <textarea id="header_css" name="header_css" style="width:100%;"><?php echo esc_textarea( $q_config['header_css'] ) ?></textarea>
                                 <p class="qtranxs_notes"><?php echo __( 'To reset to default, clear the text.', 'qtranslate' ) . ' ' . __( 'To disable this inline CSS, clear the check box.', 'qtranslate' ) ?></p>
                             </td>
                         </tr>
@@ -638,7 +638,7 @@ function qtranxf_conf() {
 									checked( $q_config['filter_options_mode'], QTX_FILTER_OPTIONS_LIST ) ?>/> <?php _e( 'Translate only options listed below (for experts only):', 'qtranslate' ) ?> </label>
                                 <br/>
                                 <input type="text" name="filter_options" id="qtranxs_filter_options" value="<?php echo isset( $q_config['filter_options'] ) ? implode( ' ', $q_config['filter_options'] ) : QTX_FILTER_OPTIONS_DEFAULT; ?>"
-                                       style="width:100%">
+                                       style="width:100%;">
                                 <p class="qtranxs_notes"><?php printf( __( 'By default, all options are filtered to be translated at front-end for the sake of simplicity of configuration. However, for a developed site, this may cause a considerable performance degradation. Normally, there are very few options, which actually need a translation. You may simply list them above to minimize the performance impact, while still getting translations needed. Options names must match the field "%s" of table "%s" of WordPress database. A minimum common set of option, normally needed a translation, is already entered in the list above as a default example. Option names in the list may contain wildcard with symbol "%s".', 'qtranslate' ), 'option_name', 'options', '%' ) ?></p>
                             </td>
                         </tr>
@@ -730,7 +730,7 @@ function qtranxf_conf() {
                                     </label><br/>
                                 </fieldset>
                                 <br/>
-                                <textarea id="highlight_mode_custom_css" name="highlight_mode_custom_css" style="width:100%"><?php echo esc_textarea( $highlight_mode_custom_css ) ?></textarea>
+                                <textarea id="highlight_mode_custom_css" name="highlight_mode_custom_css" style="width:100%;"><?php echo esc_textarea( $highlight_mode_custom_css ) ?></textarea>
                                 <p class="qtranxs_notes"><?php echo __( 'To reset to default, clear the text.', 'qtranslate' ) . ' ';
 									printf( __( 'The color in use is taken from your profile option %s, the third color.', 'qtranslate' ), '"<a href="' . admin_url( '/profile.php' ) . '">' . qtranxf_translate_wp( 'Admin Color Scheme' ) . '</a>"' ) ?></p>
                             </td>
@@ -768,7 +768,7 @@ function qtranxf_conf() {
                             <th scope="row"><?php _e( 'Configuration Files', 'qtranslate' ) ?></th>
                             <td><label for="qtranxs_config_files"
                                        class="qtranxs_explanation"><?php printf( __( 'List of configuration files. Unless prefixed with "%s", paths are relative to %s variable: %s. Absolute paths are also acceptable.', 'qtranslate' ), './', 'WP_CONTENT_DIR', trailingslashit( WP_CONTENT_DIR ) ) ?></label>
-                                <br/><textarea name="json_config_files" id="qtranxs_config_files" rows="4" style="width:100%"><?php if ( isset( $_POST['json_config_files'] ) ) {
+                                <br/><textarea name="json_config_files" id="qtranxs_config_files" rows="4" style="width:100%;"><?php if ( isset( $_POST['json_config_files'] ) ) {
 										echo sanitize_text_field( stripslashes( $_POST['json_config_files'] ) );
 									} else {
 										echo implode( PHP_EOL, $q_config['config_files'] );
@@ -785,7 +785,7 @@ function qtranxf_conf() {
                             <th scope="row"><?php _e( 'Custom Configuration', 'qtranslate' ) ?></th>
                             <td><label for="qtranxs_json_custom_i18n_config"
                                        class="qtranxs_explanation"><?php printf( __( 'Additional custom JSON-encoded configuration of %s for all admin pages. It is processed after all files from option "%s" are loaded, providing opportunity to add or to override configuration tokens as necessary.', 'qtranslate' ), 'qTranslate&#8209;X', __( 'Configuration Files', 'qtranslate' ) ); ?></label>
-                                <br/><textarea name="json_custom_i18n_config" id="qtranxs_json_custom_i18n_config" rows="4" style="width:100%"><?php if ( isset( $_POST['json_custom_i18n_config'] ) ) {
+                                <br/><textarea name="json_custom_i18n_config" id="qtranxs_json_custom_i18n_config" rows="4" style="width:100%;"><?php if ( isset( $_POST['json_custom_i18n_config'] ) ) {
 										echo sanitize_text_field( stripslashes( $_POST['json_custom_i18n_config'] ) );
 									} else if ( ! empty( $q_config['custom_i18n_config'] ) )
 										echo qtranxf_json_encode( $q_config['custom_i18n_config'] ) ?></textarea>
@@ -804,23 +804,23 @@ function qtranxf_conf() {
                             </td>
                         </tr>
                         <tr valign="top">
-                            <th scope="row" style="text-align: right">id</th>
+                            <th scope="row" style="text-align: right;">id</th>
                             <td><label for="qtranxs_custom_fields" class="qtranxs_explanation">
-                                    <input type="text" name="custom_fields" id="qtranxs_custom_fields" value="<?php echo implode( ' ', $q_config['custom_fields'] ) ?>" style="width:100%"></label>
+                                    <input type="text" name="custom_fields" id="qtranxs_custom_fields" value="<?php echo implode( ' ', $q_config['custom_fields'] ) ?>" style="width:100%;"></label>
                                 <p class="qtranxs_notes"><?php _e( 'The value of "id" attribute is normally unique within one page, otherwise the first field found, having an id specified, is picked up.', 'qtranslate' ) ?></p>
                             </td>
                         </tr>
                         <tr valign="top">
-                            <th scope="row" style="text-align: right">class</th>
+                            <th scope="row" style="text-align: right;">class</th>
                             <td><label for="qtranxs_custom_field_classes" class="qtranxs_explanation">
-                                    <input type="text" name="custom_field_classes" id="qtranxs_custom_field_classes" value="<?php echo implode( ' ', $q_config['custom_field_classes'] ) ?>" style="width:100%"></label>
+                                    <input type="text" name="custom_field_classes" id="qtranxs_custom_field_classes" value="<?php echo implode( ' ', $q_config['custom_field_classes'] ) ?>" style="width:100%;"></label>
                                 <p class="qtranxs_notes"><?php printf( __( 'All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s', 'qtranslate' ), '"id"', '"class"', '<a href="https://wordpress.org/support/plugin/qtranslate-x">', '</a>' ) ?></p>
                             </td>
                         </tr>
                         <tr valign="top">
                             <th scope="row"><?php _e( 'Custom Filters', 'qtranslate' ) ?></th>
                             <td><label for="qtranxs_text_field_filters" class="qtranxs_explanation">
-                                    <input type="text" name="text_field_filters" id="qtranxs_text_field_filters" value="<?php echo implode( ' ', $q_config['text_field_filters'] ) ?>" style="width:100%"></label>
+                                    <input type="text" name="text_field_filters" id="qtranxs_text_field_filters" value="<?php echo implode( ' ', $q_config['text_field_filters'] ) ?>" style="width:100%;"></label>
                                 <p class="qtranxs_notes"><?php printf( __( 'Names of filters (which are enabled on theme or other plugins via %s function) to add translation to. For more information, read %sFAQ%s.', 'qtranslate' ), 'apply_filters()', '<a href="https://qtranslatexteam.wordpress.com/faq/#CustomFields">', '</a>' ) ?></p>
                             </td>
                         </tr>

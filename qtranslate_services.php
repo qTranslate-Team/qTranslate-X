@@ -514,7 +514,7 @@ function qts_config_hook( $request_uri ) {
                                     <td>
                                         <input type="<?php echo ( $field['name'] == 'password' ) ? 'password' : 'text'; ?>" name="<?php echo 'qts_' . $service['service_id'] . "_" . $field['name']; ?>"
                                                value="<?php echo ( isset( $service_settings[ $service['service_id'] ][ $field['name'] ] ) && $field['name'] != 'password' ) ? $service_settings[ $service['service_id'] ][ $field['name'] ] : ''; ?>"
-                                               style="width:100%"/>
+                                               style="width:100%;"/>
                                     </td>
                                 </tr>
 								<?php
