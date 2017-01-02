@@ -1,20 +1,20 @@
 <?php
 /**
-Plugin Name: qTranslate-X
-Plugin URI: http://wordpress.org/plugins/qtranslate-x/
-Description: Adds user-friendly and database-friendly multilingual content support.
-Version: 3.4.8
-Author: qTranslate Team
-Author URI: http://qtranslatexteam.wordpress.com/about
-Tags: multilingual, language, multi-language, multilanguage, bilingual, Polyglot, admin, tinymce, widget, switcher, i18n, l10n, professional, human, translation, service, WPML, WPGlobus, Polylang, Ceceppa Multilingua, qTranslate, zTranslate, mqTranslate, qTranslate Plus
-Text Domain: qtranslate
-Domain Path: /lang/
-License: GPL2
-Author e-mail: qTranslateTeam@gmail.com
-Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
-GitHub Plugin URI: https://github.com/qTranslate-Team/qtranslate-x
-GitHub Branch: master
-*/
+ * Plugin Name: qTranslate-X
+ * Plugin URI: http://wordpress.org/plugins/qtranslate-x/
+ * Description: Adds user-friendly and database-friendly multilingual content support.
+ * Version: 3.4.8
+ * Author: qTranslate Team
+ * Author URI: http://qtranslatexteam.wordpress.com/about
+ * Tags: multilingual, language, multi-language, multilanguage, bilingual, Polyglot, admin, tinymce, widget, switcher, i18n, l10n, professional, human, translation, service, WPML, WPGlobus, Polylang, Ceceppa Multilingua, qTranslate, zTranslate, mqTranslate, qTranslate Plus
+ * Text Domain: qtranslate
+ * Domain Path: /lang/
+ * License: GPL2
+ * Author e-mail: qTranslateTeam@gmail.com
+ * Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
+ * GitHub Plugin URI: https://github.com/qTranslate-Team/qtranslate-x
+ * GitHub Branch: master
+ */
 /* Unused keywords (as described in http://codex.wordpress.org/Writing_a_Plugin):
  * Network: Optional. Whether the plugin can only be activated network wide. Example: true
  */
@@ -54,17 +54,17 @@ if ( ! function_exists( 'add_filter' ) ) {
  * Designed as interface for other plugin integration. The documentation is available at
  * https://qtranslatexteam.wordpress.com/integration/
  */
-define('QTX_VERSION','3.4.8');
+define( 'QTX_VERSION', '3.4.8' );
 
 if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
-	define( 'QTRANSLATE_DIR', dirname(__FILE__) );
+	define( 'QTRANSLATE_DIR', dirname( __FILE__ ) );
 }
 
-require_once(QTRANSLATE_DIR.'/inc/qtx_class_translator.php');
+require_once( QTRANSLATE_DIR . '/inc/qtx_class_translator.php' );
 
-if(is_admin() ){ // && !(defined('DOING_AJAX') && DOING_AJAX) //todo cleanup
-	require_once(QTRANSLATE_DIR.'/admin/qtx_activation_hook.php');
+if ( is_admin() ) { // && !(defined('DOING_AJAX') && DOING_AJAX) //todo cleanup
+	require_once( QTRANSLATE_DIR . '/admin/qtx_activation_hook.php' );
 	qtranxf_register_activation_hooks();
 }
 
@@ -72,8 +72,9 @@ if(is_admin() ){ // && !(defined('DOING_AJAX') && DOING_AJAX) //todo cleanup
 
 /**
  * Load 'Slugs' functionality.
+ *
  * @since 3.4.7
-*/
+ */
 //if(file_exists(QTRANSLATE_DIR.'/slugs'))
 //	require_once(QTRANSLATE_DIR.'/slugs/qtx_slug.php');
 

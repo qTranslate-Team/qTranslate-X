@@ -1,45 +1,53 @@
 <?php
-if(!defined('ABSPATH'))exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-	$ds = array(
-		'c' => '2015-02-25T23:38:07+00:00',
-	);
-	qtranxf_test_date($ds);
+$ds = array(
+	'c' => '2015-02-25T23:38:07+00:00',
+);
+qtranxf_test_date( $ds );
 
-function qtranxf_test_date($ds){
+function qtranxf_test_date( $ds ) {
 	$cnt = 0;
-	foreach($ds as $fmt => $date_expected){
-		$d = get_the_date($fmt,1);
-		qtranxf_tst_log('qtranxf_test_date: get_the_date('.$fmt.'): ', $d);
-		if(!qtranxf_check_test($d,$date_expected,basename(__FILE__))) ++$cnt;
+	foreach ( $ds as $fmt => $date_expected ) {
+		$d = get_the_date( $fmt, 1 );
+		qtranxf_tst_log( 'qtranxf_test_date: get_the_date(' . $fmt . '): ', $d );
+		if ( ! qtranxf_check_test( $d, $date_expected, basename( __FILE__ ) ) ) {
+			++ $cnt;
+		}
 	}
+
 	return $cnt;
 }
 
-function qtranxf_test_dt_format($cfg, $cfg_name='dtf', $format='F j, Y'){
+function qtranxf_test_dt_format( $cfg, $cfg_name = 'dtf', $format = 'F j, Y' ) {
 	global $q_config;
-	$q_config['locale'] = array_merge(qtranxf_default_locale(),$q_config['locale']);
-	$enabled_languages = $q_config['enabled_languages'];
-	require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options_update.php');
-	$t = strtotime('Nov 16, 2014 3:04pm');
+	$q_config['locale'] = array_merge( qtranxf_default_locale(), $q_config['locale'] );
+	$enabled_languages  = $q_config['enabled_languages'];
+	require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
+	$t = strtotime( 'Nov 16, 2014 3:04pm' );
 	//qtranxf_dbg_log('qtranxf_test_dt_format: $t: ',$t);
 	$m = PHP_EOL;
-	foreach($cfg as $c => $f){
-		if(!in_array($c,$q_config['enabled_languages'])) $q_config['enabled_languages'][] = $c;
-		qtranxf_updateGettextDatabases(true,$c);
-		$d = qtranxf_translate_dt_format($format, $c);
+	foreach ( $cfg as $c => $f ) {
+		if ( ! in_array( $c, $q_config['enabled_languages'] ) ) {
+			$q_config['enabled_languages'][] = $c;
+		}
+		qtranxf_updateGettextDatabases( true, $c );
+		$d = qtranxf_translate_dt_format( $format, $c );
 		//$d = qtranxf_convert_strftime2date($f);
-		$sd = date($d,$t);
-		$m .= '$'.$cfg_name.'[\''.$c.'\'] = \''.$d.'\';// "'.$sd.'"';
-		if(false)
-		{
-			require_once(QTRANSLATE_DIR.'/inc/qtx_date_time.php');
-			$ff = qtranxf_convertDateFormatToStrftimeFormat($f);
-			$sf = qtranxf_strftime($ff,$t); $m .= ' // strftime("'.$f.'") "'.($sf?$sf:'invalid').'"';
+		$sd = date( $d, $t );
+		$m .= '$' . $cfg_name . '[\'' . $c . '\'] = \'' . $d . '\';// "' . $sd . '"';
+		if ( false ) {
+			require_once( QTRANSLATE_DIR . '/inc/qtx_date_time.php' );
+			$ff = qtranxf_convertDateFormatToStrftimeFormat( $f );
+			$sf = qtranxf_strftime( $ff, $t );
+			$m .= ' // strftime("' . $f . '") "' . ( $sf ? $sf : 'invalid' ) . '"';
 		}
 		$m .= PHP_EOL;
 	}
 	$q_config['enabled_languages'] = $enabled_languages;
+
 	//qtranxf_dbg_log('qtranxf_test_dt_format("'.$cfg_name.'","'.$format.'"): $m:'.$m);
 	return $m;
 }
