@@ -296,7 +296,7 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 			$fields['post_name'] = array( 'encode' => 'slug', 'post-type-excluded' => 'attachment' );
 			//$fields['new-post-slug'] = array();//no need
 
-			$page_config['js-exec']['post-exec-slug'] = array( 'src' => './slugs/admin/js/post-exec.min.js' );
+			$page_config['js-exec']['post-exec-slug'] = array( 'src' => './slugs/admin/js/post-exec.js' );
 		}
 
 		{// page edit-tags.php?action=edit

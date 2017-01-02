@@ -88,8 +88,8 @@ function qtranxf_test_meta_cache() {
 			}
 		}
 	},
-	"js-conf":{"customize-conf":{"src":"./admin/js/customize-conf.min.js"}},
-	"js-exec":{"customize-exec":{"src":"./admin/js/customize-exec.min.js"}}
+	"js-conf":{"customize-conf":{"src":"./admin/js/customize-conf.js"}},
+	"js-exec":{"customize-exec":{"src":"./admin/js/customize-exec.js"}}
 }
 ,
 */

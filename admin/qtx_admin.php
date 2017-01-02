@@ -377,7 +377,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 			unset( $page_config['js-conf'] );
 		}
 
-		$page_config['js'][] = array( 'handle' => 'qtranslate-admin-common', 'src' => './admin/js/common.min.js' );
+		$page_config['js'][] = array( 'handle' => 'qtranslate-admin-common', 'src' => './admin/js/common.js' );
 
 		if ( isset( $page_config['js-exec'] ) ) {
 			foreach ( $page_config['js-exec'] as $k => $js ) {
@@ -511,12 +511,12 @@ function qtranxf_add_admin_footer_js( $enqueue_script = false ) {
 
 function qtranxf_add_admin_head_js( $enqueue_script = true ) {
 	if ( $enqueue_script ) {
-		//wp_register_script( 'qtranslate-admin-options', plugins_url( 'js/options.min.js', __FILE__ ), array(), QTX_VERSION );
-		wp_enqueue_script( 'qtranslate-admin-options', plugins_url( 'js/options.min.js', __FILE__ ), array(), QTX_VERSION );
+		//wp_register_script( 'qtranslate-admin-options', plugins_url( 'js/options.js', __FILE__ ), array(), QTX_VERSION );
+		wp_enqueue_script( 'qtranslate-admin-options', plugins_url( 'js/options.js', __FILE__ ), array(), QTX_VERSION );
 	} else {
 		echo '<script type="text/javascript">' . PHP_EOL . '// <![CDATA[' . PHP_EOL;
 		$plugin_dir_path = plugin_dir_path( __FILE__ );
-		readfile( $plugin_dir_path . 'js/options.min.js' );
+		readfile( $plugin_dir_path . 'js/options.js' );
 		echo '//]]>' . PHP_EOL . '</script>' . PHP_EOL;
 	}
 }

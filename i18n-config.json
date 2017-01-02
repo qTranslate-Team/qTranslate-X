@@ -51,7 +51,7 @@
             },
             "js-exec": {
                 "post-exec": {
-                    "src": "./admin/js/post-exec.min.js"
+                    "src": "./admin/js/post-exec.js"
                 }
             }
         },
@@ -111,7 +111,7 @@
             },
             "js-exec": {
                 "widgets-exec": {
-                    "src": "./admin/js/widgets-exec.min.js"
+                    "src": "./admin/js/widgets-exec.js"
                 }
             }
         },
@@ -133,7 +133,7 @@
             },
             "js-exec": {
                 "edit-tag-exec": {
-                    "src": "./admin/js/edit-tag-exec.min.js"
+                    "src": "./admin/js/edit-tag-exec.js"
                 }
             }
         },
@@ -180,7 +180,7 @@
             },
             "js-exec": {
                 "edit-tags-exec": {
-                    "src": "./admin/js/edit-tags-exec.min.js"
+                    "src": "./admin/js/edit-tags-exec.js"
                 }
             }
         },
@@ -230,7 +230,7 @@
             },
             "js-exec": {
                 "nav-menus-exec": {
-                    "src": "./admin/js/nav-menus-exec.min.js"
+                    "src": "./admin/js/nav-menus-exec.js"
                 }
             }
         },
