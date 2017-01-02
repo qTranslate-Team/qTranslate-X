@@ -1,10 +1,14 @@
-/* executed for
- /wp-admin/options-general.php?page=qtranslate-x
- */
+// executed for /wp-admin/options-general.php?page=qtranslate-x
 jQuery(document).ready(
     function ($) {
-        var getcookie     = function (cname) {
-            var nm = cname + "=";
+        /**
+         * Get cookie value by name
+         *
+         * @param {string} name Cookie name
+         * @returns {string} Cookie value
+         */
+        function getCookie(name) {
+            var nm = name + "=";
             var ca = document.cookie.split(';');
             for (var i = 0; i < ca.length; i++) {
                 var ce = ca[i];
@@ -12,95 +16,89 @@ jQuery(document).ready(
                 if (p >= 0) return ce.substring(p + nm.length, ce.length);
             }
             return '';
-        };
-        var setFormAction = function (hash) {
+        }
+
+        /**
+         * Set cookie value
+         *  
+         * @param {string} name Cookie name
+         * @param {string} value Cookie value
+         */
+        function setCookie(name, value) {
+            document.cookie = name + '=' + value;
+        }
+
+        /**
+         * Replace the hash in the form action.
+         *
+         * @param hash
+         */
+        function addHashToFormAction(hash) {
             var f = jQuery('#qtranxs-configuration-form');
             var a = f.attr('action');
             a     = a.replace(/(#.*|$)/, hash);
             f.attr('action', a);
-        };
-        var switchTabTo   = function (anchor, hash) {
-            // active tab
+        }
+
+        /**
+         * Switch to the given tab.
+         *
+         * @param anchor
+         * @param hash
+         */
+        function switchTabTo(anchor, hash) {
+            // Activate the tab
             anchor.parent().children().removeClass('nav-tab-active');
             anchor.addClass('nav-tab-active');
-            // active tab content
+
+            // Activate the tab content
             var tabcontents = $('.tabs-content');
             tabcontents.children().addClass('hidden');
             var tab_id = hash.replace('#', '#tab-');
             tabcontents.find('div' + tab_id).removeClass('hidden');
-            setFormAction(hash);
-            document.cookie = 'qtrans_admin_section=' + hash;
-        };
-        var onHashChange  = function (hash_default) {
+
+            addHashToFormAction(hash);
+            setCookie('qtrans_admin_section', hash);
+        }
+
+        /**
+         * Switch to the given default tab, unless the location contains a hash or a cookie is set.
+         */
+        function onHashChange() {
+            var default_hash = '#general';
+
+            // Bail if there are no tabs
             var tabs = $('.nav-tab-wrapper');
             if (!tabs || !tabs.length) return;
+
+            // Try the current location first
             var hash = window.location.hash;
+
+            // Then try to get the hash from the cookie
             if (!hash) {
-                hash = getcookie('qtrans_admin_section');
-                if (!hash) {
-                    if (!hash_default) return;
-                    hash = hash_default;
-                }
+                hash = getCookie('qtrans_admin_section');
             }
+
+            // Finally, use the default hash
+            if (!hash) {
+                hash = default_hash;
+            }
+
+            // Find the link that refers to this hash
             var anchor = tabs.find('a[href="' + hash + '"]');
-            while (!anchor || !anchor.length) {
-                if (window.location.hash) {
-                    hash = getcookie('qtrans_admin_section');
-                    if (hash) {
-                        anchor = tabs.find('a[href="' + hash + '"]');
-                        if (anchor && anchor.length) break;
-                    }
-                }
-                if (!hash_default) return;
-                hash   = hash_default;
-                anchor = tabs.find('a[href="' + hash + '"]');
-                if (anchor && anchor.length) break;
-                return;
+
+            // In case the anchor does not exist, use the default one
+            if (!anchor || !anchor.length) {
+                anchor = tabs.find('a[href="' + default_hash + '"]');
             }
+
             switchTabTo(anchor, hash);
-        };
+        }
+
         $(window).bind('hashchange', function (e) {
             onHashChange();
         });
-        onHashChange('#general');
-    });
 
-/* // Unnecessary as Show/Hide is obsolete
- function qtranxj_getcookie(cname)
- {
- var nm = cname + "=";
- var ca = document.cookie.split(';');
- for(var i=0; i<ca.length; i++) {
- var ce = ca[i];
- var p = ce.indexOf(nm);
- if (p >= 0) return ce.substring(p+nm.length,ce.length);
- }
- return '';
- }
- function qtranxj_delcookie(cname)
- {
- var date = new Date();
- date.setTime(date.getTime()-(24*60*60*1000));
- document.cookie=cname+'=; expires='+date.toGMTString();
- }
- function qtranxj_readShowHideCookie(id) {
- var e=document.getElementById(id);
- if(!e) return;
- if(qtranxj_getcookie(id)){
- e.style.display='block';
- }else{
- e.style.display='none';
- }
- }
- function qtranxj_toggleShowHide(id) {
- var e = document.getElementById(id);
- if (e.style.display == 'block'){
- qtranxj_delcookie(id);
- e.style.display = 'none';
- }else{
- document.cookie=id+'=1';
- e.style.display='block';
- }
- return false;
- }
- */
+        // Switch to the correct tab on load
+        onHashChange();
+    });
