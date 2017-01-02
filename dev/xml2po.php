@@ -254,6 +254,3 @@ foreach ( $translations as $lang => $words ) {
 	}
 	file_put_contents( $po_dir . '/language-' . $lang . '.po', $po_content );
 }
-
-
-?>
