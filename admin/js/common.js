@@ -187,6 +187,11 @@ var qTranslateX = function (pg) {
     qTranslateConfig.qtx = this;
 
     /**
+     * @type {number}
+     */
+    this.lastUniqueFieldId = 0;
+
+    /**
      * Designed as interface for other plugin integration. The documentation is available at
      * https://qtranslatexteam.wordpress.com/integration/
      * return array keyed by two-letter language code. Example of usage:
@@ -320,7 +325,7 @@ var qTranslateX = function (pg) {
                 qtx.removeContentHook(inpField);
             }
         } else {
-            jQuery(inpField).uniqueId();
+            jQuery(inpField).id = 'ui-id' + (++this.lastUniqueFieldId);
         }
         //co('addContentHook: id=',inpField.id);
         var h = contentHooks[inpField.id] = {};
