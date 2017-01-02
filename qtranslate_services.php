@@ -30,14 +30,14 @@ function qts_initialize() {
 
 	// OpenSSL functions used
 	global $qts_openssl_functions_used;
-	$qts_openssl_functions_used = array(
+	$qts_openssl_functions_used = [
 		'openssl_pkey_new',
 		'openssl_pkey_export',
 		'openssl_pkey_get_details',
 		'openssl_seal',
 		'openssl_open',
 		'openssl_free_key'
-	);
+	];
 
 	// error messages
 	global $qts_error_messages;
@@ -105,9 +105,9 @@ function qts_queryQS( $action, $data = '', $fast = false ) {
 	openssl_pkey_export( $key, $private_key );
 	$public_key = openssl_pkey_get_details( $key );
 	$public_key = $public_key["key"];
-	$msg        = qts_base64_serialize( array( 'key' => $public_key, 'data' => $data ) );
-	openssl_seal( $msg, $msg, $server_key, array( $qts_public_key ) );
-	$msg  = qts_base64_serialize( array( 'key' => $server_key[0], 'data' => $msg ) );
+	$msg        = qts_base64_serialize( [ 'key' => $public_key, 'data' => $data ] );
+	openssl_seal( $msg, $msg, $server_key, [ $qts_public_key ] );
+	$msg  = qts_base64_serialize( [ 'key' => $server_key[0], 'data' => $msg ] );
 	$data = "message=" . $msg;
 
 	// connect to qts
@@ -167,7 +167,7 @@ function qts_translateButtons( $available_languages, $missing_languages ) {
 	if ( sizeof( $missing_languages ) == 0 ) {
 		return;
 	}
-	$missing_languages_name = array();
+	$missing_languages_name = [];
 	foreach ( $missing_languages as $language ) {
 		$missing_languages_name[] = '<a href="edit.php?page=qtranslate_services&post=' . $post->ID . '&target_language=' . $language . '">' . $q_config['language_name'][ $language ] . '</a>';
 	}
@@ -263,19 +263,19 @@ function qts_save() {
 
 function qts_cleanup( $var, $action ) {
 	if ( ! is_array( $var ) ) {
-		$var = array();
+		$var = [];
 	}
 	switch ( $action ) {
 		case QTS_GET_SERVICES:
 			foreach ( $var as $service_id => $service ) {
 				// make array out of serialized field
-				$fields          = array();
+				$fields          = [];
 				$required_fields = explode( '|', $service['service_required_fields'] );
 				foreach ( $required_fields as $required_field ) {
 					if ( strpos( $required_field, " " ) !== false ) {
 						list( $fieldname, $title ) = explode( ' ', $required_field, 2 );
 						if ( $fieldname != '' ) {
-							$fields[] = array( 'name' => $fieldname, 'value' => '', 'title' => $title );
+							$fields[] = [ 'name' => $fieldname, 'value' => '', 'title' => $title ];
 						}
 					}
 				}
@@ -302,13 +302,13 @@ function qts_config_pre_hook() {
 			$services         = qts_queryQS( QTS_GET_SERVICES );
 			$service_settings = get_option( 'qts_service_settings' );
 			if ( ! is_array( $service_settings ) ) {
-				$service_settings = array();
+				$service_settings = [];
 			}
 
 			foreach ( $services as $service_id => $service ) {
 				// check if there are already settings for the field
 				if ( ! isset( $service_settings[ $service_id ] ) || ! is_array( $service_settings[ $service_id ] ) ) {
-					$service_settings[ $service_id ] = array();
+					$service_settings[ $service_id ] = [];
 				}
 
 				// update fields
@@ -391,13 +391,13 @@ function qts_translate_box( $post ) {
 }
 
 function qts_order_columns( $columns ) {
-	return array(
+	return [
 		'title'           => __( 'Post Title', 'qtranslate' ),
 		'service'         => __( 'Service', 'qtranslate' ),
 		'source_language' => __( 'Source Language', 'qtranslate' ),
 		'target_language' => __( 'Target Language', 'qtranslate' ),
 		'action'          => __( 'Action', 'qtranslate' )
-	);
+	];
 }
 
 function qts_config_hook( $request_uri ) {
@@ -620,7 +620,7 @@ function qts_service() {
 	// Detect available Languages and possible target languages
 	$available_languages = qtranxf_getAvailableLanguages( $post->post_content );
 	if ( $available_languages === false && ! empty( $post->post_content ) ) {
-		$available_languages = array( $q_config['default_language'] );
+		$available_languages = [ $q_config['default_language'] ];
 	}
 	if ( $available_languages === false || sizeof( $available_languages ) == 0 ) {
 		$error = __( 'The requested Post has no content, no Translation possible.', 'qtranslate' );
@@ -697,7 +697,7 @@ function qts_service() {
 		$default_service = $service_id;
 		update_option( 'qts_default_service', $service_id );
 		$order_key = substr( md5( time() . AUTH_KEY ), 0, 20 );
-		$request   = array(
+		$request   = [
 			'order_service_id'      => $service_id,
 			'order_url'             => get_option( 'home' ),
 			'order_key'             => $order_key,
@@ -708,10 +708,10 @@ function qts_service() {
 			'order_source_locale'   => $q_config['locale'][ $translate_from ],
 			'order_target_language' => $translate_to,
 			'order_target_locale'   => $q_config['locale'][ $translate_to ]
-		);
+		];
 		// check for additional fields
 		if ( isset( $service_settings[ $service_id ] ) && is_array( $service_settings[ $service_id ] ) ) {
-			$request['order_required_field'] = array();
+			$request['order_required_field'] = [];
 			foreach ( $service_settings[ $service_id ] as $setting => $value ) {
 				$request['order_required_field'][ $setting ] = $value;
 			}
@@ -729,9 +729,9 @@ function qts_service() {
 		if ( isset( $answer['order_id'] ) ) {
 			$orders = get_option( 'qts_orders' );
 			if ( ! is_array( $orders ) ) {
-				$orders = array();
+				$orders = [];
 			}
-			$orders[] = array( 'post_id' => $post_id, 'service_id' => $service_id, 'source_language' => $translate_from, 'target_language' => $translate_to, 'order' => array( 'order_key' => $order_key, 'order_id' => $answer['order_id'] ) );
+			$orders[] = [ 'post_id' => $post_id, 'service_id' => $service_id, 'source_language' => $translate_from, 'target_language' => $translate_to, 'order' => [ 'order_key' => $order_key, 'order_id' => $answer['order_id'] ] ];
 			update_option( 'qts_orders', $orders );
 			if ( empty( $answer['message'] ) ) {
 				$order_completed_message = '';
@@ -790,8 +790,8 @@ if(!empty($message)) {
         <form action="edit.php?page=qtranslate_services" method="post" id="qtranslate-services-translate">
             <p><?php
 				if ( sizeof( $available_languages ) > 1 ) {
-					$available_languages_name = array();
-					foreach ( array_diff( $available_languages, array( $translate_from ) ) as $language ) {
+					$available_languages_name = [];
+					foreach ( array_diff( $available_languages, [ $translate_from ] ) as $language ) {
 						$available_languages_name[] = '<a href="' . add_query_arg( 'source_language', $language, $url_link ) . '">' . $q_config['language_name'][ $language ] . '</a>';
 					}
 					$available_languages_names = join( ", ", $available_languages_name );
@@ -972,7 +972,7 @@ function qts_quote() {
 	$post_title     = $post->post_title;
 	$post_content   = $post->post_content;
 	$post_excerpt   = $post->post_excerpt;
-	$request        = array(
+	$request        = [
 		'order_service_id'      => $service_id,
 		'order_title'           => $post_title,
 		'order_text'            => $post_content,
@@ -983,7 +983,7 @@ function qts_quote() {
 		'order_target_locale'   => $q_config['locale'][ $translate_to ],
 		'order_confirm_url'     => get_admin_url( null, 'edit.php?page=qtranslate_services&confirm=1&post=' . $_POST['post_id'] . '&source_language=' . $translate_from . '&target_language=' . $translate_to . '&service_id=' . $service_id ),
 		'order_failure_url'     => get_admin_url( null, 'edit.php?page=qtranslate_services&post=' . $_POST['post_id'] . '&source_language=' . $translate_from . '&target_language=' . $translate_to . '&service_id=' . $service_id )
-	);
+	];
 	$answer         = qts_queryQS( QTS_QUOTE, $request );
 	$price          = __( 'unavailable', 'qtranslate' );
 	$currency       = '';

@@ -18,9 +18,9 @@ require_once( QTRANSLATE_DIR . '/qtranslate_widget.php' );
  */
 class QTX_Translator implements WP_Translator {
 	public function __construct() {
-		add_filter( 'translate_text', array( $this, 'translate_text' ), 10, 3 );
-		add_filter( 'translate_term', array( $this, 'translate_term' ), 10, 3 );
-		add_filter( 'translate_url', array( $this, 'translate_url' ), 10, 2 );
+		add_filter( 'translate_text', [ $this, 'translate_text' ], 10, 3 );
+		add_filter( 'translate_term', [ $this, 'translate_term' ], 10, 3 );
+		add_filter( 'translate_url', [ $this, 'translate_url' ], 10, 2 );
 		//add_filter('translate_date', 'qtranxf_', 10, 2);
 		//add_filter('translate_time', 'qtranxf_', 10, 2);
 	}

@@ -229,14 +229,14 @@ function qtranxf_admin_section_import_export( $request_uri ) {
                 <small><?php _e( 'Note, that only string options and standard post and page fields are affected.', 'qtranslate' ) ?></small>
             </td>
         </tr>
-		<?php qtranxf_add_row_migrate( 'qTranslate', 'qtranslate', array( 'compatible' => true ) ) ?>
+		<?php qtranxf_add_row_migrate( 'qTranslate', 'qtranslate', [ 'compatible' => true ] ) ?>
 		<?php qtranxf_add_row_migrate( 'mqTranslate', 'mqtranslate' ) ?>
 		<?php qtranxf_add_row_migrate( 'qTranslate Plus', 'qtranslate-xp' ) ?>
-		<?php qtranxf_add_row_migrate( 'zTranslate', 'ztranslate', array( 'compatible' => true ) ) ?>
-		<?php qtranxf_add_row_migrate( 'WPML Multilingual CMS', 'sitepress-multilingual-cms', array(
+		<?php qtranxf_add_row_migrate( 'zTranslate', 'ztranslate', [ 'compatible' => true ] ) ?>
+		<?php qtranxf_add_row_migrate( 'WPML Multilingual CMS', 'sitepress-multilingual-cms', [
 			'href' => 'https://wpml.org',
 			'text' => sprintf( __( 'Use plugin %s to import data.', 'qtranslate' ), '<a href="https://wordpress.org/plugins/w2q-wpml-to-qtranslate/" target="_blank">W2Q: WPML to qTranslate</a>' )
-		) ) ?>
+		] ) ?>
 		<?php do_action( 'qtranslate_add_row_migrate' ) ?>
         <tr valign="top">
             <th scope="row"><?php _e( 'Reset qTranslate', 'qtranslate' ) ?></th>

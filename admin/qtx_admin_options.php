@@ -7,38 +7,38 @@ require_once( QTRANSLATE_DIR . '/admin/qtx_admin_utils.php' );
 
 function qtranxf_admin_set_default_options( &$ops ) {
 	//options processed in a standardized way
-	$ops['admin'] = array();
+	$ops['admin'] = [];
 
-	$ops['admin']['int'] = array(
+	$ops['admin']['int'] = [
 		'editor_mode'    => QTX_EDITOR_MODE_LSB,
 		'highlight_mode' => QTX_HIGHLIGHT_MODE_BORDER_LEFT,
-	);
+	];
 
-	$ops['admin']['bool'] = array(
+	$ops['admin']['bool'] = [
 		'auto_update_mo' => true,// automatically update .mo files
-	);
+	];
 
 	//single line options
-	$ops['admin']['str'] = array(
+	$ops['admin']['str'] = [
 		'lsb_style'              => 'Simple_Buttons.css',
 		'lsb_style_wrap_class'   => 'qtranxf_default_lsb_style_wrap_class',
 		'lsb_style_active_class' => 'qtranxf_default_lsb_style_active_class',
-	);
+	];
 
 	//multi-line options
-	$ops['admin']['text'] = array(
+	$ops['admin']['text'] = [
 		'highlight_mode_custom_css' => null, // qtranxf_get_admin_highlight_css
-	);
+	];
 
-	$ops['admin']['array'] = array(
-		'config_files'         => array( './i18n-config.json' ),
-		'admin_config'         => array(),
-		'custom_i18n_config'   => array(),
-		'custom_fields'        => array(),
-		'custom_field_classes' => array(),
+	$ops['admin']['array'] = [
+		'config_files'         => [ './i18n-config.json' ],
+		'admin_config'         => [],
+		'custom_i18n_config'   => [],
+		'custom_fields'        => [],
+		'custom_field_classes' => [],
 		//'custom_pages' => array(),
-		'post_type_excluded'   => array(),
-	);
+		'post_type_excluded'   => [],
+	];
 
 	//options processed in a special way
 

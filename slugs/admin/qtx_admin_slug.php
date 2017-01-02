@@ -55,7 +55,7 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 			$query = $wpdb->prepare( $sql, $slug, $lang, $name );
 			$wpdb->query( $query );
 			if ( ! isset( $q_config['slugs-cache']['names'][ $name ] ) ) {
-				$q_config['slugs-cache']['names'][ $name ] = array();
+				$q_config['slugs-cache']['names'][ $name ] = [];
 			}
 			$q_config['slugs-cache']['names'][ $name ][ $lang ] = $slug;
 		}
@@ -250,16 +250,16 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 		//qtranxf_dbg_log('qtranxf_slug_admin_config: ');
 		{// qtranslate-x configuration page
 			if ( ! isset( $page_configs['slugs-config'] ) ) {
-				$page_configs['slugs-config'] = array();
+				$page_configs['slugs-config'] = [];
 			}
 			$page_config = &$page_configs['slugs-config'];
 
 			if ( ! isset( $page_configs['pages'] ) ) {
-				$page_config['pages'] = array( 'options-general.php' => 'page=qtranslate-x' );
+				$page_config['pages'] = [ 'options-general.php' => 'page=qtranslate-x' ];
 			}
 
 			if ( ! isset( $page_configs['anchors'] ) ) {
-				$page_config['anchors'] = array( 'qtranxs_slug_lsb_top' => array( 'where' => 'first' ), 'qtranxf_slug_lsb_bottom' => array( 'where' => 'first' ) );
+				$page_config['anchors'] = [ 'qtranxs_slug_lsb_top' => [ 'where' => 'first' ], 'qtranxf_slug_lsb_bottom' => [ 'where' => 'first' ] ];
 			}
 
 			//qtranxf_config_add_form($page_config,'qtranxf_slug_config');
@@ -284,12 +284,12 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 
 		{// page post*.php
 			if ( ! isset( $page_configs['post'] ) ) {
-				$page_configs['post'] = array();
+				$page_configs['post'] = [];
 			}
 			$page_config = &$page_configs['post'];
 
 			if ( ! isset( $page_configs['pages'] ) ) {
-				$page_config['pages'] = array( 'post.php' => '', 'post-new.php' => '' );
+				$page_config['pages'] = [ 'post.php' => '', 'post-new.php' => '' ];
 			}
 
 			//if(!isset($page_config['post_type'])) $page_config['post_type'] = array();
@@ -297,52 +297,52 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 
 			qtranxf_config_add_form( $page_config, 'post' );
 			$fields              = &$page_config['forms']['post']['fields']; // shorthand
-			$fields['post_name'] = array( 'encode' => 'slug', 'post-type-excluded' => 'attachment' );
+			$fields['post_name'] = [ 'encode' => 'slug', 'post-type-excluded' => 'attachment' ];
 			//$fields['new-post-slug'] = array();//no need
 
-			$page_config['js-exec']['post-exec-slug'] = array( 'src' => './slugs/admin/js/post-exec.js' );
+			$page_config['js-exec']['post-exec-slug'] = [ 'src' => './slugs/admin/js/post-exec.js' ];
 		}
 
 		{// page edit-tags.php?action=edit
 			if ( ! isset( $page_configs['edit-tag'] ) ) {
-				$page_configs['edit-tag'] = array();
+				$page_configs['edit-tag'] = [];
 			}
 			$page_config = &$page_configs['edit-tag'];
 			if ( ! isset( $page_config['pages'] ) ) {
-				$page_config['pages'] = array( 'edit-tags.php' => 'action=edit' );
+				$page_config['pages'] = [ 'edit-tags.php' => 'action=edit' ];
 			}
 			if ( ! isset( $page_config['forms'] ) ) {
-				$page_config['forms'] = array();
+				$page_config['forms'] = [];
 			}
 			if ( ! isset( $page_config['forms']['edittag'] ) ) {
-				$page_config['forms']['edittag'] = array();
+				$page_config['forms']['edittag'] = [];
 			}
 			if ( ! isset( $page_config['forms']['edittag']['fields'] ) ) {
-				$page_config['forms']['edittag']['fields'] = array();
+				$page_config['forms']['edittag']['fields'] = [];
 			}
 			$fields         = &$page_config['forms']['edittag']['fields']; // shorthand
-			$fields['slug'] = array( 'encode' => 'slug' );
+			$fields['slug'] = [ 'encode' => 'slug' ];
 		}
 
 		{// page edit-tags.php?taxonomy=
 			if ( ! isset( $page_configs['edit-tags'] ) ) {
-				$page_configs['edit-tags'] = array();
+				$page_configs['edit-tags'] = [];
 			}
 			$page_config = &$page_configs['edit-tags'];
 			if ( ! isset( $page_config['pages'] ) ) {
-				$page_config['pages'] = array( 'edit-tags.php' => '^(?!.*action=edit).*$' );
+				$page_config['pages'] = [ 'edit-tags.php' => '^(?!.*action=edit).*$' ];
 			}
 			if ( ! isset( $page_config['forms'] ) ) {
-				$page_config['forms'] = array();
+				$page_config['forms'] = [];
 			}
 			if ( ! isset( $page_config['forms']['the-list'] ) ) {
-				$page_config['forms']['the-list'] = array();
+				$page_config['forms']['the-list'] = [];
 			}
 			if ( ! isset( $page_config['forms']['the-list']['fields'] ) ) {
-				$page_config['forms']['the-list']['fields'] = array();
+				$page_config['forms']['the-list']['fields'] = [];
 			}
 			$fields         = &$page_config['forms']['the-list']['fields']; // shorthand
-			$fields['slug'] = array( 'jquery' => 'td.column-slug', 'encode' => 'display' );
+			$fields['slug'] = [ 'jquery' => 'td.column-slug', 'encode' => 'display' ];
 		}
 
 		return $page_configs;
@@ -470,7 +470,7 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 	function qtranxf_slug_rewrite_rules_array( $rules_orig ) {
 		//qtranxf_dbg_log('qtranxf_slug_rewrite_rules_array: rules org: ', $rules_orig);
 		$srx   = '#([\?\(\)\[\]\{\}\,\.\*\:\+]+)#';
-		$rules = array();//need to preserve order of items
+		$rules = [];//need to preserve order of items
 		foreach ( $rules_orig as $k => $v ) {
 			$blocks = preg_split( $srx, $k, - 1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
 			$rx     = '';

@@ -23,8 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$format_req = $format;
 		// add date suffix ability (%q) to strftime
 		$day     = intval( ltrim( strftime( "%d", $date ), '0' ) );
-		$search  = array();
-		$replace = array();
+		$search  = [];
+		$replace = [];
 
 		// date S
 		$search[] = '/(([^%])%q|^%q)/';
@@ -227,8 +227,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 {//utils
 	function qtranxf_convertDateFormatToStrftimeFormat( $format ) {
 		$mappings              = qtranxf_date_strftime_mapping();
-		$date_parameters       = array();
-		$strftime_parameters   = array();
+		$date_parameters       = [];
+		$strftime_parameters   = [];
 		$date_parameters[]     = '#%#';
 		$strftime_parameters[] = '%';
 		foreach ( $mappings as $df => $sf ) {

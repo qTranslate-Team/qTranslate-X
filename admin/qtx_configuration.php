@@ -12,7 +12,7 @@ function qtranxf_language_form() {
 	$language_code = isset( $q_config['posted']['language_code'] ) ? $q_config['posted']['language_code'] : '';
 	$original_lang = isset( $q_config['posted']['original_lang'] ) ? $q_config['posted']['original_lang'] : '';
 
-	$lang_props = isset( $q_config['posted']['lang_props'] ) ? $q_config['posted']['lang_props'] : array();
+	$lang_props = isset( $q_config['posted']['lang_props'] ) ? $q_config['posted']['lang_props'] : [];
 
 	$language_flag   = isset( $lang_props['flag'] ) ? $lang_props['flag'] : '';
 	$language_name   = isset( $lang_props['language_name'] ) ? $lang_props['language_name'] : '';
@@ -50,7 +50,7 @@ function qtranxf_language_form() {
     <div class="form-field form-field-flag">
         <label for="language_flag"><?php _e( 'Flag', 'qtranslate' ) ?></label>
 		<?php
-		$files    = array();
+		$files    = [];
 		$flag_dir = trailingslashit( WP_CONTENT_DIR ) . $q_config['flag_location'];
 		if ( $dir_handle = @opendir( $flag_dir ) ) {
 			while ( false !== ( $file = readdir( $dir_handle ) ) ) {
@@ -182,12 +182,12 @@ function qtranxf_admin_section_end( $nm, $button_name = '', $button_class = 'but
 function qtranxf_get_admin_sections() {
 	//$q_config['admin_sections'] = array();
 	//$admin_sections = &$q_config['admin_sections'];
-	$admin_sections             = array();
+	$admin_sections             = [];
 	$admin_sections['general']  = __( 'General', 'qtranslate' );//General Settings
 	$admin_sections['datetime'] = __( 'Dates', 'qtranslate' );// Date/Time Format Settings
 	$admin_sections['advanced'] = __( 'Advanced', 'qtranslate' );//Advanced Settings
 
-	$custom_sections = apply_filters( 'qtranslate_admin_sections', array() );
+	$custom_sections = apply_filters( 'qtranslate_admin_sections', [] );
 	foreach ( $custom_sections as $k => $v ) {
 		$admin_sections[ $k ] = $v;
 	}
@@ -261,7 +261,7 @@ function qtranxf_conf() {
 			$front_config = $q_config['front_config'];
 			$front_config = apply_filters( 'i18n_front_config', $front_config );
 
-			$configs                 = array();
+			$configs                 = [];
 			$configs['vendor']       = 'combined effective configuration';
 			$configs['admin-config'] = $admin_config;
 			$configs['front-config'] = $front_config;
@@ -863,14 +863,14 @@ function qtranxf_conf() {
 				private $_order;
 
 				public function __construct( $clean_uri ) {
-					parent::__construct( array( 'screen' => 'language' ) );
+					parent::__construct( [ 'screen' => 'language' ] );
 					//$this->_language_names = $language_names;
 					$this->_clean_uri       = $clean_uri;
 					$_SERVER['REQUEST_URI'] = preg_replace( '#.*' . $_SERVER['HTTP_HOST'] . '#', '', $clean_uri ) . '#languages';
 				}
 
 				public function get_columns() {
-					return array(
+					return [
 						'locale' => __( 'Locale', 'qtranslate' ),
 						'code'   => _x( 'Code', 'Two-letter Language Code meant.', 'qtranslate' ),
 						'flag'   => __( 'Flag', 'qtranslate' ),
@@ -878,18 +878,18 @@ function qtranxf_conf() {
 						'action' => __( 'Action', 'qtranslate' ),
 						//'edit' => __('Edit', 'qtranslate'),
 						'stored' => __( 'Stored', 'qtranslate' )
-					);
+					];
 				}
 
 				public function get_sortable_columns() {
-					return array(
-						'locale' => array( 'locale', false ),
-						'code'   => array( 'code', false ),
-						'flag'   => array( 'flag', false ),
-						'name'   => array( 'name', true ), //true means it's already sorted
-						'action' => array( 'action', false ),
-						'stored' => array( 'stored', false )
-					);
+					return [
+						'locale' => [ 'locale', false ],
+						'code'   => [ 'code', false ],
+						'flag'   => [ 'flag', false ],
+						'name'   => [ 'name', true ], //true means it's already sorted
+						'action' => [ 'action', false ],
+						'stored' => [ 'stored', false ]
+					];
 				}
 
 				protected function compare_items( $a, $b ) {
@@ -913,7 +913,7 @@ function qtranxf_conf() {
 				}
 
 				protected function get_table_classes() {
-					return array( 'widefat', 'qtranxs-language-list' );
+					return [ 'widefat', 'qtranxs-language-list' ];
 				}
 
 				public function prepare_items() {
@@ -931,7 +931,7 @@ function qtranxf_conf() {
 					$flag_location_dir     = trailingslashit( WP_CONTENT_DIR ) . $q_config['flag_location'];
 					$flag_location_url_def = content_url( qtranxf_flag_location_default() );
 					$clean_uri             = $this->_clean_uri;
-					$data                  = array();
+					$data                  = [];
 					foreach ( $langs_config as $lang => $props ) {
 						$locale = $props['locale'];
 						$flag   = $props['flag'];//$flags[$lang];
@@ -967,7 +967,7 @@ function qtranxf_conf() {
 						}
 						$edit_url = $clean_uri . '&edit=' . $lang;
 						$atitle   = __( 'Edit', 'qtranslate' ) . ' ' . $lang_name . ' (' . $locale . ')';
-						$data[]   = array(
+						$data[]   = [
 							'locale'     => $locale,
 							'code'       => $lang,
 							'flag'       => '<a href="' . $edit_url . '" title="' . $atitle . '"><img src="' . $flag_url . '" alt="' . sprintf( __( '%s Flag', 'qtranslate' ), $lang_name ) . '"></a>',
@@ -977,9 +977,9 @@ function qtranxf_conf() {
 							'stored'     => empty( $props['stored'] ) ? $stored : '<a class="delete" href="' . $clean_uri . '&delete=' . $lang . '#languages">' . $stored . '</a>',
 							'admin_name' => $admin_name,
 							'orderby'    => $orderby
-						);
+						];
 					}
-					uasort( $data, array( $this, 'compare_items' ) );
+					uasort( $data, [ $this, 'compare_items' ] );
 					$this->items = $data;
 				}
 			}
@@ -1064,7 +1064,7 @@ function qtranxf_conf() {
 
 function qtranxf_date_format_multilinual( $fmt ) {
 	global $q_config;
-	$f = array();
+	$f = [];
 	foreach ( $q_config['enabled_languages'] as $lang ) {
 		$f[ $lang ] = empty( $q_config['date_i18n'][ $fmt ][ $lang ] ) ? $fmt : $q_config['date_i18n'][ $fmt ][ $lang ];
 	}
@@ -1085,7 +1085,7 @@ function qtranxf_date_i18n_multilinual( $fmt, $i = false, $gmt = false ) {
 	if ( ! $i ) {
 		$i = time();
 	}
-	$t = array();
+	$t = [];
 	$d = date_i18n( $fmt, $i, $gmt );
 	foreach ( $q_config['enabled_languages'] as $lang ) {
 		$t[ $lang ] = empty( $q_config['date_i18n'][ $fmt ][ $lang ] ) ? $d

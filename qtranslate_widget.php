@@ -32,7 +32,7 @@ transition: 1s ease opacity;
 class qTranslateXWidget extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'qtranxs_widget', 'description' => __( 'Allows your visitors to choose a Language.', 'qtranslate' ) );
+		$widget_ops = [ 'classname' => 'qtranxs_widget', 'description' => __( 'Allows your visitors to choose a Language.', 'qtranslate' ) ];
 		parent::__construct( 'qtranslate', __( 'qTranslate Language Chooser', 'qtranslate' ), $widget_ops );
 	}
 
@@ -103,7 +103,7 @@ class qTranslateXWidget extends WP_Widget {
 	}
 
 	function form( $instance ) {
-		$instance         = wp_parse_args( (array) $instance, array( 'title' => '', 'type' => 'text', 'format' => '', 'widget-css' => QTX_WIDGET_CSS ) );
+		$instance         = wp_parse_args( (array) $instance, [ 'title' => '', 'type' => 'text', 'format' => '', 'widget-css' => QTX_WIDGET_CSS ] );
 		$title            = $instance['title'];
 		$hide_title       = isset( $instance['hide-title'] ) && $instance['hide-title'] !== false;
 		$hide_title_colon = isset( $instance['hide-title-colon'] );
@@ -173,7 +173,7 @@ class qTranslateXWidget extends WP_Widget {
  * @param array $args
  * @param string $id
  */
-function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
+function qtranxf_generateLanguageSelectCode( $args = [], $id = '' ) {
 	global $q_config;
 	if ( is_string( $args ) ) {
 		$type = $args;
@@ -219,7 +219,7 @@ function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
 		case 'dropdown': {
 			foreach ( qtranxf_getSortedLanguages() as $language ) {
 				$alt     = $q_config['language_name'][ $language ] . ' (' . $language . ')';
-				$classes = array( 'lang-' . $language );
+				$classes = [ 'lang-' . $language ];
 				if ( $language == $q_config['language'] ) {
 					$classes[] = 'active';
 				}
@@ -307,7 +307,7 @@ function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
 					$content = str_replace( '%a', $a == $n ? '' : $a, $content );
 				}
 				$content = str_replace( '%c', $language, $content );
-				$classes = array( 'language-chooser-item', 'language-chooser-item-' . $language );
+				$classes = [ 'language-chooser-item', 'language-chooser-item-' . $language ];
 				if ( $language == $q_config['language'] ) {
 					$classes[] = 'active';
 				}

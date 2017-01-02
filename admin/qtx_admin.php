@@ -13,9 +13,9 @@ function qtranxf_collect_translations_deep( $qfields, $sep ) {
 	if ( is_string( $content ) ) {
 		return qtranxf_join_texts( $qfields, $sep );
 	}
-	$result = array();
+	$result = [];
 	foreach ( $content as $f => $r ) {
-		$texts = array();
+		$texts = [];
 		foreach ( $qfields as $lang => &$vals ) {
 			$texts[ $lang ] = $vals[ $f ];
 		}
@@ -284,7 +284,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 	}
 	if ( $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW ) {
 		//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: QTX_EDITOR_MODE_RAW: '.$pagenow.'; post_type: ', $post_type);
-		$page_config = array();
+		$page_config = [];
 
 		return $page_config;
 	}
@@ -294,7 +294,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 			case 'post-new.php':
 				if ( in_array( $post_type, $q_config['post_type_excluded'] ) ) {
 					//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: post_type_excluded: pagenow: '.$pagenow.'; post_type: ', $post_type);
-					$page_config = array();
+					$page_config = [];
 
 					return $page_config;
 				}
@@ -306,7 +306,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 	//$page_configs = apply_filters('i18n_admin_config_post_type', $page_configs, $post_type);
 
 	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $page_configs: ', $page_configs);
-	$page_config = isset( $page_configs[''] ) ? $page_configs[''] : array();
+	$page_config = isset( $page_configs[''] ) ? $page_configs[''] : [];
 	if ( $post_type ) {
 		foreach ( $page_configs as $k => $cfg ) {
 			if ( empty( $k ) ) {
@@ -325,7 +325,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 				continue;
 			}
 			if ( is_null( $matched ) ) {
-				$page_config = array();
+				$page_config = [];
 				break;
 			}
 			$page_config = qtranxf_merge_config( $page_config, $cfg );
@@ -369,7 +369,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 	}
 
 	if ( ! empty( $page_config ) ) {
-		$page_config['js'] = array();
+		$page_config['js'] = [];
 		if ( isset( $page_config['js-conf'] ) ) {
 			foreach ( $page_config['js-conf'] as $k => $js ) {
 				if ( ! isset( $js['handle'] ) ) {
@@ -380,7 +380,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 			unset( $page_config['js-conf'] );
 		}
 
-		$page_config['js'][] = array( 'handle' => 'qtranslate-admin-common', 'src' => './admin/js/common.js' );
+		$page_config['js'][] = [ 'handle' => 'qtranslate-admin-common', 'src' => './admin/js/common.js' ];
 
 		if ( isset( $page_config['js-exec'] ) ) {
 			foreach ( $page_config['js-exec'] as $k => $js ) {
@@ -457,9 +457,9 @@ function qtranxf_add_admin_footer_js( $enqueue_script = false ) {
 	wp_dequeue_script( 'autosave' );
 	wp_deregister_script( 'autosave' );//autosave script saves the active language only and messes it up later in a hard way
 
-	$config = array();
+	$config = [];
 	// since 3.2.9.9.0 'enabled_languages' is replaced with 'language_config' structure
-	$keys = array( 'default_language', 'language', 'url_mode', 'lsb_style_wrap_class', 'lsb_style_active_class', 'hide_default_language' ); // ,'term_name'
+	$keys = [ 'default_language', 'language', 'url_mode', 'lsb_style_wrap_class', 'lsb_style_active_class', 'hide_default_language' ]; // ,'term_name'
 	foreach ( $keys as $key ) {
 		$config[ $key ] = $q_config[ $key ];
 	}
@@ -472,14 +472,14 @@ function qtranxf_add_admin_footer_js( $enqueue_script = false ) {
 	$config['homeinfo_path'] = trailingslashit( $homeinfo['path'] );
 	$config['home_url_path'] = parse_url( home_url( '/' ), PHP_URL_PATH );//todo optimize
 	$config['flag_location'] = qtranxf_flag_location();
-	$config['js']            = array();
+	$config['js']            = [];
 	//$config['flag']=array();//deprecated since 3.2.9.9.0
 	//$config['language_name']=array();//deprecated since 3.2.9.9.0
-	$config['language_config'] = array();
+	$config['language_config'] = [];
 	foreach ( $q_config['enabled_languages'] as $lang ) {
 		//$config['flag'][$lang]=$q_config['flag'][$lang];
 		//$config['language_name'][$lang]=$q_config['language_name'][$lang];
-		$config['language_config'][ $lang ]                = array();
+		$config['language_config'][ $lang ]                = [];
 		$config['language_config'][ $lang ]['flag']        = $q_config['flag'][ $lang ];
 		$config['language_config'][ $lang ]['name']        = $q_config['language_name'][ $lang ];
 		$config['language_config'][ $lang ]['locale']      = $q_config['locale'][ $lang ];
@@ -515,7 +515,7 @@ function qtranxf_add_admin_footer_js( $enqueue_script = false ) {
 function qtranxf_add_admin_head_js( $enqueue_script = true ) {
 	if ( $enqueue_script ) {
 		//wp_register_script( 'qtranslate-admin-options', plugins_url( 'js/options.js', __FILE__ ), array(), QTX_VERSION );
-		wp_enqueue_script( 'qtranslate-admin-options', plugins_url( 'js/options.js', __FILE__ ), array(), QTX_VERSION );
+		wp_enqueue_script( 'qtranslate-admin-options', plugins_url( 'js/options.js', __FILE__ ), [], QTX_VERSION );
 	} else {
 		echo '<script type="text/javascript">' . PHP_EOL . '// <![CDATA[' . PHP_EOL;
 		$plugin_dir_path = plugin_dir_path( __FILE__ );
@@ -583,7 +583,7 @@ function qtranxf_get_admin_highlight_css( $highlight_mode ) {
 
 function qtranxf_add_admin_css() {
 	global $q_config;
-	wp_register_style( 'qtranslate-admin-style', plugins_url( 'css/qtranslate_configuration.css', __FILE__ ), array(), QTX_VERSION );
+	wp_register_style( 'qtranslate-admin-style', plugins_url( 'css/qtranslate_configuration.css', __FILE__ ), [], QTX_VERSION );
 	wp_enqueue_style( 'qtranslate-admin-style' );
 	qtranxf_add_admin_lang_icons();
 	qtranxf_add_admin_highlight_css();
@@ -707,7 +707,7 @@ function qtranxf_admin_menu() {
 function qtranxf_nav_menu_metabox( $object ) {
 	global $nav_menu_selected_id;
 	$nm    = __( 'Language Menu', 'qtranslate' );
-	$elems = array( '#qtransLangSwLM#' => $nm );
+	$elems = [ '#qtransLangSwLM#' => $nm ];
 
 	class qtranxcLangSwItems {
 		public $db_id = 0;
@@ -719,11 +719,11 @@ function qtranxf_nav_menu_metabox( $object ) {
 		public $url;
 		public $target = '';
 		public $attr_title = '';
-		public $classes = array();
+		public $classes = [];
 		public $xfn = '';
 	}
 
-	$elems_obj = array();
+	$elems_obj = [];
 	foreach ( $elems as $value => $title ) {
 		$elems_obj[ $title ] = new qtranxcLangSwItems();
 		$obj                 = &$elems_obj[ $title ];
@@ -756,7 +756,7 @@ function qtranxf_nav_menu_metabox( $object ) {
     <div id="qtranxs-langsw" class="qtranxslangswdiv">
         <div id="tabs-panel-qtranxs-langsw-all" class="tabs-panel tabs-panel-view-all tabs-panel-active">
             <ul id="qtranxs-langswchecklist" class="list:qtranxs-langsw categorychecklist form-no-clear">
-				<?php echo walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $elems_obj ), 0, (object) array( 'walker' => $walker ) ) ?>
+				<?php echo walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $elems_obj ), 0, (object) [ 'walker' => $walker ] ) ?>
             </ul>
         </div>
         <span class="list-controls hide-if-no-js">
@@ -797,24 +797,23 @@ function qtranxf_add_language_menu( $wp_admin_bar ) {
 		$title = $q_config['language_name'][ $q_config['language'] ];
 	}
 
-	$wp_admin_bar->add_menu( array(
+	$wp_admin_bar->add_menu( [
 			'id'     => 'language',
 			'parent' => 'top-secondary',
 			//'href' => 'http://example.com',
 			//'meta' => array('class'),
 			'title'  => $title
-		)
+		]
 	);
 
 	foreach ( $q_config['enabled_languages'] as $language ) {
 		$wp_admin_bar->add_menu(
-			array
-			(
+			[
 				'id'     => $language,
 				'parent' => 'language',
 				'title'  => $q_config['language_name'][ $language ],
 				'href'   => add_query_arg( 'lang', $language )
-			)
+			]
 		);
 	}
 }

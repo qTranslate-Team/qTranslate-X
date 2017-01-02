@@ -27,11 +27,11 @@ if ( ! function_exists( 'qtrans_getAvailableLanguages' ) ) {
 			return $langs;
 		}
 		if ( empty( $text ) ) {
-			return array();
+			return [];
 		}
 		global $q_config;
 
-		return array( $q_config['default_language'] );
+		return [ $q_config['default_language'] ];
 	}
 }
 

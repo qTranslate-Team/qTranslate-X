@@ -58,7 +58,7 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
                         <td colspan="2" id="qtranxs_slug_lsb_top"></td>
                     </tr>
 					<?php
-					$objects = get_taxonomies( array( 'public' => true, 'show_ui' => true, '_builtin' => true ), 'object' );
+					$objects = get_taxonomies( [ 'public' => true, 'show_ui' => true, '_builtin' => true ], 'object' );
 					$objects = qtranxf_slug_admin_filter_types( $objects );
 					if ( ! empty( $objects ) ) {
 						?>
@@ -75,7 +75,7 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 					}
 
 					//global $wp_taxonomies; $objects = $wp_taxonomies;
-					$objects = get_taxonomies( array( 'public' => true, 'show_ui' => true, '_builtin' => false ), 'object' );
+					$objects = get_taxonomies( [ 'public' => true, 'show_ui' => true, '_builtin' => false ], 'object' );
 					$objects = qtranxf_slug_admin_filter_types( $objects );
 					if ( ! empty( $objects ) ) {
 						?>
@@ -90,7 +90,7 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 					}
 
 					//global $wp_post_types; $objects = $wp_post_types;
-					$objects = get_post_types( array( '_builtin' => true, 'public' => true ), 'objects' );
+					$objects = get_post_types( [ '_builtin' => true, 'public' => true ], 'objects' );
 					$objects = qtranxf_slug_admin_filter_types( $objects );
 					if ( ! empty( $objects ) ) {
 						?>
@@ -105,7 +105,7 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 					}
 
 					//$objects = get_post_types( array('publicly_queryable' => true) );
-					$objects = get_post_types( array( '_builtin' => false, 'public' => true ), 'objects' );
+					$objects = get_post_types( [ '_builtin' => false, 'public' => true ], 'objects' );
 					$objects = qtranxf_slug_admin_filter_types( $objects );
 					if ( ! empty( $objects ) ) {
 						?>
@@ -238,7 +238,7 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 	 */
 	function qtranxf_slug_split_permastruct( $s ) {
 		$blocks = explode( '/', $s );
-		$info   = array( 'blocks' => $blocks, 'slugs' => array() );
+		$info   = [ 'blocks' => $blocks, 'slugs' => [] ];
 		$slugs  = &$info['slugs'];
 		if ( count( $blocks ) == 1 ) {
 			$slugs[] = $blocks[0];
@@ -280,16 +280,16 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 				if ( $value_org != $value_new ) {
 					//qtranxf_dbg_log('qtranxf_slug_update_translations_of: $value_org: ', $value_org);
 					if ( ! isset( $q_config['slugs_opt']['mv'] ) ) {
-						$q_config['slugs_opt']['mv'] = array();
+						$q_config['slugs_opt']['mv'] = [];
 					}
 					if ( ! isset( $q_config['slugs_opt']['mv']['terms'] ) ) {
-						$q_config['slugs_opt']['mv']['terms'] = array();
+						$q_config['slugs_opt']['mv']['terms'] = [];
 					}
 					if ( ! isset( $q_config['slugs_opt']['mv']['terms'][ $group ] ) ) {
-						$q_config['slugs_opt']['mv']['terms'][ $group ] = array( 'group_name' => $group_name, 'values' => array() );
+						$q_config['slugs_opt']['mv']['terms'][ $group ] = [ 'group_name' => $group_name, 'values' => [] ];
 					}
 					if ( ! isset( $q_config['slugs_opt']['mv']['terms'][ $group ]['values'][ $key ] ) ) {
-						$q_config['slugs_opt']['mv']['terms'][ $group ]['values'][ $key ]              = array();
+						$q_config['slugs_opt']['mv']['terms'][ $group ]['values'][ $key ]              = [];
 						$q_config['slugs_opt']['mv']['terms'][ $group ]['values'][ $key ]['value_org'] = $value_org;
 					}
 					$q_config['slugs_opt']['mv']['terms'][ $group ]['values'][ $key ]['value_new'] = $value_new;
@@ -302,9 +302,9 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 			$cnt = count( $info_def['slugs'] );
 			//qtranxf_dbg_log('qtranxf_slug_update_translations_of: $cnt: ', $cnt);
 			if ( $is_permastruct ) {
-				$names = array();
+				$names = [];
 				foreach ( $info_def['slugs'] as $name ) {
-					$names[ $name ] = array();
+					$names[ $name ] = [];
 				}
 				foreach ( $qfields as $lng => $val ) {
 					if ( empty( $val ) ) {
@@ -453,10 +453,10 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 
 	add_action( 'qtranslate_add_row_migrate', 'qtranxf_slug_add_row_migrate' );
 	function qtranxf_slug_add_row_migrate() {
-		qtranxf_add_row_migrate( 'Qtranslate Slug', 'qtranslate-slug', array(
+		qtranxf_add_row_migrate( 'Qtranslate Slug', 'qtranslate-slug', [
 			'no_export' => true,
 			'note'      => __( 'These options get auto-migrated on activation of plugin if applicable. Migration utilities are provided here for the sake of completeness.', 'qtranslate' )
-		) );
+		] );
 	}
 
 	function qtranxf_migrate_import_qtranslate_slug( $default_language ) {

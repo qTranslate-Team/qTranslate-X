@@ -31,7 +31,7 @@ define( 'QTX_URL_SLUG', 10 );
 		//qtranxf_dbg_log('1.qtranxf_slug_option_config: ');
 		//$ops['front']['array']['slug'] = 'qtranxf_slug_option_default';
 		$ops['front']['bool']['slugs']      = false;
-		$ops['front']['array']['slugs_opt'] = array();
+		$ops['front']['array']['slugs_opt'] = [];
 		//$ops['front']['array']['slugs_post_type'] = array();
 		//$ops['front']['array']['slugs_taxonomy'] = array();
 		return $ops;
@@ -44,7 +44,7 @@ define( 'QTX_URL_SLUG', 10 );
 			add_filter( 'qtranslate_url_del_language', 'qtranxf_slug_url_del_language', 5, 2 );
 			add_filter( 'qtranslate_url_set_language_pre', 'qtranxf_slug_url_set_language', 5, 3 );
 		}
-		$q_config['slugs-cache'] = array( 'names' => array(), 'slugs' => array() );
+		$q_config['slugs-cache'] = [ 'names' => [], 'slugs' => [] ];
 	}
 
 	function qtranxf_slug_registered_taxonomy( $taxonomy, $object_type, $args ) {
@@ -130,7 +130,7 @@ define( 'QTX_URL_SLUG', 10 );
 	function qtranxf_slug_path_del_language( &$urlinfo, &$lang = null ) {
 		global $q_config;
 		$slugs_org                = qtranxf_slug_split_path( $urlinfo['wp-path'] );
-		$urlinfo['wp-path-slugs'] = array();//slugs of the default language
+		$urlinfo['wp-path-slugs'] = [];//slugs of the default language
 		$slugs                    = &$urlinfo['wp-path-slugs'];
 		$modified                 = false;
 		foreach ( $slugs_org as $k => $slug_org ) {
@@ -147,7 +147,7 @@ define( 'QTX_URL_SLUG', 10 );
 			$slugs[]  = $info['name'];
 			$modified = true;
 		}
-		$urlinfo['wp-paths']                                  = array();
+		$urlinfo['wp-paths']                                  = [];
 		$urlinfo['wp-paths'][ $q_config['default_language'] ] = implode( '/', $slugs );
 
 		//qtranxf_dbg_log('qtranxf_slug_path_del_language: '.($modified?'modified':'unmodified').': $urlinfo: ', $urlinfo);
@@ -163,7 +163,7 @@ define( 'QTX_URL_SLUG', 10 );
 		//if(!isset($urlinfo['wp-path-slugs'])){
 		//	//qtranxf_dbg_log('qtranxf_slug_path_set_language('.$lang.'): no wp-path-slugs: $urlinfo: ', $urlinfo);
 		//}
-		$slugs    = array();
+		$slugs    = [];
 		$modified = false;
 		foreach ( $urlinfo['wp-path-slugs'] as $k => $slug_def ) {
 			if ( empty( $slug_def ) ) {
@@ -237,12 +237,12 @@ define( 'QTX_URL_SLUG', 10 );
 		}
 		$sql                                       = 'SELECT slug, lang FROM ' . $wpdb->prefix . 'i18n_slugs WHERE name = %s';
 		$rows                                      = $wpdb->get_results( $wpdb->prepare( $sql, $name ) );
-		$q_config['slugs-cache']['names'][ $name ] = array();
+		$q_config['slugs-cache']['names'][ $name ] = [];
 		$names                                     = &$q_config['slugs-cache']['names'][ $name ];
 		$slugs                                     = &$q_config['slugs-cache']['slugs'];
 		foreach ( $rows as $row ) {
 			$names[ $row->lang ] = $row->slug;
-			$slugs[ $row->slug ] = array( 'lang' => $row->lang, 'name' => $name );
+			$slugs[ $row->slug ] = [ 'lang' => $row->lang, 'name' => $name ];
 		}
 
 		return $names;
@@ -262,7 +262,7 @@ define( 'QTX_URL_SLUG', 10 );
 		$row = $wpdb->get_row( $wpdb->prepare( $sql, $slug ), ARRAY_A );
 
 		//qtranxf_dbg_log('qtranxf_slug_get_name: '.$slug.' => ', $row);
-		return $q_config['slugs-cache']['slugs'][ $slug ] = is_array( $row ) ? $row : array();
+		return $q_config['slugs-cache']['slugs'][ $slug ] = is_array( $row ) ? $row : [];
 	}
 
 	/**

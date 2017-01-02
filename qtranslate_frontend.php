@@ -97,8 +97,8 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ) {
 	$language     = $q_config['language'];
 	$itemid       = 0;
 	$menu_order   = 0;
-	$itemsremoved = array();
-	$qtransmenus  = array();
+	$itemsremoved = [];
+	$qtransmenus  = [];
 	//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: count(items)='.count($items).'; args: ', $args);//,true);
 	//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: count(items)=',count($items));
 	foreach ( $items as $key => $item ) {
@@ -233,7 +233,7 @@ function qtranxf_add_language_menu_item( &$items, &$menu_order, &$itemid, $key, 
 	if ( $p !== false ) {
 		$qs   = substr( $item->url, $p + 1 );
 		$qs   = str_replace( '#', '', $qs );
-		$pars = array();
+		$pars = [];
 		parse_str( $qs, $pars );
 		if ( isset( $pars['type'] ) && stripos( $pars['type'], 'AL' ) !== false ) {
 			$type = 'AL';
@@ -334,7 +334,7 @@ function qtranxf_add_language_menu_item( &$items, &$menu_order, &$itemid, $key, 
 				continue;
 			}
 		}
-		$item = new WP_Post( (object) array( 'ID' => ++ $itemid ) );
+		$item = new WP_Post( (object) [ 'ID' => ++ $itemid ] );
 
 		//add properties required for nav_menu_item, whose absense causes class-wp-customize-setting.php to throw Exception in function __construct
 		//$item->db_id=$item->ID;
@@ -368,7 +368,7 @@ function qtranxf_add_language_menu_item( &$items, &$menu_order, &$itemid, $key, 
 		$item->url = esc_url( $item->url );//not sure if this is needed
 		//}
 		$item->attr_title = $q_config['language_name'][ $lang ];
-		$item->classes    = array();
+		$item->classes    = [];
 		//$item->classes[] = 'qtranxs_flag_'.$lang;
 		$item->classes[] = 'qtranxs-lang-menu-item';
 		$item->classes[] = 'qtranxs-lang-menu-item-' . $lang;
@@ -580,7 +580,7 @@ function qtranxf_translate_post( $post, $lang ) {
 				if ( count( $blocks ) > 1 ) {//value is multilingual
 					$key_ml        = $key . '_ml';
 					$post->$key_ml = $txt;
-					$langs         = array();
+					$langs         = [];
 					$content       = qtranxf_split_blocks( $blocks, $langs );
 					$post->$key    = qtranxf_use_content( $lang, $content, $langs, false );
 					//$post->$key = qtranxf_use_block($lang, $blocks, false);
@@ -666,7 +666,7 @@ function qtranxf_excludePages( $pages ) {
 		$where      = qtranxf_where_clause_translated_posts( $lang, $wpdb->posts );
 		$query      = "SELECT ID FROM $wpdb->posts WHERE post_type = 'page' AND post_status = 'publish' AND NOT " . $where;
 		$hide_pages = $wpdb->get_results( $query );
-		$exclude    = array();
+		$exclude    = [];
 		foreach ( $hide_pages as $page ) {
 			$exclude[] = $page->ID;
 		}
@@ -868,7 +868,7 @@ function qtranxf_cache_delete_metadata( $meta_type, $object_id ) {//, $meta_key)
  */
 function qtranxf_translate_metadata( $meta_type, $original_value, $object_id, $meta_key = '', $single = false ) {
 	global $q_config;
-	static $meta_cache_unserialized = array();
+	static $meta_cache_unserialized = [];
 	if ( ! isset( $q_config['url_info'] ) ) {
 		//qtranxf_dbg_log('qtranxf_filter_postmeta: too early: $object_id='.$object_id.'; $meta_key',$meta_key,true);
 		return $original_value;
@@ -891,10 +891,10 @@ function qtranxf_translate_metadata( $meta_type, $original_value, $object_id, $m
 	}
 
 	if ( ! isset( $meta_cache_unserialized[ $meta_type ] ) ) {
-		$meta_cache_unserialized[ $meta_type ] = array();
+		$meta_cache_unserialized[ $meta_type ] = [];
 	}
 	if ( ! isset( $meta_cache_unserialized[ $meta_type ][ $object_id ] ) ) {
-		$meta_cache_unserialized[ $meta_type ][ $object_id ] = array();
+		$meta_cache_unserialized[ $meta_type ][ $object_id ] = [];
 	}
 	$meta_unserialized = &$meta_cache_unserialized[ $meta_type ][ $object_id ];
 
@@ -902,13 +902,13 @@ function qtranxf_translate_metadata( $meta_type, $original_value, $object_id, $m
 		if ( $meta_cache_wp ) {
 			$meta_cache = $meta_cache_wp;
 		} else {
-			$meta_cache = update_meta_cache( $meta_type, array( $object_id ) );
+			$meta_cache = update_meta_cache( $meta_type, [ $object_id ] );
 			$meta_cache = $meta_cache[ $object_id ];
 		}
-		$meta_unserialized = array();//clear this cache if we are re-doing meta_cache
+		$meta_unserialized = [];//clear this cache if we are re-doing meta_cache
 		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
 		foreach ( $meta_cache as $mkey => $mval ) {
-			$meta_unserialized[ $mkey ] = array();
+			$meta_unserialized[ $mkey ] = [];
 			if ( strpos( $mkey, '_url' ) !== false ) {
 				switch ( $mkey ) {
 					case '_menu_item_url':
@@ -973,7 +973,7 @@ function qtranxf_translate_metadata( $meta_type, $original_value, $object_id, $m
 			 * WP assumes that, if $meta_key is empty, then $single must be 'false', but developers sometimes put 'true' anyway, as it is ignored in the original function. The line below offsets this imperfection.
 			 * If WP ever fixes that place, this block of code can be removed.
 			 */
-			return array( $meta_cache );
+			return [ $meta_cache ];
 		}
 
 		return $meta_cache;
@@ -1000,7 +1000,7 @@ function qtranxf_translate_metadata( $meta_type, $original_value, $object_id, $m
 	if ( $single ) {
 		return '';
 	} else {
-		return array();
+		return [];
 	}
 }
 
@@ -1232,7 +1232,7 @@ function qtranxf_option_dt_format( $fmt ) {
 		//qtranxf_dbg_log('qtranxf_option_dt_format: $fmt_lang: ', $fmt);
 	}
 	if ( ! isset( $c ) ) {
-		$c = array();
+		$c = [];
 	}
 
 	return $c[ $fmt_req ] = $fmt;

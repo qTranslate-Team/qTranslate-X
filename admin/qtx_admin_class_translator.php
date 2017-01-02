@@ -12,7 +12,7 @@ require_once( QTRANSLATE_DIR . '/admin/i18n-interface-admin.php' );
 class QTX_Translator_Admin extends QTX_Translator implements WP_Translator_Admin {
 	public function __construct() {
 		parent::__construct();
-		add_filter( 'multilingual_term', array( $this, 'multilingual_term' ), 10, 3 );
+		add_filter( 'multilingual_term', [ $this, 'multilingual_term' ], 10, 3 );
 	}
 
 	public static function get_translator() {

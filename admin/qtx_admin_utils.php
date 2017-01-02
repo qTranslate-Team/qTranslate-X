@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function qtranxf_loadfiles_js( $jss, $enqueue_script ) {
 	$cnt  = 0;
-	$deps = array();
+	$deps = [];
 	foreach ( $jss as $k => $js ) {
 		if ( isset( $js['javascript'] ) && ! empty( $js['javascript'] ) ) {
 			echo $js['javascript'];
@@ -397,7 +397,7 @@ function qtranxf_mark_default( $text ) {
 	if ( count( $blocks ) > 1 ) {
 		return $text;
 	}//already have other languages.
-	$content = array();
+	$content = [];
 	foreach ( $q_config['enabled_languages'] as $language ) {
 		if ( $language == $q_config['default_language'] ) {
 			$content[ $language ] = $text;
@@ -550,7 +550,7 @@ function qtranxf_updateTermLibrary() {
 			if ( isset( $_POST[ 'qtrans_term_' . $q_config['default_language'] ] ) && $_POST[ 'qtrans_term_' . $q_config['default_language'] ] != '' ) {
 				$default = htmlspecialchars( qtranxf_stripSlashesIfNecessary( $_POST[ 'qtrans_term_' . $q_config['default_language'] ] ), ENT_NOQUOTES );
 				if ( ! isset( $q_config['term_name'][ $default ] ) || ! is_array( $q_config['term_name'][ $default ] ) ) {
-					$q_config['term_name'][ $default ] = array();
+					$q_config['term_name'][ $default ] = [];
 				}
 				foreach ( $q_config['enabled_languages'] as $lang ) {
 					$_POST[ 'qtrans_term_' . $lang ] = qtranxf_stripSlashesIfNecessary( $_POST[ 'qtrans_term_' . $lang ] );
@@ -663,7 +663,7 @@ add_filter('manage_language_columns', 'qtranxf_language_columns');
 */
 
 function qtranxf_languageColumnHeader( $columns ) {
-	$new_columns = array();
+	$new_columns = [];
 	if ( isset( $columns['cb'] ) ) {
 		$new_columns['cb'] = '';
 	}
@@ -693,7 +693,7 @@ function qtranxf_languageColumn( $column ) {
 			echo _x( 'Languages are not set', 'Appears in the column "Languages" on post listing pages, when content has no language tags yet.', 'qtranslate' );
 		} else {
 			$missing_languages        = array_diff( $q_config['enabled_languages'], $available_languages );
-			$available_languages_name = array();
+			$available_languages_name = [];
 			$language_names           = null;
 			foreach ( $available_languages as $language ) {
 				if ( isset( $q_config['language_name'][ $language ] ) ) {
@@ -718,7 +718,7 @@ function qtranxf_languageColumn( $column ) {
 
 function qtranxf_fetch_file_selection( $dir, $suffix = '.css' ) {
 	//qtranxf_dbg_log('qtranxf_fetch_file_selection: dir:',$dir);
-	$files      = array();
+	$files      = [];
 	$dir_handle = @opendir( $dir );
 	if ( ! $dir_handle ) {
 		return false;
@@ -1046,9 +1046,9 @@ function qtranxf_json_encode( $o ) {
  */
 function qtranxf_config_add_form( &$page_config, $nm ) {
 	if ( ! isset( $page_config['forms'][ $nm ] ) ) {
-		$page_config['forms'][ $nm ] = array( 'fields' => array() );
+		$page_config['forms'][ $nm ] = [ 'fields' => [] ];
 	} else if ( ! isset( $page_config['forms'][ $nm ]['fields'] ) ) {
-		$page_config['forms'][ $nm ]['fields'] = array();
+		$page_config['forms'][ $nm ]['fields'] = [];
 	}
 }
 
@@ -1085,7 +1085,7 @@ function qtranxf_decode_name_value_pair( &$a, $nam, $val ) {
 			$k = (int) $k;
 		}
 		if ( empty( $a[ $n ] ) ) {
-			$a[ $n ] = array();
+			$a[ $n ] = [];
 		}
 		if ( empty( $s ) ) {
 			$a[ $n ][ $k ] = $val;
@@ -1105,7 +1105,7 @@ function qtranxf_decode_name_value_pair( &$a, $nam, $val ) {
  * @return array
  */
 function qtranxf_decode_name_value( $data ) {
-	$a = array();
+	$a = [];
 	foreach ( $data as $nv ) {
 		qtranxf_decode_name_value_pair( $a, $nv->name, wp_slash( $nv->value ) );
 		/*

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function qtranxf_langs_preset() {
 	global $q_config, $qtranslate_options;
-	$langs = array();
+	$langs = [];
 	foreach ( $qtranslate_options['languages'] as $nm => $opn ) {
 		$defs = call_user_func( 'qtranxf_default_' . $nm );
 		foreach ( $defs as $lang => $v ) {
@@ -46,9 +46,9 @@ function qtranxf_langs_stored( &$defs = null ) {
 	if ( ! $defs ) {
 		$defs = qtranxf_langs_preset();
 	}
-	$langs = array();
+	$langs = [];
 	foreach ( $qtranslate_options['languages'] as $nm => $opn ) {
-		$vals         = get_option( $opn, array() );
+		$vals         = get_option( $opn, [] );
 		$vals_changed = ! is_array( $vals );
 		if ( ! $vals_changed ) {
 			foreach ( $vals as $lang => $v ) {
@@ -115,7 +115,7 @@ function qtranxf_save_languages( $langs_stored, $qtranslate_options = null ) {
 			qtranxf_set_default_options( $qtranslate_options );
 		}
 	}
-	$cfg = array();
+	$cfg = [];
 	foreach ( $langs_stored as $lang => $props ) {
 		foreach ( $props as $nm => $v ) {
 			$cfg[ $nm ][ $lang ] = $v;

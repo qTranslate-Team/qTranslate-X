@@ -65,9 +65,9 @@ function qtranxf_add_admin_notice( $msg, $kind ) {
 		}
 	} else {
 		if ( ! isset( $q_config['url_info'] ) ) {
-			$q_config['url_info'] = array();
+			$q_config['url_info'] = [];
 		}
-		$q_config['url_info'][ $kind ] = array( $msg );
+		$q_config['url_info'][ $kind ] = [ $msg ];
 	}
 }
 
@@ -204,7 +204,7 @@ function qtranxf_parseURL( $url ) {
 	preg_match( '!(?:(\w+)://)?(?:(\w+)\:(\w+)@)?([^/:?#]+)?(?:\:(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!', $url, $out );
 	//qtranxf_dbg_log('qtranxf_parseURL('.$url.'): out:',$out);
 	//new code since 3.2.8 - performance improvement
-	$result = array();
+	$result = [];
 	if ( ! empty( $out[1] ) ) {
 		$result['scheme'] = $out[1];
 	}
@@ -325,7 +325,7 @@ function qtranxf_buildURL( $urlinfo, $homeinfo ) {
  * @return array
  */
 function qtranxf_copy_url_info( $urlinfo ) {
-	$r = array();
+	$r = [];
 	if ( isset( $urlinfo['scheme'] ) ) {
 		$r['scheme'] = $urlinfo['scheme'];
 	}
@@ -531,7 +531,7 @@ function qtranxf_del_query_arg( &$query, $key ) {
 */
 function qtranxf_sanitize_url( $url ) {
 	$url   = preg_replace( '|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', $url );
-	$strip = array( '%0d', '%0a', '%0D', '%0A' );
+	$strip = [ '%0d', '%0a', '%0D', '%0A' ];
 	$count = 0;
 	do {
 		$url = str_replace( $strip, '', $url, $count );
@@ -774,7 +774,7 @@ function qtranxf_getAvailableLanguages( $text ) {
 	if ( count( $blocks ) <= 1 ) {
 		return false;
 	}// no languages set
-	$result  = array();
+	$result  = [];
 	$content = qtranxf_split_languages( $blocks );
 	foreach ( $content as $language => $lang_text ) {
 		$lang_text = trim( $lang_text );
@@ -820,7 +820,7 @@ function qtranxf_getSortedLanguages( $reverse = false ) {
 	$languages = $q_config['enabled_languages'];
 	ksort( $languages );
 	// fix broken order
-	$clean_languages = array();
+	$clean_languages = [];
 	foreach ( $languages as $lang ) {
 		$clean_languages[] = $lang;
 	}
@@ -966,7 +966,7 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
 
 	//qtranxf_dbg_log('qtranxf_parse_page_config: $url_path: "'.$url_path.'"; $url_query: "'.$url_query.'"');
 	//qtranxf_dbg_log('qtranxf_parse_page_config: $config: ', $config);
-	$page_configs = array();
+	$page_configs = [];
 	foreach ( $config as $pgkey => $pgcfg ) {
 		$d       = isset( $pgcfg['preg_delimiter'] ) ? $pgcfg['preg_delimiter'] : '!';
 		$matched = qtranxf_match_page( $pgcfg, $url_path, $url_query, $d );
@@ -989,7 +989,7 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
 			}
 		}
 		if ( ! isset( $page_configs[ $post_type_key ] ) ) {
-			$page_configs[ $post_type_key ] = array();
+			$page_configs[ $post_type_key ] = [];
 		}
 		$page_config = &$page_configs[ $post_type_key ];
 
@@ -1009,13 +1009,13 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
 						$id = $k;
 					}
 					if ( ! isset( $page_config['anchors'] ) ) {
-						$page_config['anchors'] = array();
+						$page_config['anchors'] = [];
 					}
 					$page_config['anchors'][ $id ] = $anchor;
 				}
 			} else if ( $key === 'forms' ) {
 				if ( ! isset( $page_config['forms'] ) ) {
-					$page_config['forms'] = array();
+					$page_config['forms'] = [];
 				}
 				foreach ( $cfg as $form_id => $pgcfg_form ) {
 					if ( ! isset( $pgcfg_form['fields'] ) ) {
@@ -1246,7 +1246,7 @@ function qtranxf_windows_os() {
 	function qtranxf_date_strftime_mapping() {
 		static $mapping;
 		if ( ! $mapping ) {
-			$mapping = array(
+			$mapping = [
 				'd' => '%d',
 				'D' => '%a',
 				'j' => '%e',//'%E',
@@ -1284,7 +1284,7 @@ function qtranxf_windows_os() {
 				'c' => '%2',
 				'r' => '%3',
 				'U' => '%4'
-			);
+			];
 		}
 
 		return $mapping;
@@ -1292,8 +1292,8 @@ function qtranxf_windows_os() {
 
 	function qtranxf_convert_date2strftime( $format ) {
 		$mappings = qtranxf_date_strftime_mapping();
-		$d        = array();
-		$s        = array();
+		$d        = [];
+		$s        = [];
 		$d[]      = '#%#';
 		$s[]      = '%%';
 		foreach ( $mappings as $df => $sf ) {
@@ -1310,8 +1310,8 @@ function qtranxf_windows_os() {
 			return $format;
 		}
 		$mappings = qtranxf_date_strftime_mapping();
-		$d        = array();
-		$s        = array();
+		$d        = [];
+		$s        = [];
 		foreach ( $mappings as $df => $sf ) {
 			$d[] = $df;
 			$s[] = $sf;

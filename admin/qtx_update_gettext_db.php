@@ -55,7 +55,7 @@ function qtranxf_updateGettextDatabasesEx( $force = false, $only_for_language = 
 		$langs   = $q_config['enabled_languages'];
 		$locales = $q_config['locale'];
 	} else {
-		$langs   = array( $only_for_language );
+		$langs   = [ $only_for_language ];
 		$locales = qtranxf_language_configured( 'locale' );
 	}
 	$errcnt = 0;
@@ -91,7 +91,7 @@ function qtranxf_updateGettextDatabasesEx( $force = false, $only_for_language = 
 		$skin              = new Automatic_Upgrader_Skin;
 		$upgrader          = new Language_Pack_Upgrader( $skin );
 		$translation->type = 'core';
-		$result            = $upgrader->upgrade( $translation, array( 'clear_update_cache' => false ) );
+		$result            = $upgrader->upgrade( $translation, [ 'clear_update_cache' => false ] );
 
 		if ( is_wp_error( $result ) ) {
 			qtranxf_add_warning( sprintf( __( 'Failed to update gettext database for "%s": %s', 'qtranslate' ), $lang, $result->get_error_message() ) );

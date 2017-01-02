@@ -23,7 +23,7 @@ function qtranxf_localeForCurrentLanguage( $locale ) {
 	$locale_lang = $q_config['locale'][ $lang ];
 
 	// submit a few possible locales
-	$lc   = array();
+	$lc   = [];
 	$lc[] = $locale_lang . '.utf8';
 	$lc[] = $locale_lang . '@euro';
 	$lc[] = $locale_lang;
@@ -41,7 +41,7 @@ function qtranxf_localeForCurrentLanguage( $locale ) {
 	//qtranxf_dbg_log('qtranxf_localeForCurrentLanguage: $lc: ', $lc);
 	$loc = setlocale( LC_TIME, $lc );
 	if ( ! $loc ) {
-		$lc2 = array();
+		$lc2 = [];
 		if ( strlen( $locale_lang ) == 2 ) {
 			$lc2[] = $locale_lang . '_' . strtoupper( $locale_lang );
 			$loc   = $locale_lang . '_' . strtoupper( $lang );

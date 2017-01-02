@@ -73,19 +73,19 @@ function qtranxf_default_enabled_languages() {
 			}
 			$flag = 'aa.png';
 		} while ( false );
-		$props = array(
+		$props = [
 			'language_name' => $name,
 			'flag'          => $flag,
 			'locale'        => $locale,
 			'date_format'   => __( 'F j, Y' ),
 			'time_format'   => __( 'g:i a' ),
 			'not_available' => 'Sorry, this entry is only available in %LANG:, : and %.'
-		);
+		];
 		qtranxf_set_default_options( $qtranslate_options );
-		qtranxf_save_languages( array( $lang => $props ), $qtranslate_options );
+		qtranxf_save_languages( [ $lang => $props ], $qtranslate_options );
 		//qtranxf_dbg_log('qtranxf_default_enabled_languages: $props: ',$props);
 	}
-	$enabled_languages = array( $lang );
+	$enabled_languages = [ $lang ];
 	if ( $lang != 'en' ) {
 		$enabled_languages[] = 'en';
 	}
@@ -146,7 +146,7 @@ function qtranxf_load_config_files( $json_files ) {
 		}
 	}
 
-	$cfg_all = array();
+	$cfg_all = [];
 	foreach ( $json_files as $fnm ) {
 		$cfg_json = file_get_contents( $fnm );
 		//$cfg_json=php_strip_whitespace($fnm);
@@ -162,10 +162,10 @@ function qtranxf_load_config_files( $json_files ) {
 		}
 	}
 	if ( ! isset( $cfg_all['admin-config'] ) ) {
-		$cfg_all['admin-config'] = array();
+		$cfg_all['admin-config'] = [];
 	}
 	if ( ! isset( $cfg_all['front-config'] ) ) {
-		$cfg_all['front-config'] = array();
+		$cfg_all['front-config'] = [];
 	}
 
 	return $cfg_all;
@@ -175,7 +175,7 @@ function qtranxf_load_config_files( $json_files ) {
  * @since 3.4
  */
 function qtranxf_get_option_config_files() {
-	$config_files_def = array( './i18n-config.json' );
+	$config_files_def = [ './i18n-config.json' ];
 	$config_files     = get_option( 'qtranslate_config_files', $config_files_def );
 	if ( ! is_array( $config_files ) ) {
 		$config_files = $config_files_def;
@@ -264,7 +264,7 @@ function qtranxf_standardize_config_anchor( &$anchor ) {
 				$id = $anchor;
 				break;
 		}
-		$anchor          = array();
+		$anchor          = [];
 		$anchor['where'] = 'before';
 	} else if ( isset( $anchor['id'] ) ) {
 		$id = $anchor['id'];
@@ -427,7 +427,7 @@ function qtranxf_update_config_options( $config_files, $changed = true ) {
 	if ( $changed ) {
 		update_option( 'qtranslate_config_files', $config_files );
 	}
-	$custom_config = get_option( 'qtranslate_custom_i18n_config', array() );
+	$custom_config = get_option( 'qtranslate_custom_i18n_config', [] );
 	$cfg           = qtranxf_load_config_all( $config_files, $custom_config );
 	update_option( 'qtranslate_admin_config', $cfg['admin-config'] );
 	update_option( 'qtranslate_front_config', $cfg['front-config'] );
@@ -449,7 +449,7 @@ function qtranxf_search_config_files_theme( $theme = null, $found = null ) {
 		$theme = wp_get_theme( $theme );
 	}
 	if ( ! $found ) {
-		$found = array();
+		$found = [];
 	}
 	$fn = $theme->theme_root . '/' . $theme->stylesheet . '/i18n-config.json';
 	if ( file_exists( $fn ) ) {
@@ -636,7 +636,7 @@ function qtranxf_find_plugin_file( $fp ) {
 
 		return;
 	}
-	$found = array( $fn );
+	$found = [ $fn ];
 	$found = qtranxf_normalize_config_files( $found );
 
 	return $found[0];
@@ -849,7 +849,7 @@ function qtranxf_activation_hook() {
 		}
 	}
 
-	$vers = get_option( 'qtranslate_versions', array() );
+	$vers = get_option( 'qtranslate_versions', [] );
 	if ( ! isset( $vers[ $ver_cur ] ) ) {
 		$vers[ $ver_cur ] = $ts;
 	}
@@ -887,7 +887,7 @@ function qtranxf_activation_hook() {
  */
 function qtranxf_deactivation_hook() {
 	//qtranxf_dbg_log('qtranxf_deactivation_hook: ', __FILE__);
-	$vers = get_option( 'qtranslate_versions', array() );
+	$vers = get_option( 'qtranslate_versions', [] );
 	$ts   = time();
 	if ( isset( $vers['l'] ) ) {
 		$t = $ts - $vers['l'];
@@ -1007,11 +1007,11 @@ function qtranxf_admin_notices_version() {
 	}
 
 	if ( $ver_prv < 33000 && $ver_cur >= 32980 ) {
-		qtranxf_admin_notices_new_options( array( __( 'Highlight Style', 'qtranslate' ), __( 'LSB Style', 'qtranslate' ) ), '3.3', 'https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3' );
+		qtranxf_admin_notices_new_options( [ __( 'Highlight Style', 'qtranslate' ), __( 'LSB Style', 'qtranslate' ) ], '3.3', 'https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3' );
 	}
 
 	if ( $ver_prv < 34000 && $ver_cur >= 32980 ) {
-		qtranxf_admin_notices_new_options( array( '<a href="' . admin_url( 'options-general.php?page=qtranslate-x#integration' ) . '">' . __( 'Configuration Files', 'qtranslate' ) . '</a>' ), '3.4', 'https://qtranslatexteam.wordpress.com/2015/05/15/release-notes-3-4/' );
+		qtranxf_admin_notices_new_options( [ '<a href="' . admin_url( 'options-general.php?page=qtranslate-x#integration' ) . '">' . __( 'Configuration Files', 'qtranslate' ) . '</a>' ], '3.4', 'https://qtranslatexteam.wordpress.com/2015/05/15/release-notes-3-4/' );
 	}
 }
 
@@ -1318,7 +1318,7 @@ add_action( 'admin_notices', 'qtranxf_admin_notices_errors' );
  */
 function qtranxf_update_option_admin_notices( $messages, $id, $toggle = true ) {
 	if ( ! is_array( $messages ) ) {
-		$messages = array();
+		$messages = [];
 	}
 	if ( $toggle && isset( $messages[ $id ] ) ) {
 		unset( $messages[ $id ] );
@@ -1331,13 +1331,13 @@ function qtranxf_update_option_admin_notices( $messages, $id, $toggle = true ) {
 }
 
 function qtranxf_update_option_admin_notices_id( $id ) {
-	$messages = get_option( 'qtranslate_admin_notices', array() );
+	$messages = get_option( 'qtranslate_admin_notices', [] );
 
 	return qtranxf_update_option_admin_notices( $messages, $id, false );
 }
 
 function qtranxf_update_admin_notice( $id ) {
-	$messages = get_option( 'qtranslate_admin_notices', array() );
+	$messages = get_option( 'qtranslate_admin_notices', [] );
 
 	return qtranxf_update_option_admin_notices( $messages, $id );
 }

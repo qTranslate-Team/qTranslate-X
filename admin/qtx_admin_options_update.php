@@ -22,21 +22,21 @@ function qtranxf_editConfig() {
 	}
 	// init some needed variables
 	if ( ! isset( $q_config['url_info']['errors'] ) ) {
-		$q_config['url_info']['errors'] = array();
+		$q_config['url_info']['errors'] = [];
 	}
 	if ( ! isset( $q_config['url_info']['warnings'] ) ) {
-		$q_config['url_info']['warnings'] = array();
+		$q_config['url_info']['warnings'] = [];
 	}
 	if ( ! isset( $q_config['url_info']['messages'] ) ) {
-		$q_config['url_info']['messages'] = array();
+		$q_config['url_info']['messages'] = [];
 	}
 
 	$errors = &$q_config['url_info']['errors'];
 	//$warnings = &$q_config['url_info']['warnings'];
 	$messages = &$q_config['url_info']['messages'];
 
-	$q_config['posted']                  = array();
-	$q_config['posted']['lang_props']    = array();
+	$q_config['posted']                  = [];
+	$q_config['posted']['lang_props']    = [];
 	$q_config['posted']['language_code'] = '';
 	$q_config['posted']['original_lang'] = '';
 
@@ -171,7 +171,7 @@ function qtranxf_editConfig() {
 			exit;
 		} else {
 			//reset form for new language
-			$lang_props    = array();
+			$lang_props    = [];
 			$original_lang = '';
 		}
 	} elseif ( isset( $_GET['convert'] ) ) {
@@ -250,7 +250,7 @@ function qtranxf_editConfig() {
 		//$lang_props['not_available'] = isset($langs['not_available'][$lang])?$langs['not_available'][$lang]:'';
 		//$lang_props['flag'] = isset($langs['flag'][$lang])?$langs['flag'][$lang]:'';
 		$langs      = qtranxf_langs_config();
-		$lang_props = isset( $langs[ $lang ] ) ? $langs[ $lang ] : array();
+		$lang_props = isset( $langs[ $lang ] ) ? $langs[ $lang ] : [];
 	} elseif ( isset( $_GET['delete'] ) ) {
 		$lang = sanitize_text_field( $_GET['delete'] );
 		// validate delete (protect code)
@@ -756,7 +756,7 @@ function qtranxf_parse_post_type_excluded() {
 	if ( ! is_array( $_POST['post_types_all'] ) ) {
 		return false;
 	}
-	$post_type_excluded = array();
+	$post_type_excluded = [];
 	foreach ( $_POST['post_types_all'] as $post_type => $v ) {
 		if ( isset( $_POST['post_types'][ $post_type ] ) ) {
 			continue;
@@ -771,7 +771,7 @@ function qtranxf_parse_post_type_excluded() {
 
 function qtranxf_updateLanguageDateTimeFormats( $date_i18n, $enabled_languages, $prop, $format ) {
 	$opnm        = 'qtranslate_' . $prop . 's';
-	$dbs_formats = get_option( $opnm, array() );
+	$dbs_formats = get_option( $opnm, [] );
 	$def_formats = call_user_func( 'qtranxf_default_' . $prop );
 	//qtranxf_dbg_log('qtranxf_updateLanguageDateTimeFormats('.$prop.'): $def_formats: ',$def_formats);
 	//qtranxf_dbg_log('qtranxf_updateLanguageDateTimeFormats('.$prop.'): $dbs_formats: ',$dbs_formats);
@@ -828,9 +828,9 @@ function qtranxf_updateSettingDateI18N( $nm ) {
 	//qtranxf_dbg_log('qtranxf_updateSettingDateI18N: $_POST['.$nm.']: ',$_POST[$nm]);
 	//qtranxf_dbg_log('qtranxf_updateSettingDateI18N: $_POST['.$nm_fmt.']: ',$_POST[$nm_fmt]);
 	if ( ! isset( $q_config[ $nm ] ) || ! is_array( $q_config[ $nm ] ) ) {
-		$q_config[ $nm ] = array();
+		$q_config[ $nm ] = [];
 	}
-	$date_i18n = array();
+	$date_i18n = [];
 	qtranxf_get_date_time_formats( $date_format, $time_format );
 	//qtranxf_dbg_log('qtranxf_updateSettingDateI18N: $date_format: ',$date_format);
 	//qtranxf_dbg_log('qtranxf_updateSettingDateI18N: $time_format: ',$time_format);
@@ -933,7 +933,7 @@ function qtranxf_updateSettings() {
 			break;
 	}
 
-	$domains = isset( $q_config['domains'] ) ? $q_config['domains'] : array();
+	$domains = isset( $q_config['domains'] ) ? $q_config['domains'] : [];
 	foreach ( $q_config['enabled_languages'] as $lang ) {
 		$id = 'language_domain_' . $lang;
 		if ( ! isset( $_POST[ $id ] ) ) {
@@ -957,7 +957,7 @@ function qtranxf_updateSettings() {
 		$json_config_files_post = sanitize_text_field( stripslashes( $_POST['json_config_files'] ) );
 		$json_files             = preg_split( '/[\s,]+/', $json_config_files_post, null, PREG_SPLIT_NO_EMPTY );
 		if ( empty( $json_files ) ) {
-			$_POST['config_files'] = array();
+			$_POST['config_files'] = [];
 			unset( $_POST['json_config_files'] );
 		} else {
 			$nerr = isset( $q_config['url_info']['errors'] ) ? count( $q_config['url_info']['errors'] ) : 0;
@@ -981,7 +981,7 @@ function qtranxf_updateSettings() {
 		//verify that JSON string can be parsed
 		$cfg_json = sanitize_text_field( stripslashes( $_POST['json_custom_i18n_config'] ) );
 		if ( empty( $cfg_json ) ) {
-			$_POST['custom_i18n_config'] = array();
+			$_POST['custom_i18n_config'] = [];
 		} else {
 			$cfg = json_decode( $cfg_json, true );
 			if ( $cfg ) {
@@ -1033,7 +1033,7 @@ function qtranxf_updateSettings() {
 		qtranxf_update_i18n_config();
 	}
 
-	$q_config['i18n-cache'] = array();//clear i18n-config cache
+	$q_config['i18n-cache'] = [];//clear i18n-config cache
 
 	/**
 	 * Opportunity to update special custom settings on sub-plugins
@@ -1129,7 +1129,7 @@ function qtranxf_set_date_i18n_formats( &$cfg, $lang, $date_format = null, $time
 	qtranxf_get_date_time_formats( $date_format, $time_format );
 	$changed = ! isset( $cfg['date_i18n'] ) || ! is_array( $cfg['date_i18n'] );
 	if ( $changed ) {
-		$cfg['date_i18n'] = array();
+		$cfg['date_i18n'] = [];
 	}
 	if ( qtranxf_set_date_i18n_format( $cfg, $lang, 'date_format', $date_format ) ) {
 		$changed = true;

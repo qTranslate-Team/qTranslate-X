@@ -3,9 +3,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$ds = array(
+$ds = [
 	'c' => '2015-02-25T23:38:07+00:00',
-);
+];
 qtranxf_test_date( $ds );
 
 function qtranxf_test_date( $ds ) {
