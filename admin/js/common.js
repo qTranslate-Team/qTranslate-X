@@ -34,6 +34,8 @@
 
 /**
  * since 3.2.7
+ *
+ * @param {string} text
  */
 qtranxj_get_split_blocks = function (text) {
     var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\]|\{:[a-z]{2}\}|\{:\})/gi; // @since 3.3.6 swirly brackets
@@ -41,7 +43,11 @@ qtranxj_get_split_blocks = function (text) {
 };
 
 /**
+ * Split the given text block into individual languages
+ * 
  * since 3.2.7
+ *
+ * @param {string} text
  */
 qtranxj_split = function (text) {
     var blocks = qtranxj_get_split_blocks(text);
