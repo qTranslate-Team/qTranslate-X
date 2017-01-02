@@ -6,6 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action( 'show_user_profile', 'qtranxf_show_extra_profile_fields' );
 add_action( 'edit_user_profile', 'qtranxf_show_extra_profile_fields' );
 
+/**
+ * @param $user
+ */
 function qtranxf_show_extra_profile_fields( $user ) {
 	global $q_config;
 	if ( $q_config['highlight_mode'] != QTX_HIGHLIGHT_MODE_NONE ) { ?>
@@ -31,6 +34,11 @@ function qtranxf_show_extra_profile_fields( $user ) {
 add_action( 'personal_options_update', 'qtranxf_save_extra_profile_fields' );
 add_action( 'edit_user_profile_update', 'qtranxf_save_extra_profile_fields' );
 
+/**
+ * @param $user_id
+ *
+ * @return bool
+ */
 function qtranxf_save_extra_profile_fields( $user_id ) {
 	global $q_config;
 

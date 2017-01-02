@@ -34,6 +34,11 @@ function qtranxf_loadfiles_js( $jss, $enqueue_script ) {
 	}
 }
 
+/**
+ * @param $url_info
+ *
+ * @return mixed
+ */
 function qtranxf_detect_admin_language( $url_info ) {
 	global $q_config;
 	$cs   = null;
@@ -108,6 +113,12 @@ function qtranxf_array_compare( $a, $b ) {
 	return true;
 }
 
+/**
+ * @param $texts
+ * @param $sep
+ *
+ * @return null|string
+ */
 function qtranxf_join_texts( $texts, $sep ) {
 	switch ( $sep ) {
 		//case '[':// default case
@@ -124,6 +135,11 @@ function qtranxf_join_texts( $texts, $sep ) {
 	}
 }
 
+/**
+ * @param $text
+ *
+ * @return string
+ */
 function qtranxf_convert_to_b( $text ) {
 	$blocks = qtranxf_get_language_blocks( $text );
 	if ( count( $blocks ) > 1 ) {
@@ -171,6 +187,11 @@ function qtranxf_convert_to_b( $text ) {
 	return $text;
 }
 
+/**
+ * @param $text
+ *
+ * @return null|string
+ */
 function qtranxf_convert_to_b_no_closing( $text ) {
 	$blocks = qtranxf_get_language_blocks( $text );
 	if ( count( $blocks ) > 1 ) {
@@ -188,6 +209,11 @@ function qtranxf_convert_to_b_no_closing( $text ) {
 	return $text;
 }
 
+/**
+ * @param $text
+ *
+ * @return null|string
+ */
 function qtranxf_convert_to_c( $text ) {
 	$blocks = qtranxf_get_language_blocks( $text );
 	if ( count( $blocks ) > 1 ) {
@@ -205,6 +231,11 @@ function qtranxf_convert_to_c( $text ) {
 	return $text;
 }
 
+/**
+ * @param $text
+ *
+ * @return array|string
+ */
 function qtranxf_convert_to_b_deep( $text ) {
 	if ( is_array( $text ) ) {
 		foreach ( $text as $key => $t ) {
@@ -229,6 +260,11 @@ function qtranxf_convert_to_b_deep( $text ) {
 	return qtranxf_convert_to_b( $text );
 }
 
+/**
+ * @param $text
+ *
+ * @return array|null|string
+ */
 function qtranxf_convert_to_b_no_closing_deep( $text ) {
 	if ( is_array( $text ) ) {
 		foreach ( $text as $key => $t ) {
@@ -253,6 +289,11 @@ function qtranxf_convert_to_b_no_closing_deep( $text ) {
 	return qtranxf_convert_to_b_no_closing( $text );
 }
 
+/**
+ * @param $action
+ *
+ * @return string
+ */
 function qtranxf_convert_database( $action ) {
 	global $wpdb;
 	$wpdb->show_errors();
@@ -270,6 +311,9 @@ function qtranxf_convert_database( $action ) {
 	}
 }
 
+/**
+ * @param $action
+ */
 function qtranxf_convert_database_options( $action ) {
 	global $wpdb;
 	$wpdb->show_errors();
@@ -313,6 +357,9 @@ function qtranxf_convert_database_options( $action ) {
 	}
 }
 
+/**
+ * @param $action
+ */
 function qtranxf_convert_database_posts( $action ) {
 	global $wpdb;
 	$result = $wpdb->get_results( 'SELECT ID, post_title, post_content, post_excerpt FROM ' . $wpdb->posts );
@@ -351,6 +398,9 @@ function qtranxf_convert_database_posts( $action ) {
 	}
 }
 
+/**
+ * @param $action
+ */
 function qtranxf_convert_database_postmeta( $action ) {
 	global $wpdb;
 	$result = $wpdb->get_results( 'SELECT meta_id, meta_value FROM ' . $wpdb->postmeta );
@@ -391,6 +441,11 @@ function qtranxf_convert_database_postmeta( $action ) {
 	}
 }
 
+/**
+ * @param $text
+ *
+ * @return null|string
+ */
 function qtranxf_mark_default( $text ) {
 	global $q_config;
 	$blocks = qtranxf_get_language_blocks( $text );
@@ -409,6 +464,11 @@ function qtranxf_mark_default( $text ) {
 	return qtranxf_join_b( $content );
 }
 
+/**
+ * @param $name
+ *
+ * @return null|string
+ */
 function qtranxf_term_name_encoded( $name ) {
 	global $q_config;
 	if ( isset( $q_config['term_name'][ $name ] ) ) {
@@ -418,6 +478,12 @@ function qtranxf_term_name_encoded( $name ) {
 	return $name;
 }
 
+/**
+ * @param $obj
+ * @param null $taxonomy
+ *
+ * @return null|string
+ */
 function qtranxf_get_term_joined( $obj, $taxonomy = null ) {
 	global $q_config;
 	if ( is_object( $obj ) ) {
@@ -484,6 +550,13 @@ function qtranxf_find_term_like($lang, $s, $taxonomy=null) {
 	return $s;
 } */
 
+/**
+ * @param $terms
+ * @param null $taxonomy
+ * @param null $args
+ *
+ * @return array|null|string
+ */
 function qtranxf_get_terms_joined( $terms, $taxonomy = null, $args = null ) {
 	global $q_config;
 	if ( is_array( $terms ) ) {
@@ -498,6 +571,13 @@ function qtranxf_get_terms_joined( $terms, $taxonomy = null, $args = null ) {
 	return $terms;
 }
 
+/**
+ * @param $obj
+ * @param null $taxonomies
+ * @param null $args
+ *
+ * @return array|null|string
+ */
 function qtranxf_useAdminTermLibJoin( $obj, $taxonomies = null, $args = null ) {
 	global $pagenow;
 	//qtranxf_dbg_echo('qtranxf_useAdminTermLibJoin: $pagenow='.$pagenow);
@@ -519,6 +599,11 @@ add_filter( 'get_term', 'qtranxf_useAdminTermLibJoin', 5, 2 );
 add_filter( 'get_terms', 'qtranxf_useAdminTermLibJoin', 5, 3 );
 
 //does someone use it?
+/**
+ * @param $obj
+ *
+ * @return array
+ */
 function qtranxf_useAdminTermLib( $obj ) {
 	//qtranxf_dbg_echo('qtranxf_useAdminTermLib: $obj: ',$obj,true);
 	if ( $script_name === '/wp-admin/term.php' || ( $script_name === '/wp-admin/edit-tags.php' &&
@@ -566,6 +651,11 @@ function qtranxf_updateTermLibrary() {
 	}
 }
 
+/**
+ * @param $str
+ *
+ * @return string
+ */
 function qtranxf_stripSlashesIfNecessary( $str ) {
 	/**
 	 * @since 3.2.9.8.4 WordPress now always supplies slashed data
@@ -608,6 +698,9 @@ function qtranxf_updateTermLibraryJoin() {
 	update_option( 'qtranslate_term_name', $q_config['term_name'] );
 }
 
+/**
+ * @param $type
+ */
 function qtranxf_updateTranslations( $type ) {
 	global $q_config;
 	if ( ! isset( $_POST[ $type ] ) ) {
@@ -642,6 +735,9 @@ add_filter('gettext', 'qtranxf_gettext',0);
 add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
 */
 
+/**
+ * @return mixed
+ */
 function qtranxf_getLanguageEdit() {
 	global $q_config;
 
@@ -662,6 +758,11 @@ function qtranxf_language_columns($columns) {
 add_filter('manage_language_columns', 'qtranxf_language_columns');
 */
 
+/**
+ * @param $columns
+ *
+ * @return array
+ */
 function qtranxf_languageColumnHeader( $columns ) {
 	$new_columns = [];
 	if ( isset( $columns['cb'] ) ) {
@@ -684,6 +785,11 @@ function qtranxf_languageColumnHeader( $columns ) {
 	return array_merge( $new_columns, $columns );
 }
 
+/**
+ * @param $column
+ *
+ * @return mixed
+ */
 function qtranxf_languageColumn( $column ) {
 	global $q_config, $post;
 	if ( $column == 'language' ) {
@@ -716,6 +822,12 @@ function qtranxf_languageColumn( $column ) {
 	return $column;
 }
 
+/**
+ * @param $dir
+ * @param string $suffix
+ *
+ * @return array|bool
+ */
 function qtranxf_fetch_file_selection( $dir, $suffix = '.css' ) {
 	//qtranxf_dbg_log('qtranxf_fetch_file_selection: dir:',$dir);
 	$files      = [];
@@ -771,6 +883,11 @@ function qtranxf_before_admin_bar_render() {
 //	global $wp_admin_bar;
 //}
 
+/**
+ * @param $text
+ *
+ * @return array|null|string
+ */
 function qtranxf_admin_list_cats( $text ) {
 	global $pagenow;
 	//qtranxf_dbg_echo('qtranxf_admin_list_cats: $text',$text);
@@ -793,6 +910,11 @@ function qtranxf_admin_list_cats( $text ) {
 
 add_filter( 'list_cats', 'qtranxf_admin_list_cats', 0 );
 
+/**
+ * @param $text
+ *
+ * @return array|string
+ */
 function qtranxf_admin_dropdown_cats( $text ) {
 	global $pagenow;
 	//qtranxf_dbg_echo('qtranxf_admin_list_cats: $text',$text);
@@ -807,6 +929,11 @@ function qtranxf_admin_dropdown_cats( $text ) {
 
 add_filter( 'wp_dropdown_cats', 'qtranxf_admin_dropdown_cats', 0 );
 
+/**
+ * @param $text
+ *
+ * @return array|string
+ */
 function qtranxf_admin_category_description( $text ) {
 	global $pagenow;
 	switch ( $pagenow ) {
@@ -820,6 +947,11 @@ function qtranxf_admin_category_description( $text ) {
 
 add_filter( 'category_description', 'qtranxf_admin_category_description', 0 );
 
+/**
+ * @param $title
+ *
+ * @return array|string
+ */
 function qtranxf_admin_the_title( $title ) {
 	global $pagenow;
 	switch ( $pagenow ) {
@@ -836,6 +968,14 @@ add_filter( 'the_title', 'qtranxf_admin_the_title', 0 );//WP: fires for display 
 
 //filter added in qtranslate_hooks.php
 if ( ! function_exists( 'qtranxf_trim_words' ) ) {
+	/**
+	 * @param $text
+	 * @param $num_words
+	 * @param $more
+	 * @param $original_text
+	 *
+	 * @return null|string
+	 */
 	function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 		global $q_config;
 		//qtranxf_dbg_log('qtranxf_trim_words: $text: ',$text);
@@ -865,6 +1005,11 @@ if ( ! function_exists( 'qtranxf_trim_words' ) ) {
  * @since 2.9.8.9
  */
 if ( ! function_exists( 'qtranxf_htmledit_pre' ) ) {
+	/**
+	 * @param $output
+	 *
+	 * @return mixed|void
+	 */
 	function qtranxf_htmledit_pre( $output ) {
 		if ( ! empty( $output ) ) {
 			$output = htmlspecialchars( $output, ENT_NOQUOTES, get_option( 'blog_charset' ), false );
@@ -873,6 +1018,11 @@ if ( ! function_exists( 'qtranxf_htmledit_pre' ) ) {
 	}
 }
 
+/**
+ * @param $editor_div
+ *
+ * @return mixed
+ */
 function qtranxf_the_editor( $editor_div ) {
 	// remove wpautop, which causes unmatched <p> on combined language strings
 	if ( 'html' != wp_default_editor() ) {
@@ -983,6 +1133,10 @@ function qtranxf_meta_box_LSB() {
 	printf( __( 'This is a set of "%s" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message.', 'qtranslate' ), __( 'Language Switching Buttons', 'qtranslate' ), '<a href="https://wordpress.org/plugins/qtranslate-x/" target="_blank">qTranslate&#8209;X</a>' );
 }
 
+/**
+ * @param $post_type
+ * @param $post
+ */
 function qtranxf_add_meta_box_LSB( $post_type, $post ) {
 	global $q_config, $pagenow;
 	if ( $q_config['editor_mode'] != QTX_EDITOR_MODE_LSB ) {
@@ -1029,6 +1183,11 @@ function qtranxf_post_type_optional( $post_type ) {
 	}
 }
 
+/**
+ * @param $o
+ *
+ * @return mixed|string|void
+ */
 function qtranxf_json_encode( $o ) {
 	if ( version_compare( PHP_VERSION, '5.4.0' ) >= 0 ) {
 		return json_encode( $o, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );

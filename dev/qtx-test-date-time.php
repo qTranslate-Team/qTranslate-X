@@ -8,6 +8,11 @@ $ds = [
 ];
 qtranxf_test_date( $ds );
 
+/**
+ * @param $ds
+ *
+ * @return int
+ */
 function qtranxf_test_date( $ds ) {
 	$cnt = 0;
 	foreach ( $ds as $fmt => $date_expected ) {
@@ -21,6 +26,13 @@ function qtranxf_test_date( $ds ) {
 	return $cnt;
 }
 
+/**
+ * @param $cfg
+ * @param string $cfg_name
+ * @param string $format
+ *
+ * @return string
+ */
 function qtranxf_test_dt_format( $cfg, $cfg_name = 'dtf', $format = 'F j, Y' ) {
 	global $q_config;
 	$q_config['locale'] = array_merge( qtranxf_default_locale(), $q_config['locale'] );

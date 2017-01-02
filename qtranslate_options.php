@@ -599,12 +599,23 @@ function qtranxf_default_windows_locale() {
 	return $enm;
 }
 
+/**
+ * @param $lang
+ *
+ * @return bool
+ */
 function qtranxf_language_predefined( $lang ) {
 	$language_names = qtranxf_default_language_name();
 
 	return isset( $language_names[ $lang ] );
 }
 
+/**
+ * @param $prop
+ * @param null $opn
+ *
+ * @return array|mixed
+ */
 function qtranxf_language_configured( $prop, $opn = null ) {
 	$val = call_user_func( 'qtranxf_default_' . $prop );
 	if ( ! $opn ) {

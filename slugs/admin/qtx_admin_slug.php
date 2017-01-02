@@ -70,6 +70,9 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 		}
 	}
 
+	/**
+	 * @param $nm
+	 */
 	function qtranxf_slug_clean_request( $nm ) {
 		//qtranxf_dbg_log('qtranxf_slug_clean_request: $nm='.$nm.'; REQUEST[qtranslate-slugs]: ', $_REQUEST['qtranslate-slugs']);
 		unset( $_GET['qtranslate-slugs'][ $nm ] );
@@ -86,6 +89,12 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 		}
 	}
 
+	/**
+	 * @param $post_type
+	 * @param $post_status
+	 *
+	 * @return bool
+	 */
 	function qtranxf_slug_has_post_name( $post_type, $post_status ) {
 		switch ( $post_type ) {
 			case 'nav_menu_item':
@@ -102,6 +111,11 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 		return true;
 	}
 
+	/**
+	 * @param $qfields
+	 * @param $post_ID
+	 * @param $post
+	 */
 	function qtranxf_slug_save_post( &$qfields, $post_ID, $post ) {
 		global $wpdb;
 		$post_parent = $post->post_parent;
@@ -246,6 +260,11 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 {// filters
 	add_filter( 'editable_slug', 'qtranxf_slug_multilingual' );
 
+	/**
+	 * @param $page_configs
+	 *
+	 * @return mixed
+	 */
 	function qtranxf_slug_admin_config( $page_configs ) {
 		//qtranxf_dbg_log('qtranxf_slug_admin_config: ');
 		{// qtranslate-x configuration page
@@ -354,6 +373,12 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 	 * Loads multilingual slug to be used in the post-editing form.
 	 * $value = apply_filters( "edit_{$field}", $value, $post_id ); // in /wp-includes/post.php
 	 */
+	/**
+	 * @param $post_name
+	 * @param $post_id
+	 *
+	 * @return string
+	 */
 	function qtranxf_slug_load_post_name( $post_name, $post_id ) {
 		return qtranxf_slug_multilingual( $post_name );
 		/*
@@ -376,6 +401,11 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 
 	add_filter( 'edit_post_name', 'qtranxf_slug_load_post_name', 20, 2 );
 
+	/**
+	 * @param $post_ID
+	 * @param $post
+	 * @param $update
+	 */
 	function qtranxf_slug_action_save_post( $post_ID, $post, $update ) {
 		//if( in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' )) return;//already checked
 		//if(empty($post_ID)) return;//already checked
@@ -397,6 +427,9 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 
 	add_action( 'save_post', 'qtranxf_slug_action_save_post', 5, 3 );
 
+	/**
+	 * @param $post_ID
+	 */
 	function qtranxf_slug_action_delete_post( $post_ID ) {
 		//qtranxf_dbg_log('qtranxf_slug_action_delete_post: $post_ID: ', $post_ID);
 		$p = get_post( $post_ID );
@@ -409,6 +442,11 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 
 	add_action( 'delete_post', 'qtranxf_slug_action_delete_post' );
 
+	/**
+	 * @param $key
+	 * @param $qfields
+	 * @param $default_lang
+	 */
 	function qtranxf_slug_update_translations_for( $key, &$qfields, $default_lang ) {
 		if ( isset( $qfields['qtranslate-original-value'] ) ) {
 			$name = $qfields[ $default_lang ];
@@ -420,6 +458,11 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 		}
 	}
 
+	/**
+	 * @param $term_id
+	 * @param $tt_id
+	 * @param $taxonomy
+	 */
 	function qtranxf_slug_edited_term( $term_id, $tt_id, $taxonomy ) {
 		global $q_config;
 		if ( ! isset( $_POST['qtranslate-slugs']['slug'] ) ) {
@@ -438,6 +481,12 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 	add_action( 'created_term', 'qtranxf_slug_edited_term', 10, 3 );
 	add_action( 'edited_term', 'qtranxf_slug_edited_term', 10, 3 );
 
+	/**
+	 * @param $term_id
+	 * @param $tt_id
+	 * @param $taxonomy
+	 * @param $deleted_term
+	 */
 	function qtranxf_slug_delete_term( $term_id, $tt_id, $taxonomy, $deleted_term ) {
 		//qtranxf_dbg_log('qtranxf_slug_edited_term: $deleted_term: ', $deleted_term);
 		$slug = $deleted_term->slug;
@@ -467,6 +516,11 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 
 	add_action( 'qtranslate_admin_options_update.php', 'qtranxf_slug_options_update_php' );
 
+	/**
+	 * @param $rules_orig
+	 *
+	 * @return array
+	 */
 	function qtranxf_slug_rewrite_rules_array( $rules_orig ) {
 		//qtranxf_dbg_log('qtranxf_slug_rewrite_rules_array: rules org: ', $rules_orig);
 		$srx   = '#([\?\(\)\[\]\{\}\,\.\*\:\+]+)#';
@@ -534,6 +588,11 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 }
 
 {// utils
+	/**
+	 * @param $s
+	 *
+	 * @return int
+	 */
 	function qtranxf_slug_is_substitution( $s ) {
 		return preg_match( '/^%[a-z0-9_\-]%$/', $s );
 	}

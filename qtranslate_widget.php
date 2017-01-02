@@ -29,13 +29,23 @@ transition: 1s ease opacity;
 
 /* qTranslate-X Widget */
 
+/**
+ * Class qTranslateXWidget
+ */
 class qTranslateXWidget extends WP_Widget {
 
+	/**
+	 * qTranslateXWidget constructor.
+	 */
 	function __construct() {
 		$widget_ops = [ 'classname' => 'qtranxs_widget', 'description' => __( 'Allows your visitors to choose a Language.', 'qtranslate' ) ];
 		parent::__construct( 'qtranslate', __( 'qTranslate Language Chooser', 'qtranslate' ), $widget_ops );
 	}
 
+	/**
+	 * @param array $args
+	 * @param array $instance
+	 */
 	function widget( $args, $instance ) {
 		extract( $args );
 		//qtranxf_dbg_log('widget: $this: ',$this);
@@ -61,6 +71,12 @@ class qTranslateXWidget extends WP_Widget {
 		echo $after_widget;
 	}
 
+	/**
+	 * @param array $new_instance
+	 * @param array $old_instance
+	 *
+	 * @return array
+	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		//qtranxf_dbg_log('update: $new_instance: ',$new_instance);
@@ -102,6 +118,9 @@ class qTranslateXWidget extends WP_Widget {
 		return $instance;
 	}
 
+	/**
+	 * @param array $instance
+	 */
 	function form( $instance ) {
 		$instance         = wp_parse_args( (array) $instance, [ 'title' => '', 'type' => 'text', 'format' => '', 'widget-css' => QTX_WIDGET_CSS ] );
 		$title            = $instance['title'];

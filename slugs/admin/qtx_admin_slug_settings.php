@@ -8,6 +8,11 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 {// configuration
 
 	add_filter( 'qtranslate_admin_sections', 'qtranxf_slug_admin_sections' );
+	/**
+	 * @param $sections
+	 *
+	 * @return mixed
+	 */
 	function qtranxf_slug_admin_sections( $sections ) {
 		global $q_config;
 		$sections['slugs'] = __( 'Slugs', 'qtranslate' );
@@ -18,6 +23,10 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 		return $sections;
 	}
 
+	/**
+	 * @param $permalink_is_query
+	 * @param $url_mode
+	 */
 	function qtranxf_slug_url_mode_choices( $permalink_is_query, $url_mode ) {
 		?>
         <label title="Slug Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_SLUG; ?>" <?php checked( $url_mode, QTX_URL_SLUG );
@@ -27,6 +36,9 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 	}
 
 	add_action( 'qtranslate_configuration', 'qtranxf_slug_config' );
+	/**
+	 * @param $request_uri
+	 */
 	function qtranxf_slug_config( $request_uri ) {
 		global $q_config;
 		$nopermalinks = qtranxf_is_permalink_structure_query();
@@ -131,6 +143,11 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 		qtranxf_admin_section_end( 'slugs', $nopermalinks ? null : '' );
 	}
 
+	/**
+	 * @param $objects
+	 *
+	 * @return mixed
+	 */
 	function qtranxf_slug_admin_filter_types( $objects ) {
 		foreach ( $objects as $k => $o ) {
 			if ( isset( $o->rewrite['slug'] ) ) {
@@ -142,6 +159,10 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 		return $objects;
 	}
 
+	/**
+	 * @param $objects
+	 * @param $type
+	 */
 	function qtranxf_slug_admin_fields( $objects, $type ) {
 		$group = 'slugs_' . $type;
 		foreach ( $objects as $key => $o ) {
@@ -183,6 +204,12 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 		}
 	}
 
+	/**
+	 * @param $type
+	 * @param $label
+	 * @param $key
+	 * @param $slug
+	 */
 	function qtranxf_slug_admin_field( $type, $label, $key, $slug ) {
 		global $q_config;
 		$name = 'slugs_' . $type . '[' . $key . ']';
@@ -257,6 +284,9 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 		return $info;
 	}
 
+	/**
+	 * @param $s
+	 */
 	function qtranxf_slug_del_translations_permastruct( $s ) {
 		$info = qtranxf_slug_split_permastruct( $s );
 		//qtranxf_dbg_log('qtranxf_slug_del_translations_permastruct: $info: ', $info);
@@ -265,6 +295,12 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 		}
 	}
 
+	/**
+	 * @param $group
+	 * @param $group_name
+	 * @param $default_lang
+	 * @param $wp_group
+	 */
 	function qtranxf_slug_update_translations_of( $group, $group_name, $default_lang, &$wp_group ) {
 		global $q_config;
 		foreach ( $_POST['qtranslate-slugs'][ $group ] as $key => &$qfields ) {
@@ -344,6 +380,13 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 		qtranxf_slug_clean_request( $group );
 	}
 
+	/**
+	 * @param $value_org
+	 * @param $value_new
+	 * @param $slugs
+	 *
+	 * @return mixed
+	 */
 	function qtranxf_slug_replace( $value_org, $value_new, $slugs ) {
 		foreach ( $slugs as $k => $v ) {
 			if ( $v == $value_org ) {
@@ -355,6 +398,15 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 		return $slugs;
 	}
 
+	/**
+	 * @param $key
+	 * @param $default_name
+	 * @param $qpost
+	 * @param $blog_prefix
+	 * @param $default_lang
+	 *
+	 * @return string
+	 */
 	function qtranxf_slug_default_base_value( $key, $default_name, &$qpost, $blog_prefix, $default_lang ) {
 		// mimic code from /wp-admin/options-permalink.php
 		//preg_replace('#/+#', '/', '/' . str_replace( '#', '', $s ) );
@@ -412,6 +464,10 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 		$wp_rewrite->flush_rules( false );
 	}
 
+	/**
+	 * @param $slugs_org
+	 * @param $slugs_new
+	 */
 	function qtranxf_slug_replace_rewrite_structs( $slugs_org, $slugs_new ) {
 		global $wp_rewrite;
 		if ( empty( $wp_rewrite->extra_permastructs ) ) {
@@ -459,6 +515,9 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 		] );
 	}
 
+	/**
+	 * @param $default_language
+	 */
 	function qtranxf_migrate_import_qtranslate_slug( $default_language ) {
 		//$q_config is not yet available
 		global $wpdb;

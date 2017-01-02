@@ -10,11 +10,17 @@ require_once( QTRANSLATE_DIR . '/admin/i18n-interface-admin.php' );
  * @since 3.4
  */
 class QTX_Translator_Admin extends QTX_Translator implements WP_Translator_Admin {
+	/**
+	 * QTX_Translator_Admin constructor.
+	 */
 	public function __construct() {
 		parent::__construct();
 		add_filter( 'multilingual_term', [ $this, 'multilingual_term' ], 10, 3 );
 	}
 
+	/**
+	 * @return QTX_Translator_Admin
+	 */
 	public static function get_translator() {
 		global $q_config;
 		if ( ! isset( $q_config['translator'] ) ) {
@@ -24,6 +30,13 @@ class QTX_Translator_Admin extends QTX_Translator implements WP_Translator_Admin
 		return $q_config['translator'];
 	}
 
+	/**
+	 * @param $term
+	 * @param null $term_default
+	 * @param null $taxonomy
+	 *
+	 * @return array|null|string
+	 */
 	function multilingual_term( $term, $term_default = null, $taxonomy = null ) {
 		$terms = empty( $term_default ) ? $term : $term_default;
 

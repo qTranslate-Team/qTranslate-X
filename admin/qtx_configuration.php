@@ -142,6 +142,12 @@ function qtranxf_language_form() {
 	<?php }
 }
 
+/**
+ * @param $opnm
+ * @param $newlang
+ *
+ * @return string
+ */
 function qtranxf_date_time_format_note( $opnm, $newlang ) {
 	$msg = sprintf( __( 'Enter format as described in %sWordPress documentation%s.', 'qtranslate' ), '<a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">', '</a>' );
 	$msg .= ' ' . sprintf( __( 'Note, that field "%s" on admin page "%s" is not %smultilingual%s, it only defines the default format to be replaced at front-end with the format specified here.', 'qtranslate' ), qtranxf_translate_wp( $opnm ), '<a href="' . admin_url( 'options-general.php' ) . '" target="_blank">' . qtranxf_translate_wp( 'General Settings' ) . '</a>', '<a href="https://qtranslatexteam.wordpress.com/multilingual-fields/" target="_blank">', '</a>' );
@@ -154,14 +160,25 @@ function qtranxf_date_time_format_note( $opnm, $newlang ) {
 	return $msg;
 }
 
+/**
+ * @return string
+ */
 function qtranxf_obsolete_date_time_format_note() {
 	return sprintf( __( 'You are using obsolete value for option "%s". It is advisable to switch it to value "%s"', 'qtranslate' ), '<a href="' . admin_url( 'options-general.php?page=qtranslate-x#datetime' ) . '" target="_blank">' . __( 'Date / Time Conversion', 'qtranslate' ) . '</a>', sprintf( __( 'Use native %sWordPress date and time%s formats.', 'qtranslate' ), '<a href="http://codex.wordpress.org/Formatting_Date_and_Time" title="WordPress Formatting Date and Time" target="_blank">', '</a>' ) );
 }
 
+/**
+ * @param $nm
+ */
 function qtranxf_admin_section_start( $nm ) {
 	echo '<div id="tab-' . $nm . '" class="hidden">' . PHP_EOL;
 }
 
+/**
+ * @param $nm
+ * @param string $button_name
+ * @param string $button_class
+ */
 function qtranxf_admin_section_end( $nm, $button_name = '', $button_class = 'button-primary' ) {
 	if ( ! is_null( $button_name ) ) {
 		if ( $button_name === '' ) {
@@ -856,12 +873,20 @@ function qtranxf_conf() {
 			<?php qtranxf_admin_section_start( 'languages' ) ?>
 			<?php
 
+			/**
+			 * Class QTX_LanguageList
+			 */
 			class QTX_LanguageList extends WP_List_Table {
 				private $_clean_uri;
 				//private $_language_names;
 				private $_orderby;
 				private $_order;
 
+				/**
+				 * QTX_LanguageList constructor.
+				 *
+				 * @param array|string $clean_uri
+				 */
 				public function __construct( $clean_uri ) {
 					parent::__construct( [ 'screen' => 'language' ] );
 					//$this->_language_names = $language_names;
@@ -869,6 +894,9 @@ function qtranxf_conf() {
 					$_SERVER['REQUEST_URI'] = preg_replace( '#.*' . $_SERVER['HTTP_HOST'] . '#', '', $clean_uri ) . '#languages';
 				}
 
+				/**
+				 * @return array
+				 */
 				public function get_columns() {
 					return [
 						'locale' => __( 'Locale', 'qtranslate' ),
@@ -881,6 +909,9 @@ function qtranxf_conf() {
 					];
 				}
 
+				/**
+				 * @return array
+				 */
 				public function get_sortable_columns() {
 					return [
 						'locale' => [ 'locale', false ],
@@ -892,6 +923,12 @@ function qtranxf_conf() {
 					];
 				}
 
+				/**
+				 * @param $a
+				 * @param $b
+				 *
+				 * @return int
+				 */
 				protected function compare_items( $a, $b ) {
 					$c = strcmp( $a['orderby'], $b['orderby'] );
 					if ( $c == 0 ) {
@@ -901,17 +938,32 @@ function qtranxf_conf() {
 					return $c * $this->_order;
 				}
 
+				/**
+				 * @param object $item
+				 * @param string $column_name
+				 *
+				 * @return mixed
+				 */
 				protected function column_default( $item, $column_name ) {
 					return $item[ $column_name ];
 				}
 
+				/**
+				 * @return string
+				 */
 				protected function get_default_primary_column_name() {
 					return 'name';
 				}
 
+				/**
+				 * @param string $which
+				 */
 				protected function display_tablenav( $which ) {
 				}
 
+				/**
+				 * @return array
+				 */
 				protected function get_table_classes() {
 					return [ 'widefat', 'qtranxs-language-list' ];
 				}
@@ -1062,6 +1114,11 @@ function qtranxf_conf() {
 	<?php
 }
 
+/**
+ * @param $fmt
+ *
+ * @return null|string
+ */
 function qtranxf_date_format_multilinual( $fmt ) {
 	global $q_config;
 	$f = [];

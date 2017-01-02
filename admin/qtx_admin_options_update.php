@@ -7,10 +7,19 @@ require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_languages.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_import_export.php' );
 
+/**
+ * @param $nm
+ *
+ * @return string
+ */
 function qtranxf_get_option_name( $nm ) {
 	return 'qtranslate_' . $nm;
 }
 
+/**
+ * @param $nm
+ * @param $value
+ */
 function qtranxf_update_option_value( $nm, $value ) {
 	update_option( qtranxf_get_option_name( $nm ), $value );
 }
@@ -406,11 +415,20 @@ function qtranxf_resetConfig() {
 
 add_action( 'qtranslate_saveConfig', 'qtranxf_resetConfig', 20 );
 
+/**
+ * @param $nm
+ * @param null $default_value
+ */
 function qtranxf_update_option( $nm, $default_value = null ) {
 	global $q_config;
 	qtranxf_update_qoption( $q_config, $nm, $default_value );
 }
 
+/**
+ * @param $cfg
+ * @param $nm
+ * @param null $default_value
+ */
 function qtranxf_update_qoption( $cfg, $nm, $default_value = null ) {
 	$opnm = qtranxf_get_option_name( $nm );
 	if ( ! isset( $cfg[ $nm ] ) || ( ! is_integer( $cfg[ $nm ] ) && empty( $cfg[ $nm ] ) ) ) {
@@ -435,6 +453,10 @@ function qtranxf_update_qoption( $cfg, $nm, $default_value = null ) {
 	update_option( $opnm, $cfg[ $nm ] );
 }
 
+/**
+ * @param $nm
+ * @param null $default_value
+ */
 function qtranxf_update_option_bool( $nm, $default_value = null ) {
 	global $q_config, $qtranslate_options;
 	if ( ! isset( $q_config[ $nm ] ) ) {
@@ -545,6 +567,13 @@ function qtranxf_reloadConfig() {
 	qtranxf_load_option_qtrans_compatibility();
 }
 
+/**
+ * @param $var
+ * @param int $type
+ * @param null $def
+ *
+ * @return bool
+ */
 function qtranxf_updateSetting( $var, $type = QTX_STRING, $def = null ) {
 	global $q_config, $qtranslate_options;
 	if ( ! isset( $_POST['submit'] ) ) {
@@ -688,6 +717,11 @@ function qtranxf_update_i18n_config() {
 	}
 }
 
+/**
+ * @param $nm
+ *
+ * @return bool|null
+ */
 function qtranxf_updateSettingFlagLocation( $nm ) {
 	global $q_config;
 	if ( ! isset( $_POST['submit'] ) ) {
@@ -716,6 +750,11 @@ function qtranxf_updateSettingFlagLocation( $nm ) {
 	return true;
 }
 
+/**
+ * @param $nm
+ *
+ * @return bool
+ */
 function qtranxf_updateSettingIgnoreFileTypes( $nm ) {
 	global $q_config;
 	if ( ! isset( $_POST['submit'] ) ) {
@@ -746,6 +785,9 @@ function qtranxf_updateSettingIgnoreFileTypes( $nm ) {
 	return true;
 }
 
+/**
+ * @return bool
+ */
 function qtranxf_parse_post_type_excluded() {
 	if ( ! isset( $_POST['submit'] ) ) {
 		return false;
@@ -769,6 +811,12 @@ function qtranxf_parse_post_type_excluded() {
 	//qtranxf_dbg_log('qtranxf_parse_post_type_excluded: $_POST[post_type_excluded]: ',$_POST['post_type_excluded']);
 }
 
+/**
+ * @param $date_i18n
+ * @param $enabled_languages
+ * @param $prop
+ * @param $format
+ */
 function qtranxf_updateLanguageDateTimeFormats( $date_i18n, $enabled_languages, $prop, $format ) {
 	$opnm        = 'qtranslate_' . $prop . 's';
 	$dbs_formats = get_option( $opnm, [] );
@@ -813,6 +861,9 @@ function qtranxf_updateLanguageDateTimeFormats( $date_i18n, $enabled_languages, 
 	}
 }
 
+/**
+ * @param $nm
+ */
 function qtranxf_updateSettingDateI18N( $nm ) {
 	global $q_config;
 	if ( ! isset( $_POST['submit'] ) ) {
@@ -1062,6 +1113,12 @@ function qtranxf_executeOnUpdate() {
 	}
 }
 
+/**
+ * @param $fmt
+ * @param null $lang
+ *
+ * @return string
+ */
 function qtranxf_translate_dt_format( $fmt, $lang = null ) {
 	global $q_config;
 	if ( empty( $lang ) ) {
@@ -1103,6 +1160,10 @@ function qtranxf_translate_dt_format( $fmt, $lang = null ) {
 	return $fmt;
 }
 
+/**
+ * @param $date_format
+ * @param $time_format
+ */
 function qtranxf_get_date_time_formats( &$date_format, &$time_format ) {
 	if ( ! $date_format ) {
 		$date_format = get_option( 'date_format' );
@@ -1112,6 +1173,14 @@ function qtranxf_get_date_time_formats( &$date_format, &$time_format ) {
 	}
 }
 
+/**
+ * @param $cfg
+ * @param $enabled_languages
+ * @param null $date_format
+ * @param null $time_format
+ *
+ * @return bool
+ */
 function qtranxf_set_default_date_i18n( &$cfg, $enabled_languages, $date_format = null, $time_format = null ) {
 	qtranxf_get_date_time_formats( $date_format, $time_format );
 	$changed = false;
@@ -1125,6 +1194,14 @@ function qtranxf_set_default_date_i18n( &$cfg, $enabled_languages, $date_format 
 	return $changed;
 }
 
+/**
+ * @param $cfg
+ * @param $lang
+ * @param null $date_format
+ * @param null $time_format
+ *
+ * @return bool
+ */
 function qtranxf_set_date_i18n_formats( &$cfg, $lang, $date_format = null, $time_format = null ) {
 	qtranxf_get_date_time_formats( $date_format, $time_format );
 	$changed = ! isset( $cfg['date_i18n'] ) || ! is_array( $cfg['date_i18n'] );
@@ -1141,6 +1218,14 @@ function qtranxf_set_date_i18n_formats( &$cfg, $lang, $date_format = null, $time
 	return $changed;
 }
 
+/**
+ * @param $cfg
+ * @param $lang
+ * @param $name
+ * @param $format
+ *
+ * @return bool
+ */
 function qtranxf_set_date_i18n_format( &$cfg, $lang, $name, $format ) {
 	$changed   = false;
 	$date_i18n = &$cfg['date_i18n'];
@@ -1175,6 +1260,10 @@ function qtranxf_set_date_i18n_format( &$cfg, $lang, $name, $format ) {
 	return $changed;
 }
 
+/**
+ * @param null $date_format
+ * @param null $time_format
+ */
 function qtranxf_sync_date_i18n_config( $date_format = null, $time_format = null ) {
 	global $q_config;
 	qtranxf_get_date_time_formats( $date_format, $time_format );

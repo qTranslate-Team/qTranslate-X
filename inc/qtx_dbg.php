@@ -5,6 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( WP_DEBUG ) {
 	if ( ! function_exists( 'qtranxf_dbg_log' ) ) {
+		/**
+		 * @param $msg
+		 * @param string $var
+		 * @param bool $bt
+		 * @param bool $exit
+		 */
 		function qtranxf_dbg_log( $msg, $var = 'novar', $bt = false, $exit = false ) {
 			global $pagenow, $wp_current_filter;
 			switch ( $pagenow ) {
@@ -50,6 +56,12 @@ if ( WP_DEBUG ) {
 			}
 		}
 
+		/**
+		 * @param $msg
+		 * @param string $var
+		 * @param bool $bt
+		 * @param bool $exit
+		 */
 		function qtranxf_dbg_echo( $msg, $var = 'novar', $bt = false, $exit = false ) {
 			if ( $var !== 'novar' ) {
 				$msg .= var_export( $var, true );
@@ -63,12 +75,26 @@ if ( WP_DEBUG ) {
 			}
 		}
 
+		/**
+		 * @param $condition
+		 * @param $msg
+		 * @param string $var
+		 * @param bool $bt
+		 * @param bool $exit
+		 */
 		function qtranxf_dbg_log_if( $condition, $msg, $var = 'novar', $bt = false, $exit = false ) {
 			if ( $condition ) {
 				qtranxf_dbg_log( $msg, $var, $bt, $exit );
 			}
 		}
 
+		/**
+		 * @param $condition
+		 * @param $msg
+		 * @param string $var
+		 * @param bool $bt
+		 * @param bool $exit
+		 */
 		function qtranxf_dbg_echo_if( $condition, $msg, $var = 'novar', $bt = false, $exit = false ) {
 			if ( $condition ) {
 				qtranxf_dbg_echo( $msg, $var, $bt, $exit );

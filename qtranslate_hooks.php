@@ -71,34 +71,64 @@ function qtranxf_localeForCurrentLanguage( $locale ) {
 //	//load_theme_textdomain('my_theme', get_template_directory() . '/languages');
 //}
 
+/**
+ * @param $content
+ *
+ * @return array|string
+ */
 function qtranxf_useCurrentLanguageIfNotFoundShowEmpty( $content ) {
 	global $q_config;
 
 	return qtranxf_use( $q_config['language'], $content, false, true );
 }
 
+/**
+ * @param $content
+ *
+ * @return array|string
+ */
 function qtranxf_useCurrentLanguageIfNotFoundShowAvailable( $content ) {
 	global $q_config;
 
 	return qtranxf_use( $q_config['language'], $content, true, false );
 }
 
+/**
+ * @param $content
+ *
+ * @return array|string
+ */
 function qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $content ) {
 	global $q_config;
 
 	return qtranxf_use( $q_config['language'], $content, false, false );
 }
 
+/**
+ * @param $content
+ *
+ * @return array|string
+ */
 function qtranxf_useDefaultLanguage( $content ) {
 	global $q_config;
 
 	return qtranxf_use( $q_config['default_language'], $content, false, false );
 }
 
+/**
+ * @return string
+ */
 function qtranxf_versionLocale() {
 	return 'en_US';
 }
 
+/**
+ * @param $title
+ * @param string $raw_title
+ * @param string $context
+ *
+ * @return string
+ */
 function qtranxf_useRawTitle( $title, $raw_title = '', $context = 'save' ) {
 	switch ( $context ) {
 		case 'save': {
@@ -117,6 +147,11 @@ function qtranxf_useRawTitle( $title, $raw_title = '', $context = 'save' ) {
 }
 
 //function qtranxf_gettext($translated_text, $text, $domain) {
+/**
+ * @param $translated_text
+ *
+ * @return array|string
+ */
 function qtranxf_gettext( $translated_text ) {
 	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
 	global $q_config;
@@ -128,6 +163,11 @@ function qtranxf_gettext( $translated_text ) {
 }
 
 //function qtranxf_gettext_with_context($translated_text, $text, $context, $domain) {
+/**
+ * @param $translated_text
+ *
+ * @return array|string
+ */
 function qtranxf_gettext_with_context( $translated_text ) {
 	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
 	global $q_config;
@@ -139,6 +179,11 @@ function qtranxf_gettext_with_context( $translated_text ) {
 }
 
 //function qtranxf_ngettext($translation, $single, $plural, $number, $domain) {
+/**
+ * @param $translated_text
+ *
+ * @return array|string
+ */
 function qtranxf_ngettext( $translated_text ) {
 	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
 	global $q_config;

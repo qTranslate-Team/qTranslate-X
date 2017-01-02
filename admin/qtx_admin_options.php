@@ -5,6 +5,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_utils.php' );
 
+/**
+ * @param $ops
+ */
 function qtranxf_admin_set_default_options( &$ops ) {
 	//options processed in a standardized way
 	$ops['admin'] = [];

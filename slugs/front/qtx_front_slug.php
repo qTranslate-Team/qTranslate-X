@@ -47,6 +47,13 @@ function qtranxf_slug_parse_request( &$wp ) {//calss WP
 
 add_action( 'parse_request', 'qtranxf_slug_parse_request' );
 
+/**
+ * @param $title
+ * @param string $raw_title
+ * @param string $context
+ *
+ * @return string
+ */
 function qtranxf_slug_sanitize_title( $title, $raw_title = '', $context = 'save' ) {
 	switch ( $context ) {
 		case 'query': {

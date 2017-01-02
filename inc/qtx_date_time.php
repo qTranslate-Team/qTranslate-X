@@ -138,6 +138,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return qtranxf_strftime( $format, $ts, $default, $before, $after );
 	}
 
+	/**
+	 * @param $format
+	 * @param $mysq_time
+	 * @param $default
+	 * @param string $before
+	 * @param string $after
+	 *
+	 * @return bool|int|string
+	 */
 	function qtranxf_format_time( $format, $mysq_time, $default, $before = '', $after = '' ) {
 		global $q_config;
 		if ( empty( $format ) ) {
@@ -159,6 +168,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return qtranxf_strftime( $format, $ts, $default, $before, $after );
 	}
 
+	/**
+	 * @param $old_date
+	 * @param string $format
+	 * @param null $post
+	 *
+	 * @return bool|int|string
+	 */
 	function qtranxf_dateFromPostForCurrentLanguage( $old_date, $format = '', $post = null ) {
 		$post = get_post( $post );
 		if ( ! $post ) {
@@ -168,6 +184,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return qtranxf_format_date( $format, $post->post_date, $old_date );
 	}
 
+	/**
+	 * @param $old_date
+	 * @param string $format
+	 *
+	 * @return bool|int|string
+	 */
 	function qtranxf_dateModifiedFromPostForCurrentLanguage( $old_date, $format = '' ) {
 		global $post;
 		if ( ! $post ) {
@@ -177,6 +199,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return qtranxf_format_date( $format, $post->post_modified, $old_date );
 	}
 
+	/**
+	 * @param $old_date
+	 * @param string $format
+	 * @param null $post
+	 * @param bool $gmt
+	 *
+	 * @return bool|int|string
+	 */
 	function qtranxf_timeFromPostForCurrentLanguage( $old_date, $format = '', $post = null, $gmt = false ) {
 		$post = get_post( $post );
 		if ( ! $post ) {
@@ -187,6 +217,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return qtranxf_format_time( $format, $post_date, $old_date );
 	}
 
+	/**
+	 * @param $old_date
+	 * @param string $format
+	 * @param bool $gmt
+	 *
+	 * @return bool|int|string
+	 */
 	function qtranxf_timeModifiedFromPostForCurrentLanguage( $old_date, $format = '', $gmt = false ) {
 		global $post;
 		if ( ! $post ) {
@@ -197,6 +234,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return qtranxf_format_time( $format, $post_date, $old_date );
 	}
 
+	/**
+	 * @param $old_date
+	 * @param $format
+	 * @param null $comment
+	 *
+	 * @return bool|int|string
+	 */
 	function qtranxf_dateFromCommentForCurrentLanguage( $old_date, $format, $comment = null ) {
 		if ( ! $comment ) {
 			global $comment;
@@ -208,6 +252,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return qtranxf_format_date( $format, $comment->comment_date, $old_date );
 	}
 
+	/**
+	 * @param $old_date
+	 * @param string $format
+	 * @param bool $gmt
+	 * @param bool $translate
+	 * @param null $comment
+	 *
+	 * @return bool|int|string
+	 */
 	function qtranxf_timeFromCommentForCurrentLanguage( $old_date, $format = '', $gmt = false, $translate = true, $comment = null ) {
 		if ( ! $translate ) {
 			return $old_date;
@@ -225,6 +278,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 {//utils
+	/**
+	 * @param $format
+	 *
+	 * @return mixed
+	 */
 	function qtranxf_convertDateFormatToStrftimeFormat( $format ) {
 		$mappings              = qtranxf_date_strftime_mapping();
 		$date_parameters       = [];
@@ -247,6 +305,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return $format;
 	}
 
+	/**
+	 * @param $format
+	 * @param $default_format
+	 *
+	 * @return array|mixed|string
+	 */
 	function qtranxf_convertFormat( $format, $default_format ) {
 		global $q_config;
 		// if one of special language-neutral formats are requested, don't replace it
@@ -279,6 +343,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 	}
 
+	/**
+	 * @param $format
+	 *
+	 * @return array|mixed|string
+	 */
 	function qtranxf_convertDateFormat( $format ) {
 		global $q_config;
 		if ( isset( $q_config['date_format'][ $q_config['language'] ] ) ) {
@@ -292,6 +361,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return qtranxf_convertFormat( $format, $default_format );
 	}
 
+	/**
+	 * @param $format
+	 *
+	 * @return array|mixed|string
+	 */
 	function qtranxf_convertTimeFormat( $format ) {
 		global $q_config;
 		if ( isset( $q_config['time_format'][ $q_config['language'] ] ) ) {
@@ -305,18 +379,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return qtranxf_convertFormat( $format, $default_format );
 	}
 
+	/**
+	 * @param $format
+	 *
+	 * @return string
+	 */
 	function qtranxf_formatCommentDateTime( $format ) {
 		global $comment;
 
 		return qtranxf_strftime( qtranxf_convertFormat( $format, $format ), mysql2date( 'U', $comment->comment_date ), '' );
 	}
 
+	/**
+	 * @param $format
+	 *
+	 * @return string
+	 */
 	function qtranxf_formatPostDateTime( $format ) {
 		global $post;
 
 		return qtranxf_strftime( qtranxf_convertFormat( $format, $format ), mysql2date( 'U', $post->post_date ), '' );
 	}
 
+	/**
+	 * @param $format
+	 *
+	 * @return string
+	 */
 	function qtranxf_formatPostModifiedDateTime( $format ) {
 		global $post;
 

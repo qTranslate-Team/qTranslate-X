@@ -27,6 +27,11 @@ define( 'QTX_URL_SLUG', 10 );
 
 {//action/filters
 	add_filter( 'qtranslate_option_config', 'qtranxf_slug_option_config' );
+	/**
+	 * @param $ops
+	 *
+	 * @return mixed
+	 */
 	function qtranxf_slug_option_config( $ops ) {
 		//qtranxf_dbg_log('1.qtranxf_slug_option_config: ');
 		//$ops['front']['array']['slug'] = 'qtranxf_slug_option_default';
@@ -47,6 +52,11 @@ define( 'QTX_URL_SLUG', 10 );
 		$q_config['slugs-cache'] = [ 'names' => [], 'slugs' => [] ];
 	}
 
+	/**
+	 * @param $taxonomy
+	 * @param $object_type
+	 * @param $args
+	 */
 	function qtranxf_slug_registered_taxonomy( $taxonomy, $object_type, $args ) {
 		global $wp_taxonomies;
 		//qtranxf_dbg_log('qtranxf_slug_registered_taxonomy: $taxonomy='.$taxonomy.'; $object_type: ', $object_type);
@@ -59,6 +69,10 @@ define( 'QTX_URL_SLUG', 10 );
 
 	add_action( 'registered_taxonomy', 'qtranxf_slug_registered_taxonomy', 10, 3 );
 
+	/**
+	 * @param $post_type
+	 * @param $args
+	 */
 	function qtranxf_slug_registered_post_type( $post_type, $args ) {
 		global $wp_post_types;
 		//qtranxf_dbg_log('qtranxf_slug_registered_post_type: $post_type='.$post_type.', $args: ', $args);
@@ -70,6 +84,12 @@ define( 'QTX_URL_SLUG', 10 );
 
 	add_action( 'registered_post_type', 'qtranxf_slug_registered_post_type', 10, 2 );
 
+	/**
+	 * @param $lang
+	 * @param $urlinfo
+	 *
+	 * @return string
+	 */
 	function qtranxf_slug_detect_language( $lang, &$urlinfo ) {
 		global $q_config;
 		//qtranxf_dbg_log('qtranxf_slug_detect_language: $urlinfo: ', $urlinfo);
@@ -102,6 +122,9 @@ define( 'QTX_URL_SLUG', 10 );
 
 	add_filter( 'i18n_detect_language', 'qtranxf_slug_detect_language', 2, 2 );
 
+	/**
+	 * @param $url_info
+	 */
 	function qtranxf_slug_load( $url_info ) {
 		global $q_config, $wpdb;
 		//qtranxf_dbg_log('2.qtranxf_slug_load: ');
@@ -155,6 +178,12 @@ define( 'QTX_URL_SLUG', 10 );
 	}
 
 
+	/**
+	 * @param $urlinfo
+	 * @param $lang
+	 *
+	 * @return bool
+	 */
 	function qtranxf_slug_path_set_language( &$urlinfo, $lang ) {
 		global $q_config;
 		if ( $lang == $q_config['default_language'] ) {
@@ -184,6 +213,12 @@ define( 'QTX_URL_SLUG', 10 );
 		return $modified;
 	}
 
+	/**
+	 * @param $urlinfo
+	 * @param null $url_mode
+	 *
+	 * @return mixed
+	 */
 	function qtranxf_slug_url_del_language( $urlinfo, $url_mode = null ) {
 		if ( ! empty( $urlinfo['wp-path'] ) ) {
 			qtranxf_slug_path_del_language( $urlinfo );
@@ -192,6 +227,13 @@ define( 'QTX_URL_SLUG', 10 );
 		return $urlinfo;
 	}
 
+	/**
+	 * @param $urlinfo
+	 * @param $lang
+	 * @param null $url_mode
+	 *
+	 * @return mixed
+	 */
 	function qtranxf_slug_url_set_language( $urlinfo, $lang, $url_mode = null ) {
 		if ( ! empty( $urlinfo['wp-path'] ) ) {
 			//if(!isset($urlinfo['wp-paths']) || !isset($urlinfo['wp-path-slugs'])){
@@ -315,10 +357,20 @@ define( 'QTX_URL_SLUG', 10 );
 		return $slug;
 	}
 
+	/**
+	 * @param $s
+	 *
+	 * @return mixed|string
+	 */
 	function qtranxf_slug_encode( $s ) {
 		return qtranxf_slug_encode_raw( urldecode( $s ) );
 	}
 
+	/**
+	 * @param $s
+	 *
+	 * @return mixed|string
+	 */
 	function qtranxf_slug_encode_raw( $s ) {
 		$s = rawurlencode( $s );
 		$s = str_replace( '%2F', '/', $s );

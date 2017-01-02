@@ -3,10 +3,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * @param $url_converted
+ * @param $url_expected
+ *
+ * @return bool
+ */
 function qtranxf_check_url( $url_converted, $url_expected ) {
 	return qtranxf_check_test( $url_converted, $url_expected, 'qtx-test-convertURL' );
 }
 
+/**
+ * @param $url_mode_name
+ * @param $urls
+ * @param $lang
+ * @param $showLanguage
+ *
+ * @return int
+ */
 function qtranxf_test_convertURL( $url_mode_name, $urls, $lang, $showLanguage ) {
 	$cnt = 0;
 	foreach ( $urls as $url => $url_expected ) {
@@ -23,6 +37,10 @@ function qtranxf_test_convertURL( $url_mode_name, $urls, $lang, $showLanguage ) 
 	return $cnt;
 }
 
+/**
+ * @param $url_mode
+ * @param $lang
+ */
 function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 	global $q_config;
 

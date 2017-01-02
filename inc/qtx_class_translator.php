@@ -17,6 +17,9 @@ require_once( QTRANSLATE_DIR . '/qtranslate_widget.php' );
  * @since 3.4
  */
 class QTX_Translator implements WP_Translator {
+	/**
+	 * QTX_Translator constructor.
+	 */
 	public function __construct() {
 		add_filter( 'translate_text', [ $this, 'translate_text' ], 10, 3 );
 		add_filter( 'translate_term', [ $this, 'translate_term' ], 10, 3 );
@@ -25,6 +28,9 @@ class QTX_Translator implements WP_Translator {
 		//add_filter('translate_time', 'qtranxf_', 10, 2);
 	}
 
+	/**
+	 * @return QTX_Translator
+	 */
 	public static function get_translator() {
 		global $q_config;
 		if ( ! isset( $q_config['translator'] ) ) {
@@ -34,6 +40,13 @@ class QTX_Translator implements WP_Translator {
 		return $q_config['translator'];
 	}
 
+	/**
+	 * @param $text
+	 * @param null $lang
+	 * @param int $flags
+	 *
+	 * @return array|string
+	 */
 	public function translate_text( $text, $lang = null, $flags = 0 ) {
 		global $q_config;
 		if ( ! $lang ) {
@@ -45,6 +58,13 @@ class QTX_Translator implements WP_Translator {
 		return qtranxf_use( $lang, $text, $show_available, $show_empty );
 	}
 
+	/**
+	 * @param $term
+	 * @param null $lang
+	 * @param null $taxonomy
+	 *
+	 * @return array
+	 */
 	public function translate_term( $term, $lang = null, $taxonomy = null ) {
 		global $q_config;
 		if ( ! $lang ) {
@@ -54,6 +74,12 @@ class QTX_Translator implements WP_Translator {
 		return qtranxf_use_term( $lang, $term, $taxonomy );
 	}
 
+	/**
+	 * @param $url
+	 * @param null $lang
+	 *
+	 * @return string
+	 */
 	public function translate_url( $url, $lang = null ) {
 		global $q_config;
 		if ( $lang ) {

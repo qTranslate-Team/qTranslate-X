@@ -15,6 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 }// */
 
+/**
+ * @param $nm_to
+ * @param $nm_from
+ */
 function qtranxf_migrate_options_update( $nm_to, $nm_from ) {
 	global $wpdb;
 	$option_names = $wpdb->get_col( "SELECT `option_name` FROM {$wpdb->options} WHERE `option_name` LIKE '$nm_to\_%'" );
@@ -31,6 +35,10 @@ function qtranxf_migrate_options_update( $nm_to, $nm_from ) {
 	}
 }
 
+/**
+ * @param $nm_to
+ * @param $nm_from
+ */
 function qtranxf_migrate_options_copy( $nm_to, $nm_from ) {
 	global $wpdb;
 	$options = $wpdb->get_results( "SELECT option_name, option_value FROM {$wpdb->options} WHERE `option_name` LIKE '$nm_from\_%'" );
@@ -104,6 +112,10 @@ function qtranxf_migrate_export_qtranslate_xp() {
 	qtranxf_migrate_export( 'qTranslate Plus', 'ppqtranslate' );
 }
 
+/**
+ * @param $plugin_name
+ * @param $nm_from
+ */
 function qtranxf_migrate_import( $plugin_name, $nm_from ) {
 	qtranxf_migrate_options_update( 'qtranslate', $nm_from );
 
@@ -114,6 +126,10 @@ function qtranxf_migrate_import( $plugin_name, $nm_from ) {
 	qtranxf_add_message( sprintf( __( '%sImportant%s: Before you start making edits to post and pages, please, make sure that both, your front site and admin back-end, work under this configuration. It may help to review "%s" and see if any of conflicting plugins mentioned there are used here. While the current content, coming from %s, is compatible with this plugin, the newly modified posts and pages will be saved with a new square-bracket-only encoding, which has a number of advantages comparing to former %s encoding. However, the new encoding is not straightforwardly compatible with %s and you will need an additional step available under "%s" option if you ever decide to go back to %s. Even with this additional conversion step, the 3rd-party plugins custom-stored data will not be auto-converted, but manual editing will still work. That is why it is advisable to create a test-copy of your site before making any further changes. In case you encounter a problem, please give us a chance to improve %s, send the login information to the test-copy of your site to %s along with a detailed step-by-step description of what is not working, and continue using your main site with %s meanwhile. It would also help, if you share a success story as well, either on %sthe forum%s, or via the same e-mail as mentioned above. Thank you very much for trying %s.', 'qtranslate' ), '<span style="color:red">', '</span>', '<a href="https://qtranslatexteam.wordpress.com/known-issues/" target="_blank">' . 'Known Issues' . '</a>', $nm, 'qTranslate', $nm, '<a href="https://qtranslatexteam.wordpress.com/option-convert-database/" target="_blank"><span style="color:magenta">' . __( 'Convert Database', 'qtranslate' ) . '</span></a>', $nm, 'qTranslate&#8209;X', '<a href="mailto:qtranslateteam@gmail.com">qtranslateteam@gmail.com</a>', $nm, '<a href="https://wordpress.org/support/plugin/qtranslate-x">', '</a>', 'qTranslate&#8209;X' ) . '<br/><span style="font-size: smaller">' . __( 'This is a one-time message, which you will not see again, unless the same import is repeated.', 'qtranslate' ) . '</span>' );
 }
 
+/**
+ * @param $plugin_name
+ * @param $nm_to
+ */
 function qtranxf_migrate_export( $plugin_name, $nm_to ) {
 	qtranxf_migrate_options_copy( $nm_to, 'qtranslate' );
 
@@ -169,6 +185,11 @@ function qtranxf_migrate_plugins() {
 
 add_action( 'qtranslate_saveConfig', 'qtranxf_migrate_plugins', 30 );
 
+/**
+ * @param $nm
+ * @param $plugin
+ * @param null $args
+ */
 function qtranxf_add_row_migrate( $nm, $plugin, $args = null ) {
 	$plugin_file = qtranxf_find_plugin_file( $plugin );
 	if ( ! $plugin_file ) {
@@ -208,6 +229,9 @@ function qtranxf_add_row_migrate( $nm, $plugin, $args = null ) {
 	<?php
 }
 
+/**
+ * @param $request_uri
+ */
 function qtranxf_admin_section_import_export( $request_uri ) {
 	//echo '<div class="tabs-content">';
 	qtranxf_admin_section_start( 'import' );

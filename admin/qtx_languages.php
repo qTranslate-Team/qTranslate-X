@@ -183,6 +183,11 @@ function qtranxf_update_config_header_css() {
 	}
 }
 
+/**
+ * @param $lang
+ *
+ * @return bool
+ */
 function qtranxf_disableLanguage( $lang ) {
 	global $q_config;
 	if ( ! qtranxf_isEnabled( $lang ) ) {
@@ -204,6 +209,11 @@ function qtranxf_disableLanguage( $lang ) {
 	return true;
 }
 
+/**
+ * @param $lang
+ *
+ * @return bool
+ */
 function qtranxf_enableLanguage( $lang ) {
 	global $q_config;
 	if ( qtranxf_isEnabled( $lang ) )// || !isset($q_config['language_name'][$lang]))

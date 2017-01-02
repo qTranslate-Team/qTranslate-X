@@ -3,10 +3,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * @param $msg
+ * @param string $var
+ * @param bool $bt
+ * @param bool $exit
+ */
 function qtranxf_tst_log( $msg, $var = 'novar', $bt = false, $exit = false ) {
 	qtranxf_dbg_log( $msg, $var, $bt, $exit );
 }
 
+/**
+ * @param $result
+ * @param $expected
+ * @param $test_name
+ *
+ * @return bool
+ */
 function qtranxf_check_test( $result, $expected, $test_name ) {
 	//qtranxf_tst_log('qtranxf_check_test: $result='.$result. PHP_EOL .'                 $expected=',$expected);
 	if ( $result == $expected ) {

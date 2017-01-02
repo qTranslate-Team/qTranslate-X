@@ -3,6 +3,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * @return int
+ */
 function qtranxf_version_int() {
 	$ver = str_replace( '.', '', QTX_VERSION );
 	while ( strlen( $ver ) < 5 ) {
@@ -588,6 +591,12 @@ function qtranxf_add_config_files( &$config_files, $found ) {
 	return $changed;
 }
 
+/**
+ * @param $config_files
+ * @param $found
+ *
+ * @return bool
+ */
 function qtranxf_del_config_files( &$config_files, $found ) {
 	$changed = false;
 	foreach ( $found as $fn ) {
@@ -642,6 +651,10 @@ function qtranxf_find_plugin_file( $fp ) {
 	return $found[0];
 }
 
+/**
+ * @param $new_name
+ * @param $new_theme
+ */
 function qtranxf_on_switch_theme( $new_name, $new_theme ) {
 	$config_files = qtranxf_get_option_config_files();
 	$changed      = false;
@@ -667,6 +680,13 @@ function qtranxf_on_switch_theme( $new_name, $new_theme ) {
 
 add_action( 'switch_theme', 'qtranxf_on_switch_theme', 10, 2 );
 
+/**
+ * @param $fn_bnm
+ * @param $fn_qtx
+ * @param $bnm
+ *
+ * @return bool
+ */
 function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
 	$plugins = wp_get_active_and_valid_plugins();
 	$fn_bnm  = null;
@@ -700,6 +720,10 @@ function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
 	return $fn_bnm || $fn_qtx;
 }
 
+/**
+ * @param $fn_add
+ * @param $fn_del
+ */
 function qtranxf_adjust_config_files( $fn_add, $fn_del ) {
 	$config_files = qtranxf_get_option_config_files();
 	if ( $fn_add ) {
@@ -723,6 +747,10 @@ function qtranxf_adjust_config_files( $fn_add, $fn_del ) {
 	qtranxf_update_config_options( $config_files );
 }
 
+/**
+ * @param $plugin
+ * @param bool $network_wide
+ */
 function qtranxf_on_activate_plugin( $plugin, $network_wide = false ) {
 	//qtranxf_dbg_log('qtranxf_on_activate_plugin: $plugin: ',$plugin);
 	$bnm = dirname( $plugin );
@@ -740,6 +768,10 @@ function qtranxf_on_activate_plugin( $plugin, $network_wide = false ) {
 
 add_action( 'activate_plugin', 'qtranxf_on_activate_plugin' );
 
+/**
+ * @param $plugin
+ * @param bool $network_deactivating
+ */
 function qtranxf_on_deactivate_plugin( $plugin, $network_deactivating = false ) {
 	//qtranxf_dbg_log('qtranxf_on_deactivate_plugin: $plugin: ',$plugin);
 	$bnm = dirname( $plugin );
@@ -970,6 +1002,10 @@ function qtranxf_admin_notice_first_install() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notice_first_install' );
 
+/**
+ * @param $nm
+ * @param $plugin
+ */
 function qtranxf_admin_notice_deactivate_plugin( $nm, $plugin ) {
 	deactivate_plugins( $plugin, true );
 	$d        = dirname( $plugin );
@@ -1078,6 +1114,10 @@ function qtranxf_check_qtranslate_other()
 //add_action('admin_init', 'qtranxf_check_qtranslate_other', 0);
 */
 
+/**
+ * @param $title
+ * @param $plugin
+ */
 function qtranxf_admin_notice_plugin_conflict( $title, $plugin ) {
 	if ( ! is_plugin_active( $plugin ) ) {
 		return;
@@ -1106,10 +1146,18 @@ function qtranxf_admin_notices_plugin_conflicts() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_plugin_conflicts' );
 
+/**
+ * @return string
+ */
 function qtranxf_get_plugin_link() {
 	return '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>';
 }
 
+/**
+ * @param $plugin
+ *
+ * @return bool
+ */
 function qtranxf_get_plugin_location_wpbvc( $plugin ) {
 	global $vc_manager;
 	if ( is_plugin_active( $plugin ) ) {
@@ -1127,6 +1175,11 @@ function qtranxf_get_plugin_location_wpbvc( $plugin ) {
 	return $plugin;
 }
 
+/**
+ * @param $plugin
+ *
+ * @return bool
+ */
 function qtranxf_get_plugin_location( $plugin ) {
 	if ( ! is_plugin_active( $plugin ) ) {
 		return false;
@@ -1135,6 +1188,14 @@ function qtranxf_get_plugin_location( $plugin ) {
 	return $plugin;
 }
 
+/**
+ * @param $plugin
+ * @param $integr_title
+ * @param $integr_plugin
+ * @param string $get_plugin_location
+ *
+ * @return int
+ */
 function qtranxf_admin_notice_plugin_integration( $plugin, $integr_title, $integr_plugin, $get_plugin_location = 'qtranxf_get_plugin_location' ) {
 	if ( is_plugin_active( $integr_plugin ) ) {
 		return 0;
@@ -1330,12 +1391,22 @@ function qtranxf_update_option_admin_notices( $messages, $id, $toggle = true ) {
 	return $messages;
 }
 
+/**
+ * @param $id
+ *
+ * @return array
+ */
 function qtranxf_update_option_admin_notices_id( $id ) {
 	$messages = get_option( 'qtranslate_admin_notices', [] );
 
 	return qtranxf_update_option_admin_notices( $messages, $id, false );
 }
 
+/**
+ * @param $id
+ *
+ * @return array
+ */
 function qtranxf_update_admin_notice( $id ) {
 	$messages = get_option( 'qtranslate_admin_notices', [] );
 
@@ -1353,6 +1424,11 @@ function qtranxf_ajax_qtranslate_admin_notice() {
 
 add_action( 'wp_ajax_qtranslate_admin_notice', 'qtranxf_ajax_qtranslate_admin_notice' );
 
+/**
+ * @param $nms
+ * @param $ver
+ * @param $url
+ */
 function qtranxf_admin_notices_new_options( $nms, $ver, $url ) {
 	$messages = get_option( 'qtranslate_admin_notices' );
 	$id       = 'new-options-ver-' . str_replace( '.', '', $ver );
