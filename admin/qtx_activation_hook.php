@@ -613,6 +613,10 @@ function qtranxf_update_config_files() {
 	qtranxf_update_config_options( $config_files, $changed );
 }
 
+/**
+ * @param $fp
+ * @return mixed
+ */
 function qtranxf_find_plugin_file( $fp ) {
 	$fp = '/' . $fp;
 	$fn = WP_PLUGIN_DIR . $fp;
@@ -1305,6 +1309,13 @@ function qtranxf_admin_notices_errors() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_errors' );
 
+/**
+ * @param $messages
+ * @param $id
+ * @param bool $toggle
+ *
+ * @return array
+ */
 function qtranxf_update_option_admin_notices( $messages, $id, $toggle = true ) {
 	if ( ! is_array( $messages ) ) {
 		$messages = array();

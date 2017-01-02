@@ -47,8 +47,7 @@ function qtranxf_test_interface() {
 // *
 function qtranxf_test_next_posts_link() {
 	//global $post;
-	$npl = next_posts_link();
-	qtranxf_tst_log( 'qtranxf_test_next_posts_link: ', $npl );
+	next_posts_link();
 }
 
 //qtranxf_test_next_posts_link();// */

@@ -120,7 +120,7 @@ function qtranxf_collect_translations_posted() {
 			if ( strpos( $val, 'qtranslate-fields' ) === false ) {
 				continue;
 			}
-			$r;
+			$r = [];
 			parse_str( $val, $r );
 			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST['.$nm.'] $r: ', $r);
 			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST['.$nm.']: ', $val);
@@ -298,7 +298,6 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 
 					return $page_config;
 				}
-			default:
 				break;
 		}
 	}

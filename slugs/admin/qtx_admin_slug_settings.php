@@ -42,8 +42,8 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
                 <tr>
                     <th scope="row"><?php _e( 'Translate Slugs', 'qtranslate' ) ?></th>
                     <td><input type="checkbox" name="slugs" id="qtranxs_slugs"<?php checked( ! empty( $q_config['slugs'] ) ) ?> value="1"><label for="qtranxs_slugs"
-                                                                                                                                                 class="qtranxs_explanation"><?php printf( __( 'Enable multilingual URL slugs for posts, pages, categories, post types, tags, etc.', 'qtranslate' ) ) ?></label>
-                        <p class="qtranxs_notes"><?php printf( __( 'Make sure to deactivate all other 3rd-party slug services. You may need to %simport slug data%s from other slug-plugins upon activation this service.', 'qtranslate' ), '<a href="' . $request_uri . '#import">', '</a>' ) . ' ' . printf( __( 'It is important to read %sLocalized Slugs Guide%s to prevent other possible confusions.', 'qtranslate' ), '<a href="https://qtranslatexteam.wordpress.com/slugs/" target="_blank">', '</a>' ) ?></p>
+                                                                                                                                                  class="qtranxs_explanation"><?php printf( __( 'Enable multilingual URL slugs for posts, pages, categories, post types, tags, etc.', 'qtranslate' ) ) ?></label>
+                        <p class="qtranxs_notes"><?php echo sprintf( __( 'Make sure to deactivate all other 3rd-party slug services. You may need to %simport slug data%s from other slug-plugins upon activation this service.', 'qtranslate' ), '<a href="' . $request_uri . '#import">', '</a>' ) . ' ' . sprintf( __( 'It is important to read %sLocalized Slugs Guide%s to prevent other possible confusions.', 'qtranslate' ), '<a href="https://qtranslatexteam.wordpress.com/slugs/" target="_blank">', '</a>' ) ?></p>
                     </td>
                 </tr>
 				<?php
@@ -201,10 +201,22 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 //function qtranxf_slug_sanitize_base($s){ return preg_replace('#/+#', '/', '/' . str_replace( '#', '', $s ) ); }
 
 //function qtranxf_slug_is_permastruct($s){ return preg_match('#[^a-z0-9_\-]#',$s); }
+
+	/**
+	 * @param $s
+	 *
+	 * @return bool
+	 */
 	function qtranxf_slug_is_permastruct( $s ) {
 		return strpos( $s, '/' ) !== false;
 	}
 
+	/**
+	 * @param $s
+	 * @param $is_permastruct
+	 *
+	 * @return string
+	 */
 	function qtranxf_slug_sanitize( $s, &$is_permastruct ) {
 		$is_permastruct = qtranxf_slug_is_permastruct( $s );
 		$s              = str_replace( '#', '', $s );
@@ -260,7 +272,7 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 				qtranxf_add_error( sprintf( __( 'Translations of "%s" cannot be updated for unknown term "%s".', 'qtranslate' ), $group_name, $key ) );
 				continue;
 			}
-			$is_permastruct;
+			$is_permastruct = false;
 			$value_new = qtranxf_slug_sanitize( $qfields[ $default_lang ], $is_permastruct );
 			//qtranxf_dbg_log('qtranxf_slug_update_translations_of: $value_new: ', $value_new);
 			if ( isset( $qfields['qtranslate-original-value'] ) ) {

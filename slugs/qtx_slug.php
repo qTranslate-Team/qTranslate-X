@@ -80,7 +80,7 @@ define( 'QTX_URL_SLUG', 10 );
 			return $lang;
 		}
 		//qtranxf_dbg_log('qtranxf_slug_detect_language: $urlinfo: ', $urlinfo);
-		$lang_slug;
+		$lang_slug = '';
 		$modified_def = qtranxf_slug_path_del_language( $urlinfo, $lang_slug );
 		if ( $modified_def ) {
 			if ( $q_config['url_mode'] == QTX_URL_SLUG && ! empty( $lang_slug ) ) {
@@ -121,6 +121,12 @@ define( 'QTX_URL_SLUG', 10 );
 
 	add_action( 'qtranslate_load_front_admin', 'qtranxf_slug_load' );
 
+	/**
+	 * @param array $urlinfo
+	 * @param string $lang
+	 *
+	 * @return bool
+	 */
 	function qtranxf_slug_path_del_language( &$urlinfo, &$lang = null ) {
 		global $q_config;
 		$slugs_org                = qtranxf_slug_split_path( $urlinfo['wp-path'] );

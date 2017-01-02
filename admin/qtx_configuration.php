@@ -477,7 +477,7 @@ function qtranxf_conf() {
                             </tr>
                             <tr valign="top">
                                 <td><?php _e( 'Date/Time Format', 'qtranslate' ) ?></td>
-                                <td><?php echo _e( 'Localization', 'qtranslate' ) ?></td>
+                                <td><?php _e( 'Localization', 'qtranslate' ) ?></td>
                             </tr>
 							<?php
 							foreach ( $q_config['date_i18n'] as $fmt => $v ) {
