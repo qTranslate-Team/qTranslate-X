@@ -44,7 +44,7 @@ function qtranxf_language_form() {
     <input type="hidden" name="original_lang" value="<?php echo $original_lang; ?>"/>
     <div class="form-field form-field-code">
         <label for="language_code"><?php _e( 'Language Code', 'qtranslate' ) ?><br/></label>
-        <input name="language_code" id="language_ code" type="text" value="<?php echo $language_code; ?>" size="2" maxlength="2"/>
+        <input name="language_code" id="language_code" type="text" value="<?php echo $language_code; ?>" size="2" maxlength="2"/>
         <p class="qtranxs_notes"><?php echo __( '2-Letter <a href="http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter">ISO Language Code</a> for the Language you want to insert. (Example: en)', 'qtranslate' ) . '<br/>' . __( 'The language code is used in language tags and in URLs. It is case sensitive. Use of lower case for the language code is preferable, but not required. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision.', 'qtranslate' ) ?></p>
     </div>
     <div class="form-field form-field-flag">
@@ -455,17 +455,19 @@ function qtranxf_conf() {
                                 <td colspan="2" class="i18n-anchor-lsb"></td>
                             </tr>
                             <tr valign="top">
-                                <th scope="row" style="text-align:right"><label for="date_format"><?php echo qtranxf_translate_wp( 'Date Format' ) . ' (&ldquo;' . $date_format . '&rdquo;)' ?></label>
+                                <th scope="row" style="text-align:right">
+                                    <label for="date_format"><?php echo qtranxf_translate_wp( 'Date Format' ) . ' (&ldquo;' . $date_format . '&rdquo;)' ?></label>
+                                    <input type="hidden" name="date_i18n_fmt[date_format]" value="<?php echo esc_attr( $date_format ) ?>">
                                 </th>
-                                <input type="hidden" name="date_i18n_fmt[date_format]" value="<?php echo esc_attr( $date_format ) ?>">
                                 <td><input type="text" id="date_format" name="date_i18n[date_format]" value="<?php echo esc_attr( qtranxf_date_format_multilinual( $date_format ) ) ?>" class="i18n-multilingual">&nbsp;<span
                                             class="i18n-multilingual-display"><?php echo qtranxf_date_i18n_multilinual( $date_format, $ts ) ?></span>
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <th scope="row" style="text-align:right"><label for="time_format"><?php echo qtranxf_translate_wp( 'Time Format' ) . ' ( &ldquo;' . $time_format . '&rdquo; )' ?></label>
+                                <th scope="row" style="text-align:right">
+                                    <label for="time_format"><?php echo qtranxf_translate_wp( 'Time Format' ) . ' ( &ldquo;' . $time_format . '&rdquo; )' ?></label>
+                                    <input type="hidden" name="date_i18n_fmt[time_format]" value="<?php echo esc_attr( $time_format ) ?>">
                                 </th>
-                                <input type="hidden" name="date_i18n_fmt[time_format]" value="<?php echo esc_attr( $time_format ) ?>">
                                 <td><input type="text" id="time_format" name="date_i18n[time_format]" value="<?php echo esc_attr( qtranxf_date_format_multilinual( $time_format ) ) ?>" class="i18n-multilingual">&nbsp;<span
                                             class="i18n-multilingual-display"><?php echo qtranxf_date_i18n_multilinual( $time_format, $ts ) ?></span>
                                 </td>

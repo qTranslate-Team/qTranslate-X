@@ -761,14 +761,14 @@ function qtranxf_nav_menu_metabox( $object ) {
         </div>
         <span class="list-controls hide-if-no-js">
 		<a href="javascript:void(0);" class="help" onclick="jQuery( '#qtranxs-langsw-help' ).toggle();"><?php _e( 'Help', 'qtranslate' ) ?></a>
-		<span class="hide-if-js" id="qtranxs-langsw-help"><p><a name="qtranxs-langsw-help"></a>
+		<div class="hide-if-js" id="qtranxs-langsw-help"><p><a name="qtranxs-langsw-help"></a>
 				<?php
 				echo __( 'Menu item added is replaced with a drop-down menu of available languages, when menu is rendered.', 'qtranslate' );
 				echo ' ';
 				printf( __( 'The rendered menu items have CSS classes %s and %s ("%s" is a language code), which can be defined in theme style, if desired. The label of language menu can also be customized via field "%s" in the menu configuration.', 'qtranslate' ), '.qtranxs-lang-menu, .qtranxs-lang-menu-xx, .qtranxs-lang-menu-item', '.qtranxs-lang-menu-item-xx', 'xx', qtranxf_translate_wp( 'Navigation Label' ) );
 				echo ' ';
 				printf( __( 'The field "%s" of inserted menu item allows additional configuration described in %sFAQ%s.', 'qtranslate' ), qtranxf_translate_wp( 'URL' ), '<a href="https://qtranslatexteam.wordpress.com/faq/#LanguageSwitcherMenuConfig" target="blank">', '</a>' ) ?></p>
-		</span>
+		</div>
 	</span>
         <p class="button-controls">
 		<span class="add-to-menu">
