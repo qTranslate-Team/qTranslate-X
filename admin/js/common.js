@@ -592,14 +592,11 @@ var qTranslateX = function (pg) {
             case 'TEXTAREA':
                 return 0;
             case 'INPUT':
-                switch (elem.type) {
-                    case 'submit':
-                        if (elem.value) return addDisplayHookAttr(elem);
-                    default:
-                        return 0;
+                if (elem.type === 'submit' && elem.value) {
+                    return addDisplayHookAttr(elem);
                 }
-            default:
-                break;
+
+                return 0;
         }
         //co('addDisplayHook: elem: ',elem);
         var cnt = 0;
