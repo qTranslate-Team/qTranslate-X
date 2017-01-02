@@ -70,6 +70,10 @@ function qtranxf_regroup_translations_for( $type, $edit_lang, $default_lang ) {
 
 /**
  * @since 3.4.6.5
+ *
+ * @param $val
+ *
+ * @return array|void
  */
 function qtranxf_decode_json_name_value( $val ) {
 	if ( strpos( $val, 'qtranslate-fields' ) === false ) {
@@ -665,6 +669,8 @@ function qtranxf_settings_page() {
 
 /**
  * @since 3.3.8.7
+ *
+ * @param $m
  */
 function qtranxf_translate_menu( &$m ) {
 	global $q_config;
@@ -854,6 +860,11 @@ function qtranxf_admin_notices_config() {
  * Dealing with '&' in term name.
  * A term name containing '&' is stored in database with '&amp;' instead of '&',
  * but search in get_terms is done on raw '&' coming from $_POST variable.
+ *
+ * @param $args
+ * @param null $taxonomies
+ *
+ * @return mixed
  */
 function qtranxf_get_terms_args( $args, $taxonomies = null ) {
 	if ( ! empty( $args['name'] ) ) {
@@ -907,6 +918,13 @@ add_filter( 'get_terms_args', 'qtranxf_get_terms_args', 5, 2 );
  * Encode front end language on home_url, since, on admin side, it is mostly in use to create links to a preview pages.
  *
  * @since 3.4.5
+ *
+ * @param $url
+ * @param $path
+ * @param $orig_scheme
+ * @param $blog_id
+ *
+ * @return string
  */
 function qtranxf_admin_home_url( $url, $path, $orig_scheme, $blog_id ) {
 	global $q_config;

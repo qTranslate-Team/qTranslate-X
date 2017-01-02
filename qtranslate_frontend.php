@@ -419,8 +419,13 @@ add_filter('wp_setup_nav_menu_item', 'qtranxf_wp_setup_nav_menu_item');
 /**
  * @since 3.3.8.9
  *
- * @param (mixed) $value to translate, which may be array, object or string
+ * @param $value
+ * @param $lang
+ *
+ * @return array|mixed|void
+ * @internal param $ (mixed) $value to translate, which may be array, object or string
  *                and may have serialized parts with embedded multilingual values.
+ *
  */
 function qtranxf_translate_deep( $value, $lang ) {
 	if ( is_string( $value ) ) {
@@ -451,6 +456,11 @@ function qtranxf_translate_deep( $value, $lang ) {
 /**
  * @since 3.3.8.9
  * Used to filter option values
+ *
+ * @param $value
+ * @param null $lang
+ *
+ * @return array|mixed|void
  */
 function qtranxf_translate_option( $value, $lang = null ) {
 	global $q_config;
@@ -530,6 +540,9 @@ qtranxf_filter_options();
 
 /**
  * @since 3.4.6.5
+ *
+ * @param $post
+ * @param $lang
  */
 function qtranxf_translate_post( $post, $lang ) {
 	foreach ( get_object_vars( $post ) as $key => $txt ) {
@@ -612,7 +625,10 @@ function qtranxf_postsFilter( $posts, &$query ) {//WP_Query
 
 add_filter( 'the_posts', 'qtranxf_postsFilter', 5, 2 );
 
-/** allow all filters within WP_Query - many other add_filters may not be needed now? */
+/** allow all filters within WP_Query - many other add_filters may not be needed now?
+ *
+ * @param $query
+ */
 function qtranxf_pre_get_posts( &$query ) {//WP_Query
 	//qtranxf_dbg_log('qtranxf_pre_get_posts: $query: ',$query);
 	//'post_type'
@@ -631,6 +647,11 @@ add_action( 'pre_get_posts', 'qtranxf_pre_get_posts', 99 );
 
 /**
  * since 3.1-b3 new query to pass empty content and content without closing tags (sliders, galleries and other special kind of posts that never get translated)
+ *
+ * @param $lang
+ * @param $table_posts
+ *
+ * @return string
  */
 function qtranxf_where_clause_translated_posts( $lang, $table_posts ) {
 	$post_content = $table_posts . '.post_content';
@@ -661,6 +682,9 @@ function qtranxf_excludePages( $pages ) {
  *
  * $where = apply_filters( "get_{$adjacent}_post_where", $wpdb->prepare( "WHERE p.post_date $op %s AND p.post_type = %s $where", $current_post_date, $post->post_type ), $in_same_term, $excluded_terms );
  *
+ * @param $where
+ *
+ * @return string
  */
 function qtranxf_excludeUntranslatedAdjacentPosts( $where ) {
 	$lang = qtranxf_getLanguage();
@@ -818,6 +842,9 @@ if ( ! function_exists( 'qtranxf_trim_words' ) ) {
  * @since 3.2.9.9.6
  * Delete translated post_meta cache for all languages.
  * Cache may have a few languages, if it is persistent.
+ *
+ * @param $meta_type
+ * @param $object_id
  */
 function qtranxf_cache_delete_metadata( $meta_type, $object_id ) {//, $meta_key) {
 	global $q_config;
@@ -831,6 +858,14 @@ function qtranxf_cache_delete_metadata( $meta_type, $object_id ) {//, $meta_key)
 /**
  * @since 3.2.3 translation of meta data
  * @since 3.4.6.4 improved caching algorithm
+ *
+ * @param $meta_type
+ * @param $original_value
+ * @param $object_id
+ * @param string $meta_key
+ * @param bool $single
+ *
+ * @return array|mixed|string
  */
 function qtranxf_translate_metadata( $meta_type, $original_value, $object_id, $meta_key = '', $single = false ) {
 	global $q_config;
@@ -1069,6 +1104,13 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 
 /**
  * @since 3.2.3 translation of postmeta
+ *
+ * @param $original_value
+ * @param $object_id
+ * @param string $meta_key
+ * @param bool $single
+ *
+ * @return array|mixed|string
  */
 function qtranxf_filter_postmeta( $original_value, $object_id, $meta_key = '', $single = false ) {
 	return qtranxf_translate_metadata( 'post', $original_value, $object_id, $meta_key, $single );
@@ -1080,6 +1122,11 @@ add_filter( 'get_post_metadata', 'qtranxf_filter_postmeta', 5, 4 );
  * @since 3.2.9.9.6
  * Delete translated post_meta cache for all languages on cache update.
  * Cache may have a few languages, if it is persistent.
+ *
+ * @param $meta_id
+ * @param $object_id
+ * @param $meta_key
+ * @param $meta_value
  */
 function qtranxf_updated_postmeta( $meta_id, $object_id, $meta_key, $meta_value ) {
 	qtranxf_cache_delete_metadata( 'post', $object_id );
@@ -1089,6 +1136,13 @@ add_action( 'updated_postmeta', 'qtranxf_updated_postmeta', 5, 4 );
 
 /**
  * @since 3.4 translation of usermeta
+ *
+ * @param $original_value
+ * @param $object_id
+ * @param string $meta_key
+ * @param bool $single
+ *
+ * @return array|mixed|string
  */
 function qtranxf_filter_usermeta( $original_value, $object_id, $meta_key = '', $single = false ) {
 	return qtranxf_translate_metadata( 'user', $original_value, $object_id, $meta_key, $single );
@@ -1100,6 +1154,11 @@ add_filter( 'get_user_metadata', 'qtranxf_filter_usermeta', 5, 4 );
  * @since 3.4
  * Delete translated user_meta cache for all languages on cache update.
  * Cache may have a few languages, if it is persistent.
+ *
+ * @param $meta_id
+ * @param $object_id
+ * @param $meta_key
+ * @param $meta_value
  */
 function qtranxf_updated_usermeta( $meta_id, $object_id, $meta_key, $meta_value ) {
 	qtranxf_cache_delete_metadata( 'user', $object_id );
@@ -1125,6 +1184,11 @@ add_filter( 'redirect_canonical', 'qtranxf_checkCanonical', 10, 2 );
 
 /**
  * @since 3.2.8 moved here from _hooks.php
+ *
+ * @param $url
+ * @param $what
+ *
+ * @return string
  */
 function qtranxf_convertBlogInfoURL( $url, $what ) {
 	global $q_config;
@@ -1142,6 +1206,10 @@ function qtranxf_convertBlogInfoURL( $url, $what ) {
 /**
  * @since 3.3.1
  * Moved here from qtranslate_hooks.php and modified.
+ *
+ * @param $url
+ *
+ * @return string
  */
 function qtranxf_pagenum_link( $url ) {
 	$url_fixed = preg_replace( '#\?lang=[a-z]{2}/#i', '/', $url ); //kind of ugly fix for function get_pagenum_link in /wp-includes/link-template.php. Maybe we should cancel filter 'bloginfo_url' instead?

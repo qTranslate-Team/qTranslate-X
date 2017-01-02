@@ -36,6 +36,10 @@ function qtranxf_langs_preset() {
  * Load array of stored in options language properties, which differs from their preset default.
  *
  * @since 3.3
+ *
+ * @param null $defs
+ *
+ * @return array
  */
 function qtranxf_langs_stored( &$defs = null ) {
 	global $qtranslate_options;
@@ -71,6 +75,10 @@ function qtranxf_langs_stored( &$defs = null ) {
 
 /**
  * @since 3.3
+ *
+ * @param null $langs_preset
+ * @param null $langs_stored
+ *
  * @return array merged array of stored and pre-defined language properties
  */
 function qtranxf_langs_config( $langs_preset = null, $langs_stored = null ) {
@@ -96,6 +104,9 @@ function qtranxf_langs_config( $langs_preset = null, $langs_stored = null ) {
  * Save language properties to database
  *
  * @since 3.3
+ *
+ * @param $langs_stored
+ * @param null $qtranslate_options
  */
 function qtranxf_save_languages( $langs_stored, $qtranslate_options = null ) {
 	if ( ! $qtranslate_options ) {
@@ -128,6 +139,9 @@ function qtranxf_save_languages( $langs_stored, $qtranslate_options = null ) {
  * Remove language $lang properties from hash $langs.
  *
  * @since 3.3
+ *
+ * @param $langs
+ * @param $lang
  */
 function qtranxf_unsetLanguage( &$langs, $lang ) {
 	unset( $langs['language_name'][ $lang ] );
@@ -149,6 +163,8 @@ function qtranxf_unsetLanguage( &$langs, $lang ) {
 
 /**
  * @since 3.4.2
+ *
+ * @param $lang
  */
 function qtranxf_setLanguageAdmin( $lang ) {
 	global $q_config;
@@ -211,6 +227,10 @@ function qtranxf_enableLanguage( $lang ) {
  * Remove language $lang from the database.
  *
  * @since 3.3
+ *
+ * @param $lang
+ *
+ * @return string|void
  */
 function qtranxf_deleteLanguage( $lang ) {
 	global $q_config;

@@ -7,6 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Read or enqueue Java script files listed in $jss.
  *
  * @since 3.3.2
+ *
+ * @param $jss
+ * @param $enqueue_script
  */
 function qtranxf_loadfiles_js( $jss, $enqueue_script ) {
 	$cnt  = 0;
@@ -75,6 +78,9 @@ function qtranxf_detect_admin_language( $url_info ) {
 add_filter( 'qtranslate_detect_admin_language', 'qtranxf_detect_admin_language' );
 
 /**
+ * @param $a
+ * @param $b
+ *
  * @return bool true if $a and $b are equal.
  */
 function qtranxf_array_compare( $a, $b ) {
@@ -432,11 +438,13 @@ function qtranxf_get_term_joined( $obj, $taxonomy = null ) {
 
 /**
  * @since 3.4.6.8
- * @return string default language name of term $nm in langulage $lang
  *
  * @param string $lang two-letter language code to search for $nm
- * @param string $nm name of term in language $lang
+ * @param $term
  * @param string $taxonomy
+ *
+ * @return string default language name of term $nm in langulage $lang
+ * @internal param string $nm name of term in language $lang
  */
 function qtranxf_find_term( $lang, $term, $taxonomy = null ) {
 	global $q_config;
@@ -890,6 +898,11 @@ function qtranxf_the_editor( $editor_div ) {
  * }
  * add_filter('option_blogname', 'qtranxf_filter_options_general');
  * add_filter('option_blogdescription', 'qtranxf_filter_options_general');
+ *
+ * @param bool $force
+ * @param string $only_for_language
+ *
+ * @return int
  */
 
 function qtranxf_updateGettextDatabases( $force = false, $only_for_language = '' ) {
@@ -1001,6 +1014,9 @@ add_action( 'add_meta_boxes', 'qtranxf_add_meta_box_LSB', 10, 2 );
 
 /**
  * @since 3.3
+ *
+ * @param $post_type
+ *
  * @return true if post type is listed in option 'Post Types'.
  */
 function qtranxf_post_type_optional( $post_type ) {
@@ -1024,6 +1040,9 @@ function qtranxf_json_encode( $o ) {
 /**
  * @since 3.4
  * return reference to $page_config['forms'][$nm]['fields']
+ *
+ * @param $page_config
+ * @param $nm
  */
 function qtranxf_config_add_form( &$page_config, $nm ) {
 	if ( ! isset( $page_config['forms'][ $nm ] ) ) {
@@ -1049,6 +1068,10 @@ function qtranxf_verify_nonce( $nonce_name, $nonce_field = '_wpnonce' ) {
 
 /**
  * @since 3.4.6.5
+ *
+ * @param $a
+ * @param $nam
+ * @param $val
  */
 function qtranxf_decode_name_value_pair( &$a, $nam, $val ) {
 	if ( preg_match( '#([^\[]*)\[([^\]]+)\](.*)#', $nam, $matches ) ) {
@@ -1076,6 +1099,10 @@ function qtranxf_decode_name_value_pair( &$a, $nam, $val ) {
 
 /**
  * @since 3.4.6.5
+ *
+ * @param $data
+ *
+ * @return array
  */
 function qtranxf_decode_name_value( $data ) {
 	$a = array();

@@ -57,6 +57,8 @@ global $qtranslate_options;
  * other plugins and themes should not use global variables directly, they are subject to change at any time.
  *
  * @since 3.3
+ *
+ * @param $ops
  */
 function qtranxf_set_default_options( &$ops ) {
 	$ops = array();

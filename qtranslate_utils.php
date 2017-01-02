@@ -26,6 +26,8 @@ if ( WP_DEBUG ) {
 
 /**
  * @since 3.3.1
+ *
+ * @param $msg
  */
 function qtranxf_error_log( $msg ) {
 	qtranxf_add_error( $msg );
@@ -34,6 +36,8 @@ function qtranxf_error_log( $msg ) {
 
 /**
  * @since 3.3.7
+ *
+ * @param $msg
  */
 function qtranxf_add_error( $msg ) {
 	qtranxf_add_admin_notice( $msg, 'errors' );
@@ -49,6 +53,9 @@ function qtranxf_add_message( $msg ) {
 
 /**
  * @since 3.3.8.4
+ *
+ * @param $msg
+ * @param $kind
  */
 function qtranxf_add_admin_notice( $msg, $kind ) {
 	global $q_config;
@@ -67,6 +74,10 @@ function qtranxf_add_admin_notice( $msg, $kind ) {
 /**
  * Default domain translation for strings already translated by WordPress.
  * Use of this function prevents xgettext, poedit and other translating parsers from including the string that does not need translation.
+ *
+ * @param $s
+ *
+ * @return string|void
  */
 function qtranxf_translate_wp( $s ) {
 	return __( $s );
@@ -76,6 +87,10 @@ function qtranxf_translate_wp( $s ) {
  * Looks up a translation in domain 'qtranslate', and if it is not there, uses the default WordPress domain to translate.
  *
  * @since 3.4.5.5
+ *
+ * @param $s
+ *
+ * @return string|void
  */
 function qtranxf_translate( $s ) {
 	$t = get_translations_for_domain( 'qtranslate' );
@@ -118,6 +133,10 @@ function qtranxf_plugin_dirname() {
  * $plugin is path to plugin file, like the one coming from __FILE__.
  *
  * @since 3.4.5
+ *
+ * @param $plugin
+ *
+ * @return int|string
  */
 function qtranxf_dir_from_wp_content( $plugin ) {
 	global $wp_plugin_paths;
@@ -253,6 +272,11 @@ function qtranxf_parseURL( $url ) {
 
 /**
  * @since 3.2.8
+ *
+ * @param $urlinfo
+ * @param $homeinfo
+ *
+ * @return string
  */
 function qtranxf_buildURL( $urlinfo, $homeinfo ) {
 	//qtranxf_dbg_log('qtranxf_buildURL: $urlinfo:',$urlinfo);
@@ -295,6 +319,10 @@ function qtranxf_buildURL( $urlinfo, $homeinfo ) {
 
 /**
  * @since 3.2.8 Copies the data needed for qtranxf_buildURL and qtranxf_url_set_language
+ *
+ * @param $urlinfo
+ *
+ * @return array
  */
 function qtranxf_copy_url_info( $urlinfo ) {
 	$r = array();
@@ -431,6 +459,8 @@ function qtranxf_complete_url_info( &$urlinfo ) {
 
 /**
  * @since 3.2.8
+ *
+ * @param $urlinfo
  */
 function qtranxf_complete_url_info_path( &$urlinfo ) {
 	if ( isset( $urlinfo['path-base'] ) ) {
@@ -454,6 +484,9 @@ function qtranxf_complete_url_info_path( &$urlinfo ) {
  * Simplified version of WP's add_query_arg
  *
  * @since 3.2.8
+ *
+ * @param $query
+ * @param $key_value
  */
 function qtranxf_add_query_arg( &$query, $key_value ) {
 	if ( empty( $query ) ) {
@@ -467,6 +500,9 @@ function qtranxf_add_query_arg( &$query, $key_value ) {
  * Simplified version of WP's remove_query_arg
  *
  * @since 3.2.8
+ *
+ * @param $query
+ * @param $key
  */
 function qtranxf_del_query_arg( &$query, $key ) {
 	//$key_value;
@@ -607,6 +643,10 @@ function qtranxf_getLanguageDefault() {
 
 /**
  * @since 3.4.5.4 - return language name in native language, former qtranxf_getLanguageName.
+ *
+ * @param string $lang
+ *
+ * @return
  */
 function qtranxf_getLanguageNameNative( $lang = '' ) {
 	global $q_config;
@@ -619,6 +659,12 @@ function qtranxf_getLanguageNameNative( $lang = '' ) {
 
 /**
  * @since 3.4.5.4 - return language name in active language, if available, otherwise the name in native language.
+ *
+ * @param string $lang
+ * @param null $locale
+ * @param null $native_name
+ *
+ * @return null|string
  */
 function qtranxf_getLanguageName( $lang = '', $locale = null, $native_name = null ) {
 	global $q_config, $l10n;
@@ -676,6 +722,11 @@ function qtranxf_isEnabled( $lang ) {
 
 /**
  * @since 3.2.8 - change code to improve performance
+ *
+ * @param $s
+ * @param $n
+ *
+ * @return bool
  */
 function qtranxf_startsWith( $s, $n ) {
 	$l = strlen( $n );
@@ -696,6 +747,11 @@ function qtranxf_startsWith( $s, $n ) {
  * @since 3.2.8
  * $s - string to test
  * $n - needle to search
+ *
+ * @param $s
+ * @param $n
+ *
+ * @return bool
  */
 function qtranxf_endsWith( $s, $n ) {
 	$l = strlen( $n );
@@ -812,6 +868,13 @@ function qtranxf_post_type() {
  * Test $cfg['pages'] against $url_path and $url_query ($_SERVER['QUERY_STRING'])
  *
  * @since 3.4
+ *
+ * @param $cfg
+ * @param $url_path
+ * @param $url_query
+ * @param $d
+ *
+ * @return bool
  */
 function qtranxf_match_page( $cfg, $url_path, $url_query, $d ) {
 	if ( ! isset( $cfg['pages'] ) ) {
@@ -832,6 +895,11 @@ function qtranxf_match_page( $cfg, $url_path, $url_query, $d ) {
 
 /**
  * @since 3.4
+ *
+ * @param $cfg_post_type
+ * @param $post_type
+ *
+ * @return bool|null
  */
 function qtranxf_match_post_type( $cfg_post_type, $post_type ) {
 
@@ -853,6 +921,11 @@ function qtranxf_match_post_type( $cfg_post_type, $post_type ) {
 
 /**
  * @since 3.3.2
+ *
+ * @param $cfg_all
+ * @param $cfg
+ *
+ * @return mixed
  */
 function qtranxf_merge_config( $cfg_all, $cfg ) {
 	//return array_merge_recursive($cfg_all,$cfg);
@@ -869,6 +942,12 @@ function qtranxf_merge_config( $cfg_all, $cfg ) {
 
 /**
  * filters i18n configurations for the current page
+ *
+ * @param $config
+ * @param $url_path
+ * @param $url_query
+ *
+ * @return array
  */
 function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
 	global $q_config;
@@ -1081,6 +1160,8 @@ function qtranxf_write_config_log( $config, $sfx = '', $url_path = null, $url_qu
 
 /**
  * @since 3.4
+ *
+ * @param $filters
  */
 function qtranxf_add_filters( $filters ) {
 	global $q_config;
@@ -1119,6 +1200,10 @@ function qtranxf_add_filters( $filters ) {
 
 /**
  * @since 3.4
+ *
+ * @param $locale
+ *
+ * @return mixed
  */
 function qtranxf_html_locale( $locale ) {
 	return str_replace( '_', '-', $locale );

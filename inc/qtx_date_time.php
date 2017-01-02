@@ -6,7 +6,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 {// BEGIN DATE TIME FUNCTIONS
 
 	/**
+	 * @param $format
 	 * @param $date - unix time stamp
+	 *
+	 * @param string $default
+	 * @param string $before
+	 * @param string $after
+	 *
+	 * @return string
 	 */
 	function qtranxf_strftime( $format, $date, $default = '', $before = '', $after = '' ) {
 		// don't do anything if format is not given
@@ -98,6 +105,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	/**
 	 * @since 3.4.7 time functions re-organized
 	 * @since 3.2.8 time functions adjusted
+	 *
+	 * @param $format
+	 * @param $mysq_time
+	 * @param $default
+	 * @param string $before
+	 * @param string $after
+	 *
+	 * @return bool|int|string
 	 */
 	function qtranxf_format_date( $format, $mysq_time, $default, $before = '', $after = '' ) {
 		global $q_config;

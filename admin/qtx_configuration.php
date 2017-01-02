@@ -1071,11 +1071,12 @@ function qtranxf_date_format_multilinual( $fmt ) {
 }
 
 /**
- * @param string $format Format to display the date or time https://codex.wordpress.org/Formatting_Date_and_Time.
+ * @param $fmt
  * @param bool|int $i Optional. Unix timestamp. Default false.
  * @param bool $gmt Optional. Whether to use GMT timezone. Default false.
  *
  * @return string multilingual string with date/time formatted for each language.
+ * @internal param string $format Format to display the date or time https://codex.wordpress.org/Formatting_Date_and_Time.
  */
 function qtranxf_date_i18n_multilinual( $fmt, $i = false, $gmt = false ) {
 	global $q_config;

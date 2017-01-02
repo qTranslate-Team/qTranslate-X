@@ -169,6 +169,9 @@ class qTranslateXWidget extends WP_Widget {
  *   ‘format’ – needs to be provided if ‘type’ is ‘custom’. Read help text to this option on widget admin page.
  *   ‘id’ – id of widget, which is used as a distinctive string to create CSS entities.
  * @since 3.4.5 type of argument is changed, compatibility with old way is preserved.
+ *
+ * @param array $args
+ * @param string $id
  */
 function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
 	global $q_config;

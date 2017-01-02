@@ -5,7 +5,11 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 
 {//updates
 	/**
-	 * @param (string) $name - urldecoded post name or other single slug (not a path with '/').
+	 * @param $name
+	 * @param $qfields
+	 * @param $default_lang
+	 *
+	 * @internal param $ (string) $name - urldecoded post name or other single slug (not a path with '/').
 	 */
 	function qtranxf_slug_update_translations( $name, &$qfields, $default_lang ) {
 		global $q_config, $wpdb;
@@ -588,6 +592,8 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 
 	/**
 	 * @param (string) $slug - urldecoded post name or other slug.
+	 *
+	 * @return string
 	 */
 	function qtranxf_slug_multilingual_base( $slug ) {
 		global $q_config;
@@ -613,6 +619,8 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 	 * @param (string) $slug - rawurlencoded post name or other slug.
 	 * @param (string) $lang - two-letter language code.
 	 * @param (string) $name - rawurlencoded post name or other slug.
+	 *
+	 * @return string
 	 */
 	function qtranxf_slug_unique( $slug, $lang, $name ) {
 		global $wpdb;

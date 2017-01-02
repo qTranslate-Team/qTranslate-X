@@ -112,6 +112,10 @@ function qtranxf_default_default_language() {
 
 /**
  * @since 3.3.2
+ *
+ * @param $json_files
+ *
+ * @return array|mixed
  */
 function qtranxf_load_config_files( $json_files ) {
 	$content_dir = null;
@@ -184,6 +188,10 @@ function qtranxf_get_option_config_files() {
 
 /**
  * @since 3.4
+ *
+ * @param $f
+ *
+ * @return bool
  */
 function qtranxf_set_field_jquery( &$f ) {
 	if ( isset( $f['jquery'] ) ) {
@@ -213,6 +221,10 @@ function qtranxf_set_field_jquery( &$f ) {
 
 /**
  * @since 3.4
+ *
+ * @param $fields
+ *
+ * @return mixed
  */
 function qtranxf_standardize_config_fields( $fields ) {
 	foreach ( $fields as $k => $f ) {
@@ -236,6 +248,10 @@ function qtranxf_standardize_config_fields( $fields ) {
 
 /**
  * @since 3.4
+ *
+ * @param $anchor
+ *
+ * @return bool|string
  */
 function qtranxf_standardize_config_anchor( &$anchor ) {
 	if ( is_string( $anchor ) ) {
@@ -262,6 +278,10 @@ function qtranxf_standardize_config_anchor( &$anchor ) {
 
 /**
  * @since 3.4
+ *
+ * @param $cfg_front
+ *
+ * @return mixed
  */
 function qtranxf_standardize_front_config( $cfg_front ) {
 	//remove filters with empty priorities
@@ -297,6 +317,10 @@ function qtranxf_standardize_front_config( $cfg_front ) {
 
 /**
  * @since 3.4
+ *
+ * @param $configs
+ *
+ * @return mixed
  */
 function qtranxf_standardize_admin_config( $configs ) {
 	foreach ( $configs as $k => $config ) {
@@ -350,6 +374,10 @@ function qtranxf_standardize_admin_config( $configs ) {
 
 /**
  * @since 3.4
+ *
+ * @param $configs
+ *
+ * @return mixed
  */
 function qtranxf_standardize_i18n_config( $configs ) {
 	if ( isset( $configs['admin-config'] ) ) {
@@ -364,6 +392,11 @@ function qtranxf_standardize_i18n_config( $configs ) {
 
 /**
  * @since 3.4
+ *
+ * @param $json_files
+ * @param $custom_config
+ *
+ * @return array|mixed
  */
 function qtranxf_load_config_all( $json_files, $custom_config ) {
 	global $q_config;
@@ -385,6 +418,9 @@ function qtranxf_load_config_all( $json_files, $custom_config ) {
 
 /**
  * @since 3.4
+ *
+ * @param $config_files
+ * @param bool $changed
  */
 function qtranxf_update_config_options( $config_files, $changed = true ) {
 	//qtranxf_dbg_log('qtranxf_update_config_options: $config_files: ', $config_files);
@@ -400,6 +436,11 @@ function qtranxf_update_config_options( $config_files, $changed = true ) {
 
 /**
  * @since 3.4
+ *
+ * @param null $theme
+ * @param null $found
+ *
+ * @return array|null
  */
 function qtranxf_search_config_files_theme( $theme = null, $found = null ) {
 	if ( ! $theme ) {
@@ -428,6 +469,10 @@ function qtranxf_search_config_files_theme( $theme = null, $found = null ) {
 
 /**
  * @since 3.4
+ *
+ * @param $found
+ *
+ * @return mixed
  */
 function qtranxf_normalize_config_files( $found ) {
 	$nc         = strlen( WP_CONTENT_DIR );
@@ -446,6 +491,11 @@ function qtranxf_normalize_config_files( $found ) {
 
 /**
  * @since 3.4
+ *
+ * @param $fld
+ * @param $plugins
+ *
+ * @return mixed
  */
 function qtranxf_find_plugin_by_foder( $fld, $plugins ) {
 	foreach ( $plugins as $plugin ) {
@@ -497,6 +547,11 @@ function qtranxf_search_config_files() {
  * Later we may need to preserve order somehow.
  *
  * @since 3.4
+ *
+ * @param $config_files
+ * @param $fn
+ *
+ * @return array
  */
 function qtranxf_add_config_file( $config_files, $fn ) {
 	$a   = array_slice( $config_files, 0, 1 );
@@ -513,6 +568,11 @@ function qtranxf_add_config_file( $config_files, $fn ) {
 
 /**
  * @since 3.4
+ *
+ * @param $config_files
+ * @param $found
+ *
+ * @return bool
  */
 function qtranxf_add_config_files( &$config_files, $found ) {
 	$changed = false;

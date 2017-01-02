@@ -8,6 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * or 'false', if update is impossible to do,
  * or 0, if all languages were updated successfully,
  * or positive integer number of errors occurred on languages update.
+ *
+ * @param bool $force
+ * @param string $only_for_language
+ *
+ * @return int
  */
 function qtranxf_updateGettextDatabasesEx( $force = false, $only_for_language = '' ) {
 	if ( empty( $only_for_language ) ) {

@@ -221,6 +221,8 @@ require_once( QTXSLUGS_DIR . '/admin/qtx_admin_slug.php' );
 	/**
 	 * @param (string) $s - decoded string
 	 * return array - ('blocks' => [all blocks between '/'], 'slugs' => [decoded slugs])
+	 *
+	 * @return array
 	 */
 	function qtranxf_slug_split_permastruct( $s ) {
 		$blocks = explode( '/', $s );

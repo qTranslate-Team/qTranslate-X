@@ -254,6 +254,11 @@ function qtranxf_detect_language( &$url_info ) {
  * - $url_info['query']
  * - $url_info['path-base']
  * - $url_info['path-base-length']
+ *
+ * @param $url_info
+ * @param bool $link
+ *
+ * @return bool|null|string
  */
 function qtranxf_parse_language_info( &$url_info, $link = false ) {
 	global $q_config;
@@ -817,6 +822,12 @@ function qtranxf_loadConfig() {
 
 /**
  * @since 3.4
+ *
+ * @param $lang
+ * @param $obj
+ * @param $taxonomy
+ *
+ * @return array
  */
 function qtranxf_use_term( $lang, $obj, $taxonomy ) {
 	global $q_config;
@@ -905,6 +916,8 @@ function qtranxf_language_neutral_path( $path ) {
 
 /**
  * @since 3.0
+ *
+ * @param $urlinfo
  */
 function qtranxf_url_del_language( &$urlinfo ) {
 	global $q_config;
@@ -1114,12 +1127,19 @@ function qtranxf_get_url_for_language( $url, $lang, $showLanguage = true ) {
 /**
  * Encode URL $url with language $lang.
  *
- * @param (string) $url URL to be converted.
- * @param (string) $lang two-letter language code of the language to convert $url to.
- * @param (bool) $forceadmin $url is not converted on admin side, unless $forceadmin is set to true.
- * @param (bool) $showDefaultLanguage When set to true, $url is always encoded with a language, otherwise it senses option "Hide URL language information for default language" to keep $url consistent with the currently active language.
+ * @param string $url
+ * @param string $lang
+ * @param bool $forceadmin
+ * @param bool $showDefaultLanguage
+ *
+ * @return string
+ * @internal param $ (string) $url URL to be converted.
+ * @internal param $ (string) $lang two-letter language code of the language to convert $url to.
+ * @internal param $ (bool) $forceadmin $url is not converted on admin side, unless $forceadmin is set to true.
+ * @internal param $ (bool) $showDefaultLanguage When set to true, $url is always encoded with a language, otherwise it senses option "Hide URL language information for default language" to keep $url consistent with the currently active language.
  *
  * If you need a URL to switch the language, set $showDefaultLanguage=true, if you need a URL to keep the current language, set it to false.
+ *
  */
 function qtranxf_convertURL( $url = '', $lang = '', $forceadmin = false, $showDefaultLanguage = false ) {
 	global $q_config;
@@ -1182,6 +1202,10 @@ function qtranxf_convertURLs( $url, $lang = '', $forceadmin = false, $showDefaul
  * split text at all language comments and quick tags
  *
  * @since 3.3.6 swirly bracket encoding added
+ *
+ * @param $text
+ *
+ * @return array
  */
 function qtranxf_get_language_blocks( $text ) {
 	$split_regex = "#(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\]|\{:[a-z]{2}\}|\{:\})#ism";
@@ -1252,6 +1276,10 @@ function qtranxf_split_blocks( $blocks, &$found = array() ) {
 
 /**
  * gets only part with encoded languages
+ *
+ * @param $blocks
+ *
+ * @return array
  */
 function qtranxf_split_languages( $blocks ) {
 	global $q_config;
@@ -1414,6 +1442,10 @@ function qtranxf_join_b( $texts ) {
 
 /**
  * @since 3.3.6 swirly bracket encoding
+ *
+ * @param $texts
+ *
+ * @return null|string
  */
 function qtranxf_join_s( $texts ) {
 	$text = qtranxf_allthesame( $texts );
@@ -1437,13 +1469,14 @@ function qtranxf_join_s( $texts ) {
 /**
  * Prepares multilingual text leaving text that matches $rx_sep outside of language tags.
  *
+ * @param $texts
  * @param $rx_sep (string) - regular expression to match language-neutral text.
  *
  * @return string - multilingual encoded string with text matching $rx_sep outside of language tags.
  * Example:
- *   $rx_sep = '/%s/';
- *   $text = array( 'en' => 'English %s text.', 'xx' => 'Other language %s entry.');
- *   return '[:en]English [:xx]Other language [:]%s[:en] text.[:xx] entry.[:]';
+ * $rx_sep = '/%s/';
+ * $text = array( 'en' => 'English %s text.', 'xx' => 'Other language %s entry.');
+ * return '[:en]English [:xx]Other language [:]%s[:en] text.[:xx] entry.[:]';
  * @since 3.4.6.2
  */
 function qtranxf_join_byseparator( $texts, $rx_sep ) {
@@ -1491,6 +1524,10 @@ function qtranxf_join_byseparator( $texts, $rx_sep ) {
 
 /**
  * Prepare multilingal text leaving new line outside of language tags '[:]'.
+ *
+ * @param $texts
+ *
+ * @return null|string
  */
 function qtranxf_join_byline( $texts ) {
 	$text = qtranxf_allthesame( $texts );
@@ -1560,7 +1597,15 @@ function qtranxf_use( $lang, $text, $show_available = false, $show_empty = false
 
 //}
 
-/** when $text is already known to be string */
+/** when $text is already known to be string
+ *
+ * @param $lang
+ * @param $text
+ * @param bool $show_available
+ * @param bool $show_empty
+ *
+ * @return mixed|void
+ */
 function qtranxf_use_language( $lang, $text, $show_available = false, $show_empty = false ) {
 	$blocks = qtranxf_get_language_blocks( $text );
 	if ( count( $blocks ) <= 1 )//no language is encoded in the $text, the most frequent case

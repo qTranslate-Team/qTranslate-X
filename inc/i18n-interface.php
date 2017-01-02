@@ -51,9 +51,14 @@ interface WP_Translator {
 	/**
 	 * Get translated value from a multilingual string.
 	 *
-	 * @param (mixed) $text - a string, an array or an object possibly containing multilingual values.
-	 * @param (string)(optional) $lang - a two-letter language code of the language to be extracted from $text. If omitted or null, then the currently active language is assumed.
-	 * @param (int)(optional) $flags - what to return if text for language $lang is not available. Possible choices are
+	 * @param $text
+	 * @param null $lang
+	 * @param int $flags
+	 *
+	 * @return
+	 * @internal param $ (mixed) $text - a string, an array or an object possibly containing multilingual values.
+	 * @internal param $ (string)(optional) $lang - a two-letter language code of the language to be extracted from $text. If omitted or null, then the currently active language is assumed.
+	 * @internal param $ (int)(optional) $flags - what to return if text for language $lang is not available. Possible choices are
 	 *     TRANSLATE_SHOW_DEFAULT - show the value for default language (default)
 	 *     TRANSLATE_SHOW_AVALABLE - return a list of available languages with language-encoded links to the current page.
 	 *     TRANSLATE_SHOW_EMPTY - return empty string.

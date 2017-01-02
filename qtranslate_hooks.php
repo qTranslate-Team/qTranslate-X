@@ -7,6 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * locale for current language and set it on PHP.
+ *
+ * @param $locale
+ *
+ * @return
  */
 function qtranxf_localeForCurrentLanguage( $locale ) {
 	static $locale_lang;//cache

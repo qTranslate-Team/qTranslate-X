@@ -22,6 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Apply translations of slugs to all $wp->query_vars
+ *
+ * @param $wp
  */
 function qtranxf_slug_parse_request( &$wp ) {//calss WP
 	//qtranxf_dbg_log('qtranxf_slug_parse_request: $wp: ',$wp);
