@@ -349,14 +349,14 @@ function qtranxf_standardize_admin_config( $configs ) {
 			if ( empty( $config ) ) {
 				unset( $configs['anchors'] );
 			} else {
-				foreach ( $configs['anchors'] as $k => $anchor ) {
+				foreach ( $configs['anchors'] as $l => $anchor ) {
 					$id = qtranxf_standardize_config_anchor( $anchor );
 					if ( is_null( $id ) ) {
-						unset( $configs['anchors'][ $k ] );
+						unset( $configs['anchors'][ $l ] );
 					} else if ( is_string( $id ) ) {
 						$configs['anchors'][ $id ] = $anchor;
-						if ( $id !== $k ) {
-							unset( $configs['anchors'][ $k ] );
+						if ( $id !== $l ) {
+							unset( $configs['anchors'][ $l ] );
 						}
 					}
 				}
