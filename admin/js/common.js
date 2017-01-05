@@ -44,7 +44,7 @@ qtranxj_get_split_blocks = function (text) {
 
 /**
  * Split the given text block into individual languages
- * 
+ *
  * since 3.2.7
  *
  * @param {string} text
@@ -55,28 +55,34 @@ qtranxj_split = function (text) {
 };
 
 /**
+ * Build a list of text fragments for each configured language from the given list of language blocks
+ *
  * since 3.1-b1 - closing tag [:]
+ *
+ * @param blocks
+ * @returns {Object}
  */
 qtranxj_split_blocks = function (blocks) {
-    var result = new Object;
-    //for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
-    for (var lang in qTranslateConfig.language_config) {
-        //var lang=qTranslateConfig.enabled_languages[i];
-        result[lang] = '';
+    var result = {};
+
+    for (var lang1 in qTranslateConfig.language_config) {
+        result[lang1] = '';
     }
-    //if(!qtranxj_isArray(blocks))//since 3.2.7
+
+    // Text could not be split. Return empty object
     if (!blocks || !blocks.length) {
         return result;
     }
-    if (blocks.length == 1) { //no language separator found, enter it to all languages
-        var b = blocks[0];
-        //for(var j=0; j<qTranslateConfig.enabled_languages.length; ++j){
-        for (var lang in qTranslateConfig.language_config) {
-            //var lang=qTranslateConfig.enabled_languages[j];
-            result[lang] += b;
+
+    // No language separator found, use the same text for all languages
+    if (blocks.length == 1) {
+        var block = blocks[0];
+        for (var lang2 in qTranslateConfig.language_config) {
+            result[lang2] += block;
         }
         return result;
     }
+
     var clang_regex = /<!--:([a-z]{2})-->/gi;
     var blang_regex = /\[:([a-z]{2})\]/gi;
     var slang_regex = /\{:([a-z]{2})\}/gi; // @since 3.3.6 swirly brackets
@@ -85,28 +91,38 @@ qtranxj_split_blocks = function (blocks) {
     for (var i = 0; i < blocks.length; ++i) {
         var b = blocks[i];
         if (!b.length) continue;
+
+        // Match comment style tag
         matches               = clang_regex.exec(b);
         clang_regex.lastIndex = 0;
         if (matches != null) {
             lang = matches[1];
             continue;
         }
+
+        // Match bracket style tag
         matches               = blang_regex.exec(b);
         blang_regex.lastIndex = 0;
         if (matches != null) {
             lang = matches[1];
             continue;
         }
+
+        // Match swirly bracket style tag
         matches               = slang_regex.exec(b);
         slang_regex.lastIndex = 0;
         if (matches != null) {
             lang = matches[1];
             continue;
         }
+
+        // Match closing tag (any style)
         if (b == '<!--:-->' || b == '[:]' || b == '{:}') {
             lang = false;
             continue;
         }
+
+        // Build up the resulting text in an array for each language
         if (lang) {
             if (!result[lang]) {
                 result[lang] = b;
@@ -114,7 +130,7 @@ qtranxj_split_blocks = function (blocks) {
                 result[lang] += b;
             }
             lang = false;
-        } else { //keep neutral text
+        } else { // keep neutral text (append it to each language)
             for (var key in result) {
                 result[key] += b;
             }
@@ -123,6 +139,11 @@ qtranxj_split_blocks = function (blocks) {
     return result;
 };
 
+/**
+ * 
+ * @param cname
+ * @returns {*}
+ */
 function qtranxj_get_cookie(cname) {
     var nm = cname + "=";
     var ca = document.cookie.split(';');
@@ -161,8 +182,15 @@ String.prototype.xsplit = function (_regEx) {
     return arr;
 };
 
-//Since 3.2.7 removed: function qtranxj_isArray(obj){ return obj.constructor.toString().indexOf('Array') >= 0; }
-
+/**
+ * Create a tag with given name and attributes and insert it into the DOM
+ * 
+ * @param tagName
+ * @param props
+ * @param pNode
+ * @param isFirst
+ * @returns {Element}
+ */
 function qtranxj_ce(tagName, props, pNode, isFirst) {
     var el = document.createElement(tagName);
     if (props) {
