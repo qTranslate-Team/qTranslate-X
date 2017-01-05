@@ -6,9 +6,9 @@ jQuery(document).ready(
         var qtx = qTranslateConfig.js.get_qtx();
 
         var addMenuItemHooks = function (li) {
-            qtx.addContentHooksByClass('edit-menu-item-title', li);
-            qtx.addContentHooksByClass('edit-menu-item-attr-title', li);
-            qtx.addContentHooksByClass('[edit-menu-item-description', li);//must use '[:]' separator style
+            qtx.addContentHooksByClassName('edit-menu-item-title', li);
+            qtx.addContentHooksByClassName('edit-menu-item-attr-title', li);
+            qtx.addContentHooksByClassName('edit-menu-item-description', li, '['); //must use '[:]' separator style
 
             qtx.addDisplayHooksByClass('menu-item-title', li);
             //qtx.addDisplayHooksByClass('item-title',li);

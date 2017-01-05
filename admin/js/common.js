@@ -506,15 +506,6 @@ var qTranslateX = function (pg) {
         qtx.addContentHooks(fields, sep);
     };
 
-    this.addContentHooksByClass = function (nm, container) {
-        var sep;
-        if (nm.indexOf('<') == 0 || nm.indexOf('[') == 0) {
-            sep = nm.substring(0, 1);
-            nm  = nm.substring(1);
-        }
-        addContentHooksByClassName(nm, container, sep);
-    };
-
     /**
      * Designed as interface for other plugin integration. The documentation is available at
      * https://qtranslatexteam.wordpress.com/integration/
@@ -782,7 +773,7 @@ var qTranslateX = function (pg) {
         }
         for (var i = 0; i < qTranslateConfig.custom_field_classes.length; ++i) {
             var nm = qTranslateConfig.custom_field_classes[i];
-            qtx.addContentHooksByClass(nm);
+            qtx.addContentHooksByClassName(nm);
         }
         if (qTranslateConfig.LSB) {
             setTinyMceInit();
