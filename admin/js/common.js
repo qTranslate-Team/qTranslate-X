@@ -373,7 +373,12 @@ var qTranslateX=function(pg)
 		 * Highlighting the translatable fields
 		 * @since 3.2-b3
 		*/
-		inpField.className += ' qtranxs-translatable';
+        if(window.acf_qtranslate_translate_standard_field_types){
+			inpField.className += ' ';
+		}
+        else{
+        	inpField.className += ' qtranxs-translatable';
+        }
 
 		/*
 		if(window.tinyMCE){
