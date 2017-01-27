@@ -364,7 +364,7 @@ function qtranxf_detect_language_front(&$url_info) {
 	global $q_config;
 	//assert($url_info['doing_front_end']);
 	while(true){
-		if( isset($_COOKIE[QTX_COOKIE_NAME_FRONT]) && !$q_config['disable_client_cookies'] ){
+		if( isset($_COOKIE[QTX_COOKIE_NAME_FRONT]) ){
 			$cs=null;
 			$lang=qtranxf_resolveLangCase($_COOKIE[QTX_COOKIE_NAME_FRONT],$cs);
 			$url_info['lang_cookie_front'] = $lang;
@@ -389,8 +389,6 @@ function qtranxf_detect_language_front(&$url_info) {
 	){
 		$url_info['doredirect']='language needs to be shown in url';
 	}
-	if(isset($url_info['doredirect']) && $q_config['hide_default_language'])
-		$lang = $q_config['default_language'];
 	return $lang;
 }
 

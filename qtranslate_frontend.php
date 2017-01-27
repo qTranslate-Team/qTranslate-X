@@ -432,7 +432,6 @@ function qtranxf_split_languages_option($value, $nm, $lang){
  */
 function qtranxf_filter_options(){
 	global $q_config, $wpdb;
-	$where;
 	switch($q_config['filter_options_mode']){
 		case QTX_FILTER_OPTIONS_ALL:
 			$where=' WHERE autoload=\'yes\' AND (option_value LIKE \'%![:__!]%\' ESCAPE \'!\' OR option_value LIKE \'%{:__}%\' OR option_value LIKE \'%<!--:__-->%\')';
@@ -551,6 +550,7 @@ function qtranxf_pre_get_posts( &$query ) {//WP_Query
 				default: break;
 			}
 	}
+	$query->query_vars['suppress_filters'] = false;
 }
 add_action( 'pre_get_posts', 'qtranxf_pre_get_posts', 99 );
 

@@ -1,29 +1,37 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) exit;
 
+function qtranxf_registerfiles_js($jss) {
+    $cnt = 0;
+    $deps = array();
+    foreach($jss as $k => $js){
+        if(isset($js['javascript']) && !empty($js['javascript'])){
+            echo $js['javascript'];
+        }else if(isset($js['src'])){
+            $src = $js['src'];
+            $handle = isset($js['handle']) ? $js['handle'] : (is_string($k) ? $k : 'qtranslate-admin-js-'.(++$cnt) );
+            $ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;
+            $url = content_url($src);
+            wp_register_script( $handle, $url, $deps, $ver, true);
+            $deps[] = $handle;
+        }
+    }
+}
+
 /**
  * Read or enqueue Java script files listed in $jss.
  * @since 3.3.2
  */
-function qtranxf_loadfiles_js($jss, $enqueue_script) {
+function qtranxf_loadfiles_js($jss) {
 	$cnt = 0;
 	$deps = array();
 	foreach($jss as $k => $js){
 		if(isset($js['javascript']) && !empty($js['javascript'])){
 			echo $js['javascript'];
 		}else if(isset($js['src'])){
-			$src = $js['src'];
-			if($enqueue_script){
-				$handle = isset($js['handle']) ? $js['handle'] : (is_string($k) ? $k : 'qtranslate-admin-js-'.(++$cnt) );
-				$ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;
-				$url = content_url($src);
-				wp_register_script( $handle, $url, $deps, $ver, true);
-				wp_enqueue_script( $handle );
-				$deps[] = $handle;
-			}else{
-				$fp = WP_CONTENT_DIR . '/' . $src;
-				readfile($fp);
-			}
+            $handle = isset($js['handle']) ? $js['handle'] : (is_string($k) ? $k : 'qtranslate-admin-js-'.(++$cnt) );
+            wp_enqueue_script( $handle );
+            $deps[] = $handle;
 		}
 	}
 }
