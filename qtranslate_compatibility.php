@@ -10,7 +10,7 @@ if(!function_exists('qtrans_convertURL')){
 	}
 }
 if(!function_exists('qtrans_generateLanguageSelectCode')){
-	function qtrans_generateLanguageSelectCode($style='', $id=''){ return qtranxf_generateLanguageSelectCode($style,$id); }
+	function qtrans_generateLanguageSelectCode($style='', $id='', $class=''){ return qtranxf_generateLanguageSelectCode($style,$id,$class); }
 }
 
 /**

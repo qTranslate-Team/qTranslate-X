@@ -131,15 +131,17 @@ class qTranslateXWidget extends WP_Widget {
  *   ‘type’ – one of the values: ‘text’, ‘image’, ‘both’, ‘dropdown’ and ‘custom’, which match the choices on widget admin page.
  *   ‘format’ – needs to be provided if ‘type’ is ‘custom’. Read help text to this option on widget admin page.
  *   ‘id’ – id of widget, which is used as a distinctive string to create CSS entities.
+ *   ‘class’ – define the class of element to turn more easier integration with custom layouts and UI frameworks.
  * @since 3.4.5 type of argument is changed, compatibility with old way is preserved.
 */
-function qtranxf_generateLanguageSelectCode($args = array(), $id='') {
+function qtranxf_generateLanguageSelectCode($args = array(), $id='', $class='') {
 	global $q_config;
 	if(is_string($args)) $type = $args;
 	elseif(is_bool($args)&&$args) $type='image';
 	elseif(is_array($args)){
 		if(!empty($args['type'])) $type = $args['type'];
 		if(empty($id) && !empty($args['id'])) $id = $args['id'];
+		if(empty($class) && !empty($args['class'])) $class = $args['class'];
 	}
 	if(empty($type)) $type='text';
 	else switch($type){
@@ -154,9 +156,11 @@ function qtranxf_generateLanguageSelectCode($args = array(), $id='') {
 	}
 	if(empty($id)) $id = 'qtranslate';
 	$id .= '-chooser';
+	if(empty($class)) $class = 'qtranslate';
+
 	if(is_404()) $url = get_option('home'); else $url = '';
 	$flag_location=qtranxf_flag_location();
-	echo PHP_EOL.'<ul class="language-chooser language-chooser-'.$type.' qtranxs_language_chooser" id="'.$id.'">'.PHP_EOL;
+	echo PHP_EOL.'<ul class="language-chooser language-chooser-'.$type.' qtranxs_language_chooser '.$class.'" id="'.$id.'">'.PHP_EOL;
 	switch($type) {
 		case 'image':
 		case 'text':
