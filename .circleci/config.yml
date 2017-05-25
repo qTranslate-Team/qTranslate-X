@@ -21,7 +21,7 @@ jobs:
           paths:
             - vendor
       - run: ./vendor/bin/phpcs --config-set installed_paths $HOME/qtx/vendor/wp-coding-standards/wpcs
-      - run: ./vendor/bin/phpcs --standard=WordPress
+      - run: ./vendor/bin/phpcs --standard=WordPress --ignore=vendor ./
       - run: ./vendor/bin/phpunit --coverage-clover=coverage.xml
       - run: bash <(curl -s https://codecov.io/bash)
 
