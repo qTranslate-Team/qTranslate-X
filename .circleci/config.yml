@@ -16,9 +16,9 @@ jobs:
             - composer-v1-
       - run: composer install -n --prefer-dist
       - save_cache:
-        key: composer-v1-{{ checksum "composer.json" }}
-        paths:
-          - vendor
+          key: composer-v1-{{ checksum "composer.json" }}
+          paths:
+            - vendor
       - run: ./vendor/bin/phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
       - run: ./vendor/bin/phpunit --coverage-clover=coverage.xml
 
