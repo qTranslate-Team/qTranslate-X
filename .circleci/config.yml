@@ -7,6 +7,7 @@ jobs:
     environment:
       - WP_TESTS_DIR: "/tmp/wordpress-tests-lib"
       - WP_CORE_DIR: "/tmp/wordpress/"
+    working_directory: ~/qtx
     steps:
       - checkout
       - run: composer self-update
