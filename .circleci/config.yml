@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: notnoopci/php:7.1.5-browsers
+      - image: circleci/php:7.1-browsers
     environment:
       - WP_TESTS_DIR: "/tmp/wordpress-tests-lib"
       - WP_CORE_DIR: "/tmp/wordpress/"
