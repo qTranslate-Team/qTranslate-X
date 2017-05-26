@@ -1,0 +1,31 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: docksal/cli:php7
+    environment:
+      - WP_TESTS_DIR: "/tmp/wordpress-tests-lib"
+      - WP_CORE_DIR: "/tmp/wordpress/"
+      - XDEBUG_ENABLED: 1
+    working_directory: ~/qtx
+    steps:
+      - checkout
+      - restore_cache:
+        keys:
+          -
+      - restore_cache:
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run: ./vendor/bin/phpunit --coverage-clover=clover.xml
+      - run: bash <(curl -s https://codecov.io/bash) -s ~/qtx
+      - run: ./vendor/bin/phpcs --config-set installed_paths $HOME/qtx/vendor/wp-coding-standards/wpcs
+      - run: ./vendor/bin/phpcs --config-set ignore_errors_on_exit 1
+      - run: ./vendor/bin/phpcs --config-set ignore_warnings_on_exit 1
+      - run: ./vendor/bin/phpcs --standard=WordPress --ignore=vendor ./
