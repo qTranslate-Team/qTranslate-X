@@ -593,7 +593,7 @@ function qtranxf_excludeUntranslatedAdjacentPosts($where) {
 	return $where;
 }
 
-function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
+function qtranxf_excludeUntranslatedPosts($where, $query) {//WP_Query
 	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: post_type: ',$query->query_vars['post_type']);
 	switch($query->query_vars['post_type']){
 		//known not to filter
