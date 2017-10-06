@@ -168,7 +168,12 @@ function qtranxf_generateLanguageSelectCode($args = array(), $id='') {
 				if($language == $q_config['language']) $classes[] = 'active';
 				echo '<li class="'. implode(' ', $classes) .'"><a href="'.qtranxf_convertURL($url, $language, false, true).'"';
 				// set hreflang
-				echo ' hreflang="'.$language.'"';
+				if(!empty($q_config['locale_html'][$language])){
+					$hreflang = $q_config['locale_html'][$language];
+				}else{
+					$hreflang = $language;
+				}
+				echo ' hreflang="'.$hreflang.'" ';
 				echo ' title="'.$alt.'"';
 				if($type=='image')
 					echo ' class="qtranxs_image qtranxs_image_'.$language.'"';
