@@ -519,7 +519,7 @@ function qtranxf_translate_post($post,$lang) {
 	}
 }
 
-function qtranxf_postsFilter($posts,&$query) {//WP_Query
+function qtranxf_postsFilter($posts,$query) {//WP_Query
 	global $q_config;
 	//qtranxf_dbg_log('qtranxf_postsFilter: $posts: ',$posts);
 	//$post->post_content = qtranxf_useCurrentLanguageIfNotFoundShowAvailable($post->post_content);
