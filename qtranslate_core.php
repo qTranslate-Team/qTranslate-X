@@ -82,7 +82,7 @@ function qtranxf_init_language() {
 			 */
 			$target = apply_filters('qtranslate_language_detect_redirect', $url_lang, $url_orig, $url_info);
 			//qtranxf_dbg_log('qtranxf_init_language: doredirect to '.$lang.PHP_EOL .'urlorg:'.$url_orig.PHP_EOL .'target:'.$target.PHP_EOL .'url_info: ',$url_info);
-			if($target!==false && $target != $url_orig){
+			if( $target !== false && $target != $url_orig && ! is_rest_api_request( $url_orig ) ) {
 				nocache_headers();
 				wp_redirect($target);
 				//header('Location: '.$target);
@@ -1478,3 +1478,16 @@ function qtranxf_optionFilter($do='enable') {//do we need it?
 	}
 }
 */
+/**
+ * Checks whether the original url is a REST API request or no
+ *
+ * @param $url_orig
+ *
+ * @return boolean Returns true if the request is for rest api, else return false
+ */
+function is_rest_api_request( $url_orig ) {
+	if ( false !== strpos( $url_orig, 'wp-json' ) ) {
+		return true;
+	}
+	return false;
+}
