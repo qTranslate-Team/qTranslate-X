@@ -3,7 +3,7 @@
     "version": "3.4.6.9",
     "description": "Dynamic multilingual plugin for Wordpress",
     "type": "wordpress-plugin",
-    "license": "GPLv3",
+    "license": "GPL-3.0-or-later",
     "homepage": "https://wordpress.org/plugins/qtranslate-x/",
     "authors": [
         {
