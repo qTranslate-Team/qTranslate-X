@@ -1,5 +1,6 @@
 {
     "name": "appristas/qtranslate-x",
+    "version": "3.4.6.9",
     "description": "Dynamic multilingual plugin for Wordpress",
     "type": "wordpress-plugin",
     "license": "GPLv3",
