@@ -231,3 +231,5 @@ tx
 #Convenience
 *.min-orig.js
 admin/js/obsolete/*
+
+/vendor/

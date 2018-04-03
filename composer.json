@@ -1,0 +1,17 @@
+{
+    "name": "appristas/qtranslate-x",
+    "description": "Dynamic multilingual plugin for Wordpress",
+    "type": "wordpress-plugin",
+    "license": "GPLv3",
+    "homepage": "https://wordpress.org/plugins/qtranslate-x/",
+    "authors": [
+        {
+            "name": "Gasim Gasimzada",
+            "email": "gasim@appristas.io"
+        },
+        {
+            "name": "johnclause"
+        }
+    ],
+    "require": {}
+}
