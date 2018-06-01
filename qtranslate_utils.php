@@ -1366,18 +1366,6 @@ function qtranxf_match_language_locale( $locale ) {
 	}
 }
 
-/**
- * @return bool
- */
-function qtranxf_windows_os() {
-	static $windows_os;
-	if ( ! isset( $windows_os ) ) {
-		$windows_os = strtoupper( substr( PHP_OS, 0, 3 ) ) === 'WIN';
-	}
-
-	return $windows_os;
-}
-
 {// BEGIN DATE TIME FUNCTIONS
 	/**
 	 * Mapping to convert date format to strftime format and vice-versa.

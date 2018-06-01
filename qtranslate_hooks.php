@@ -27,13 +27,6 @@ function qtranxf_localeForCurrentLanguage( $locale ) {
 	$lc[] = $locale_lang . '.utf8';
 	$lc[] = $locale_lang . '@euro';
 	$lc[] = $locale_lang;
-	if ( qtranxf_windows_os() ) {
-		$windows_locale = qtranxf_default_windows_locale();
-		if ( isset( $windows_locale[ $lang ] ) ) {
-			$wl   = $windows_locale[ $lang ];
-			$lc[] = $wl;
-		}
-	}
 	$lc[] = $lang;
 
 	// return the correct locale and most importantly set it (wordpress doesn't, which is bad)
