@@ -808,9 +808,6 @@ function qtranxf_loadConfig() {
 	}
 
 	//qtranxf_dbg_log('qtranxf_loadConfig: $q_config[use_strftime]: ',$q_config['use_strftime']);
-	if ( $q_config['use_strftime'] != QTX_DATE_WP && qtranxf_windows_os() ) {
-		$q_config['use_strftime'] = QTX_DATE_WP;
-	}
 	qtranxf_load_languages_enabled();
 
 	foreach ( $qtranslate_options['front']['bool'] as $nm => $def ) {

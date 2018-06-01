@@ -241,7 +241,6 @@ function qtranxf_conf() {
 	// Allow to prepare loading additional features
 	do_action( 'qtranslate_configuration_pre', $clean_uri );
 
-	$windows_os = qtranxf_windows_os();
 	// Generate XHTML
 	?>
     <div class="wrap">
@@ -536,22 +535,16 @@ function qtranxf_conf() {
 						<?php } ?>
                         <tr valign="top">
                             <td colspan="2">
-								<?php echo __( 'Options below are legacy of qTranslate from the time when Wordpress did not have built-in translation of the dates. They are kept here for the sake of compatibility.', 'qtranslate' );
-								if ( $windows_os )
-									echo ' ' . __( 'On Windows-based server they do not work correctly and are disabled.', 'qtranslate' ) ?>
+								<?php echo __( 'Options below are legacy of qTranslate from the time when Wordpress did not have built-in translation of the dates. They are kept here for the sake of compatibility.', 'qtranslate' ); ?>
                             </td>
                         </tr>
                         <tr valign="top">
                             <th scope="row">&nbsp;</th>
                             <td>
-                                <label><input type="radio" name="use_strftime" value="<?php echo QTX_DATE; ?>" <?php checked( $q_config['use_strftime'], QTX_DATE );
-									disabled( $windows_os ) ?>/> <?php _e( 'Use emulated date function.', 'qtranslate' ) ?></label><br/>
-                                <label><input type="radio" name="use_strftime" value="<?php echo QTX_DATE_OVERRIDE; ?>" <?php checked( $q_config['use_strftime'], QTX_DATE_OVERRIDE );
-									disabled( $windows_os ) ?>/> <?php _e( 'Use emulated date function and replace formats with the predefined formats for each language.', 'qtranslate' ) ?></label><br/>
-                                <label><input type="radio" name="use_strftime" value="<?php echo QTX_STRFTIME; ?>" <?php checked( $q_config['use_strftime'], QTX_STRFTIME );
-									disabled( $windows_os ) ?>/> <?php _e( 'Use strftime instead of date.', 'qtranslate' ) ?></label><br/>
-                                <label><input type="radio" name="use_strftime" value="<?php echo QTX_STRFTIME_OVERRIDE; ?>" <?php checked( $q_config['use_strftime'], QTX_STRFTIME_OVERRIDE );
-									disabled( $windows_os ) ?>/> <?php _e( 'Use strftime instead of date and replace formats with the predefined formats for each language.', 'qtranslate' ) ?></label>
+                                <label><input type="radio" name="use_strftime" value="<?php echo QTX_DATE; ?>" <?php checked( $q_config['use_strftime'], QTX_DATE ); ?>/> <?php _e( 'Use emulated date function.', 'qtranslate' ) ?></label><br/>
+                                <label><input type="radio" name="use_strftime" value="<?php echo QTX_DATE_OVERRIDE; ?>" <?php checked( $q_config['use_strftime'], QTX_DATE_OVERRIDE ); ?>/> <?php _e( 'Use emulated date function and replace formats with the predefined formats for each language.', 'qtranslate' ) ?></label><br/>
+                                <label><input type="radio" name="use_strftime" value="<?php echo QTX_STRFTIME; ?>" <?php checked( $q_config['use_strftime'], QTX_STRFTIME ); ?>/> <?php _e( 'Use strftime instead of date.', 'qtranslate' ) ?></label><br/>
+                                <label><input type="radio" name="use_strftime" value="<?php echo QTX_STRFTIME_OVERRIDE; ?>" <?php checked( $q_config['use_strftime'], QTX_STRFTIME_OVERRIDE ); ?>/> <?php _e( 'Use strftime instead of date and replace formats with the predefined formats for each language.', 'qtranslate' ) ?></label>
                                 <p class="qtranxs_notes"><?php _e( 'Depending on the mode selected, additional customizations of the theme may be needed.', 'qtranslate' ) ?></p>
 								<?php /*
 					<br/><br/>
