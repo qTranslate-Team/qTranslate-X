@@ -844,9 +844,9 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 		return $meta_cache;
 	}
 
-	if(isset($meta_cache[$meta_key]) && isset($meta_unserialized[$meta_key])){
+	if(isset($meta_cache[$meta_key])){
 		//cache unserialized values, just for the sake of performance.
-		$meta_key_unserialized = $meta_unserialized[$meta_key];
+		$meta_key_unserialized = (isset($meta_unserialized[$meta_key])) ? $meta_unserialized[$meta_key] : array();
 		if($single){
 			if(!isset($meta_key_unserialized[0])) $meta_key_unserialized[0] = maybe_unserialize($meta_cache[$meta_key][0]);
 		}else{
