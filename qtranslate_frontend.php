@@ -190,7 +190,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ){
 }
 add_filter( 'wp_get_nav_menu_items',  'qtranxf_wp_get_nav_menu_items', 20, 3 );
 
-function qtranxf_add_language_menu_item(&$items, &$menu_order, &$itemid, $key, $language ) {
+function qtranxf_add_language_menu_item($items, $menu_order, $itemid, $key, $language ) {
 	global $q_config;
 	//qtranxf_dbg_log('qtranxf_add_language_menu_item: $key: ',$key);
 	$item = $items[$key];
@@ -333,7 +333,7 @@ function qtranxf_add_language_menu_item(&$items, &$menu_order, &$itemid, $key, $
 	}
 }
 
-function qtranxf_remove_detached_children(&$items,&$itemsremoved)
+function qtranxf_remove_detached_children($items,$itemsremoved)
 {
 	do{
 		$more=false;
@@ -519,7 +519,7 @@ function qtranxf_translate_post($post,$lang) {
 	}
 }
 
-function qtranxf_postsFilter($posts,&$query) {//WP_Query
+function qtranxf_postsFilter($posts,$query) {//WP_Query
 	global $q_config;
 	//qtranxf_dbg_log('qtranxf_postsFilter: $posts: ',$posts);
 	//$post->post_content = qtranxf_useCurrentLanguageIfNotFoundShowAvailable($post->post_content);
@@ -542,7 +542,7 @@ function qtranxf_postsFilter($posts,&$query) {//WP_Query
 add_filter('the_posts', 'qtranxf_postsFilter', 5, 2);
 
 /** allow all filters within WP_Query - many other add_filters may not be needed now? */
-function qtranxf_pre_get_posts( &$query ) {//WP_Query
+function qtranxf_pre_get_posts( $query ) {//WP_Query
 	//qtranxf_dbg_log('qtranxf_pre_get_posts: $query: ',$query);
 	//'post_type'
 	if(isset($query->query_vars['post_type'])){
@@ -593,7 +593,7 @@ function qtranxf_excludeUntranslatedAdjacentPosts($where) {
 	return $where;
 }
 
-function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
+function qtranxf_excludeUntranslatedPosts($where,$query) {//WP_Query
 	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: post_type: ',$query->query_vars['post_type']);
 	switch($query->query_vars['post_type']){
 		//known not to filter
@@ -625,7 +625,7 @@ function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 	return $where;
 }
 
-function qtranxf_excludeUntranslatedPostComments($clauses, &$q/*WP_Comment_Query*/) {
+function qtranxf_excludeUntranslatedPostComments($clauses, $q/*WP_Comment_Query*/) {
 	global $wpdb;
 
 	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPostComments: $clauses: ',$clauses);
@@ -773,7 +773,7 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 
 	if(!isset($meta_cache_unserialized[$meta_type])) $meta_cache_unserialized[$meta_type] = array();
 	if(!isset($meta_cache_unserialized[$meta_type][$object_id])) $meta_cache_unserialized[$meta_type][$object_id] = array();
-	$meta_unserialized = &$meta_cache_unserialized[$meta_type][$object_id];
+	$meta_unserialized = $meta_cache_unserialized[$meta_type][$object_id];
 
 	if( !$meta_cache ){
 		if ( $meta_cache_wp ) {
@@ -846,7 +846,7 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 
 	if(isset($meta_cache[$meta_key])){
 		//cache unserialized values, just for the sake of performance.
-		$meta_key_unserialized = &$meta_unserialized[$meta_key];
+		$meta_key_unserialized = (isset($meta_unserialized[$meta_key])) ? $meta_unserialized[$meta_key] : array();
 		if($single){
 			if(!isset($meta_key_unserialized[0])) $meta_key_unserialized[0] = maybe_unserialize($meta_cache[$meta_key][0]);
 		}else{
